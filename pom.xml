@@ -11,6 +11,7 @@
         <module>mf-registry</module>
         <module>mf-gateway</module>
         <module>mf-item</module>
+        <module>mf-common</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -2,12 +2,14 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="mf-item-service" />
         <module name="mf-registry" />
+        <module name="mf-common" />
+        <module name="mf-item-service" />
         <module name="mf-gateway" />
         <module name="mf-item-interface" />
       </profile>
@@ -16,6 +18,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="logistics" options="-parameters" />
+      <module name="mf-common" options="-parameters" />
       <module name="mf-gateway" options="-parameters" />
       <module name="mf-item" options="-parameters" />
       <module name="mf-item-interface" options="-parameters" />
