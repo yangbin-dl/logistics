@@ -19,17 +19,23 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("queryuser")
-    public ResponseEntity<User> queryUser(@RequestParam("username") String username,
+    @GetMapping("query")
+    public ResponseEntity<User> query(@RequestParam("username") String username,
                                           @RequestParam("password") String password){
-        return ResponseEntity.ok(userService.verifyUser(username, password));
+        return ResponseEntity.ok(userService.verify(username, password));
     }
 
     @PostMapping("insert")
-    public ResponseEntity<User> addUser(@RequestBody User user){
+    public ResponseEntity<User> insert(@RequestBody User user){
 
-        User u = userService.insertUser(user);
+        User u = userService.insert(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(u);
+    }
+
+    @PostMapping("update")
+    public ResponseEntity<User> update(@RequestBody User user){
+        userService.update(user);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
 

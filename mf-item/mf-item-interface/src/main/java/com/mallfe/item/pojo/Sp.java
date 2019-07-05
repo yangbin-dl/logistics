@@ -18,7 +18,7 @@ public class Sp {
     @Id
     @KeySql(useGeneratedKeys=true)
     private Long id;
-    private int hh;
+    private Integer hh;
     private String pinm;
     private String xingh;
     private String tm;

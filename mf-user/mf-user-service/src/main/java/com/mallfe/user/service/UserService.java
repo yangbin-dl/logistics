@@ -18,7 +18,13 @@ public class UserService {
     @Autowired
     private UserMapper userMapper;
 
-    public User verifyUser(String username, String password){
+    /**
+     * 用户验证
+     * @param username 用户名
+     * @param password 密码
+     * @return 完整用户信息，包括密码
+     */
+    public User verify(String username, String password){
         User t =new User();
         t.setUsername(username);
         t.setPassword(password);
@@ -30,7 +36,23 @@ public class UserService {
         return user;
     }
 
-    public User insertUser(User user){
+    /**
+     * 更新用户信息
+     * 注意：会根据id更新所有not null 字段。
+     * 适用于更新密码、用户名等。
+     * @param user 带有id的用户实体类
+     */
+    public void update(User user){
+        userMapper.updateByPrimaryKeySelective(user);
+    }
+
+
+    /**
+     * 新增用户
+     * @param user 用户信息
+     * @return 带有id的用户信息
+     */
+    public User insert(User user){
 
         //1.检查用户名是否重复
         Long userId = findUserByUsername(user.getUsername());
@@ -38,14 +60,17 @@ public class UserService {
             throw new MallfeException(ExceptionEnum.USERNAME_DUPLICATE);
         }
 
-        //2.插入用户
+        //2.插入用户，插入后会自动获取id
         userMapper.insert(user);
-
-        //3.再次查询，获取用户名对应的id
-        user.setId(findUserByUsername(user.getUsername()));
         return user;
     }
 
+
+    /**
+     * 根据用户明查询用户信息
+     * @param username 用户名
+     * @return 用户id
+     */
     private Long findUserByUsername(String username){
         User t  = new User();
         t.setUsername(username);
