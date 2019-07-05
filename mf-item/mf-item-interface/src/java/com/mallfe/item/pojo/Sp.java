@@ -8,18 +8,23 @@ import javax.persistence.Table;
 
 /**
  * 描述
- * 用户类
+ * 商品类
  * @author Yangbin
  * @since 2019/07/05
  */
-@Table(name="mf_user")
+@Table(name="mf_sp")
 @Data
-public class User {
+public class Sp {
     @Id
     @KeySql(useGeneratedKeys=true)
     private Long id;
-    private String username;
-    private String password;
-    private String truename;
-    private int lx;
+    private int hh;
+    private String pinm;
+    private String xingh;
+    private String tm;
+    private Long zhongl;
+    private Long chang;
+    private Long kuan;
+    private Long gao;
+
 }
