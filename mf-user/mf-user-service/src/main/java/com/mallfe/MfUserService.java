@@ -1,7 +1,9 @@
 package com.mallfe;
 
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * 描述
@@ -11,8 +13,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
+@MapperScan("com.mallfe.user.mapper")
 public class MfUserService {
     public static void main(String[] args) {
-
+        SpringApplication.run(MfUserService.class);
     }
 }
