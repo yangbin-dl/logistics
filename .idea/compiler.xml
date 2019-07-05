@@ -7,9 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="mf-user-interface" />
         <module name="mf-item-interface" />
         <module name="mf-user-service" />
-        <module name="mf-user-interface" />
         <module name="mf-gateway" />
         <module name="mf-item-service" />
         <module name="mf-registry" />

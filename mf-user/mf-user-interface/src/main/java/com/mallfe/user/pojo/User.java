@@ -18,8 +18,12 @@ public class User {
     @Id
     @KeySql(useGeneratedKeys=true)
     private Long id;
+
     private String username;
+
     private String password;
+
     private String truename;
-    private int lx;
+
+    private Integer lx;
 }

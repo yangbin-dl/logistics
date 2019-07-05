@@ -30,8 +30,31 @@ public class UserService {
         return user;
     }
 
-    public void insertUser(User user){
+    public User insertUser(User user){
+
+        //1.检查用户名是否重复
+        Long userId = findUserByUsername(user.getUsername());
+        if (userId != null) {
+            throw new MallfeException(ExceptionEnum.USERNAME_DUPLICATE);
+        }
+
+        //2.插入用户
         userMapper.insert(user);
+
+        //3.再次查询，获取用户名对应的id
+        user.setId(findUserByUsername(user.getUsername()));
+        return user;
+    }
+
+    private Long findUserByUsername(String username){
+        User t  = new User();
+        t.setUsername(username);
+
+        User user =userMapper.selectOne(t);
+        if(user == null){
+            return null;
+        }
+        return user.getId();
     }
 
 
