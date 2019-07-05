@@ -7,13 +7,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="mf-item-interface" />
+        <module name="mf-user-service" />
+        <module name="mf-user-interface" />
+        <module name="mf-gateway" />
+        <module name="mf-item-service" />
         <module name="mf-registry" />
         <module name="mf-common" />
-        <module name="mf-item-service" />
-        <module name="mf-gateway" />
-        <module name="mf-item-interface" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="mf-user" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
@@ -24,6 +29,9 @@
       <module name="mf-item-interface" options="-parameters" />
       <module name="mf-item-service" options="-parameters" />
       <module name="mf-registry" options="-parameters" />
+      <module name="mf-user" options="-parameters" />
+      <module name="mf-user-interface" options="-parameters" />
+      <module name="mf-user-service" options="-parameters" />
     </option>
   </component>
 </project>
