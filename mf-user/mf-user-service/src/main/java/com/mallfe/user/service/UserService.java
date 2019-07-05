@@ -23,7 +23,7 @@ public class UserService {
         t.setUsername(username);
         t.setPassword(password);
         User user =userMapper.selectOne(t);
-        if(user.getId() == null){
+        if(user == null){
             throw new MallfeException(ExceptionEnum.USER_OR_PASSWORD_NOT_CORRECT);
         }
 

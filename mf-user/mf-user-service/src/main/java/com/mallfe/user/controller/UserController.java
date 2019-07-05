@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping
+    @GetMapping("queryuser")
     public ResponseEntity<User> queryUser(@RequestParam("username") String username,
                                           @RequestParam("password") String password){
         return ResponseEntity.ok(userService.verifyUser(username, password));
