@@ -1,9 +1,9 @@
-package com.mallfe.logistics.controller;
+package com.mallfe.item.controller;
 
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.logistics.pojo.Driver;
-import com.mallfe.logistics.pojo.Path;
-import com.mallfe.logistics.service.LogisticsService;
+import com.mallfe.item.pojo.Driver;
+import com.mallfe.item.pojo.Path;
+import com.mallfe.item.service.LogisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

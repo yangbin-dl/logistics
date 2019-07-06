@@ -1,14 +1,14 @@
-package com.mallfe.logistics.service;
+package com.mallfe.item.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.logistics.mapper.DriverMapper;
-import com.mallfe.logistics.mapper.PathMapper;
-import com.mallfe.logistics.pojo.Driver;
-import com.mallfe.logistics.pojo.Path;
+import com.mallfe.item.mapper.DriverMapper;
+import com.mallfe.item.mapper.PathMapper;
+import com.mallfe.item.pojo.Driver;
+import com.mallfe.item.pojo.Path;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

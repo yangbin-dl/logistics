@@ -1,4 +1,4 @@
-package com.mallfe.logistics.pojo;
+package com.mallfe.item.pojo;
 
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;

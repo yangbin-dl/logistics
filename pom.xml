@@ -15,7 +15,6 @@
         <module>mf-user</module>
         <module>mf-user</module>
         <module>mf-user</module>
-        <module>mf-logistics</module>
     </modules>
     <packaging>pom</packaging>
 

@@ -1,21 +1,19 @@
-package com.mallfe.logistics.pojo;
+package com.mallfe.item.pojo;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import tk.mybatis.mapper.annotation.KeySql;
 
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
  * 描述
- * 送货路线类
+ * 司机类
  * @author Yangbin
  * @since 2019/07/05
  */
 @EqualsAndHashCode(callSuper = true)
-@Table(name="mf_path")
+@Table(name="mf_driver")
 @Data
-public class Path extends BaseBean{
-
+public class Driver extends BaseBean{
+    private String phone;
 }

@@ -11,14 +11,15 @@
         <module name="mf-item-interface" />
         <module name="mf-user-service" />
         <module name="mf-gateway" />
-        <module name="mf-logistics-service" />
         <module name="mf-item-service" />
         <module name="mf-registry" />
         <module name="mf-common" />
-        <module name="mf-logistics-interface" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="mf-logistics" target="1.8" />
+      <module name="mf-logistics-interface" target="1.8" />
+      <module name="mf-logistics-service" target="1.8" />
       <module name="mf-user" target="1.8" />
     </bytecodeTargetLevel>
   </component>
