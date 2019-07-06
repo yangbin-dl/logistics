@@ -7,9 +7,10 @@
     <file url="file://$PROJECT_DIR$/mf-item" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mf-item/mf-item-interface" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mf-item/mf-item-service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mf-logistics" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mf-logistics/mf-logistics-interface" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/mf-logistics/mf-logistics-service" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mf-registry" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/mf-user" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/mf-user" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mf-user" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mf-user/mf-user-interface" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mf-user/mf-user-service" charset="UTF-8" />

@@ -1,5 +1,6 @@
 package com.mallfe.item.controller;
 
+import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.Sp;
 import com.mallfe.item.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,5 +87,26 @@ public class ItemController {
     @GetMapping("querypinm")
     public ResponseEntity<List<Sp>> queryByPinm(@RequestParam("pinm") String pinm){
         return ResponseEntity.ok(itemService.queryByPinm(pinm));
+    }
+
+    /**
+     * 根据分页查询商品
+     * @param page 显示页
+     * @param rows 每页行
+     * @param sortBy 排序字段
+     * @param desc 倒序
+     * @param key 关键字
+     * @return 包含商品列表的ResponseEntity
+     */
+    @GetMapping("page")
+    public ResponseEntity<PageResult<Sp>> querySpByPage(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "5") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "false") Boolean desc,
+            @RequestParam(value = "key", required = false) String key
+    ){
+        PageResult<Sp> result=itemService.querySpByPage(page,rows,sortBy,desc,key);
+        return ResponseEntity.ok(result);
     }
 }

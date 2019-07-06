@@ -1,9 +1,13 @@
 package com.mallfe.item.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
+import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.SpMapper;
 import com.mallfe.item.pojo.Sp;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -68,5 +72,41 @@ public class ItemService {
         spMapper.insert(sp);
 
         return sp;
+    }
+
+    /**
+     * 根据分页查询商品
+     * @param page 显示页
+     * @param rows 每页行
+     * @param sortBy 排序字段
+     * @param desc 倒序
+     * @param key 关键字
+     * @return 包含商品列表的ResponseEntity
+     */
+    public PageResult<Sp> querySpByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+        //分页
+        PageHelper.startPage(page, rows);
+        //条件过滤
+        Example example = new Example(Sp.class);
+        if(StringUtils.isNotBlank(key)){
+            example.createCriteria().orLike("name","%"+key+"%")
+                    .orEqualTo("letter",key.toUpperCase());
+        }
+        //排序
+        if(StringUtils.isNotBlank(sortBy)){
+            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
+            example.setOrderByClause(orderByClause);
+        }
+
+        //查询
+        List<Sp> list = spMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.SP_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Sp> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
     }
 }

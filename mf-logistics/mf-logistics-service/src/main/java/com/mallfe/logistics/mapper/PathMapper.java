@@ -1,6 +1,6 @@
-package com.mallfe.item.mapper;
+package com.mallfe.logistics.mapper;
 
-import com.mallfe.item.pojo.Path;
+import com.mallfe.logistics.pojo.Path;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
