@@ -17,6 +17,6 @@ import javax.persistence.Table;
 public class KucnIn extends Kucn{
     private Long sl;
     private String lsh;
-    private int xh;
+    private Integer xh;
     private String ywbm;
 }

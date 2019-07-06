@@ -18,7 +18,7 @@ public class Kucn {
     @Id
     @KeySql(useGeneratedKeys=true)
     private Long id;
-    private int hh;
-    private int lx;
+    private Integer hh;
+    private Integer lx;
     private Long kucn;
 }

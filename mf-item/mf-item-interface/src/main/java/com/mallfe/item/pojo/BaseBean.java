@@ -18,5 +18,5 @@ public class BaseBean {
     private Long id;
     private String code;
     private String name;
-    private int stauts;
+    private Integer status;
 }

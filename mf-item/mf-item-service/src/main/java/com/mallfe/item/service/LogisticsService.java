@@ -102,4 +102,40 @@ public class LogisticsService {
 
         return new PageResult<>(info.getTotal(), list);
     }
+
+    /**
+     * 新增司机
+     * @param driver 司机编码、名称、电话等信息
+     * @return 司机完整信息
+     */
+    public Driver insertDriver(Driver driver) {
+        if(driver.getCode() == null){
+            throw new MallfeException(ExceptionEnum.CODE_CANNOT_BE_NULL);
+        }
+
+        if(driver.getName()== null){
+            throw new MallfeException(ExceptionEnum.NAME_CANNOT_BE_NULL);
+        }
+
+        // 插入后自动获得id
+        driverMapper.insert(driver);
+
+        return driver;
+
+    }
+
+    public Path insertPath(Path path){
+        if(path.getCode() == null){
+            throw new MallfeException(ExceptionEnum.CODE_CANNOT_BE_NULL);
+        }
+
+        if(path.getName()== null){
+            throw new MallfeException(ExceptionEnum.NAME_CANNOT_BE_NULL);
+        }
+
+        // 插入后自动获得id
+        pathMapper.insert(path);
+
+        return path;
+    }
 }

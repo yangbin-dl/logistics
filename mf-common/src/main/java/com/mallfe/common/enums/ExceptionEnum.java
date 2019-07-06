@@ -15,8 +15,9 @@ public enum ExceptionEnum {
     SP_NOT_EXISTS(404,"商品不存在！"),
     HH_CANNOT_BE_NULL(400,"货号不能为空"),
     PINM_CANNOT_BE_NULL(400,"品名不能为空"),
-    XINGH_CANNOT_BE_NULL(400,"型号不能为空")
-
+    XINGH_CANNOT_BE_NULL(400,"型号不能为空"),
+    CODE_CANNOT_BE_NULL(400,"编码不能为空"),
+    NAME_CANNOT_BE_NULL(400,"名称不能为空")
     ;
     private int code;
     private String msg;

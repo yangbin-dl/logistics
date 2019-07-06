@@ -5,11 +5,9 @@ import com.mallfe.item.pojo.Driver;
 import com.mallfe.item.pojo.Path;
 import com.mallfe.item.service.LogisticsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 描述
@@ -45,5 +43,17 @@ public class LogisticsController {
     ){
         PageResult<Path> result=logisticsService.queryPathByPage(page,rows,sortBy,desc,key);
         return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("insertdriver")
+    public ResponseEntity<Driver> insertDriver(@RequestBody Driver driver){
+        logisticsService.insertDriver(driver);
+        return ResponseEntity.status(HttpStatus.CREATED).body(driver);
+    }
+
+    @PostMapping("insertpath")
+    public ResponseEntity<Path> insertDriver(@RequestBody Path path){
+        logisticsService.insertPath(path);
+        return ResponseEntity.status(HttpStatus.CREATED).body(path);
     }
 }

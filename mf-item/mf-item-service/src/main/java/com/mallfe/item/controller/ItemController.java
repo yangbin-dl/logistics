@@ -29,8 +29,8 @@ public class ItemController {
      */
     @PostMapping("insert")
     public ResponseEntity<Sp> insert(@RequestBody Sp sp){
-        Sp s = itemService.insert(sp);
-        return ResponseEntity.status(HttpStatus.CREATED).body(s);
+        itemService.insert(sp);
+        return ResponseEntity.status(HttpStatus.CREATED).body(sp);
     }
 
     /**
