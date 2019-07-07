@@ -56,4 +56,10 @@ public class LogisticsController {
         logisticsService.insertPath(path);
         return ResponseEntity.status(HttpStatus.CREATED).body(path);
     }
+
+    @GetMapping("driver/{id}")
+    public ResponseEntity<Driver> insertDriver(@PathVariable("id") Integer id){
+        Driver driver = logisticsService.selectDriverById(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(driver);
+    }
 }

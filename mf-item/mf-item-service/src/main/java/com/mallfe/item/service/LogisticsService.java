@@ -138,4 +138,11 @@ public class LogisticsService {
 
         return path;
     }
+
+    public Driver selectDriverById(Integer id) {
+        if(null == id){
+            throw new MallfeException(ExceptionEnum.CODE_CANNOT_BE_NULL);
+        }
+        return  driverMapper.selectByPrimaryKey(id);
+    }
 }
