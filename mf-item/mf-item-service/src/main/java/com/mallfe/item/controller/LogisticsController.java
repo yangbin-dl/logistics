@@ -58,7 +58,7 @@ public class LogisticsController {
     }
 
     @GetMapping("driver/{id}")
-    public ResponseEntity<Driver> insertDriver(@PathVariable("id") Integer id){
+    public ResponseEntity<Driver> queryDriverById(@PathVariable("id") Integer id){
         Driver driver = logisticsService.selectDriverById(id);
         return ResponseEntity.status(HttpStatus.CREATED).body(driver);
     }
