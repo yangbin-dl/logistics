@@ -1,11 +1,19 @@
 package com.mallfe.user.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
+import com.mallfe.common.vo.PageResult;
 import com.mallfe.user.mapper.UserMapper;
 import com.mallfe.user.pojo.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 /**
  * 描述
@@ -92,4 +100,31 @@ public class UserService {
     }
 
 
+    public PageResult<User> querySpByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+        //分页
+        PageHelper.startPage(page, rows);
+        //条件过滤
+        Example example = new Example(User.class);
+        if(StringUtils.isNotBlank(key)){
+            example.createCriteria().orLike("username",key+"%")
+                    .orLike("truename","%"+key+"%");
+        }
+        //排序
+        if(StringUtils.isNotBlank(sortBy)){
+            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
+            example.setOrderByClause(orderByClause);
+        }
+
+        //查询
+        List<User> list = userMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.USER_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<User> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+
+    }
 }

@@ -1,5 +1,6 @@
 package com.mallfe.user.controller;
 
+import com.mallfe.common.vo.PageResult;
 import com.mallfe.user.pojo.User;
 import com.mallfe.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,18 @@ public class UserController {
     public ResponseEntity<User> update(@RequestBody User user){
         userService.update(user);
         return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @PostMapping("page")
+    public ResponseEntity<PageResult<User>> queryByPage(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "false") Boolean desc,
+            @RequestParam(value = "key", required = false) String key
+    ){
+        PageResult<User> result=userService.querySpByPage(page,rows,sortBy,desc,key);
+        return ResponseEntity.ok(result);
     }
 
 
