@@ -43,7 +43,16 @@ public class UserService {
      * @param user 带有id的用户实体类
      */
     public void update(User user){
-        userMapper.updateByPrimaryKeySelective(user);
+        int i;
+        try {
+            i=userMapper.updateByPrimaryKeySelective(user);
+        } catch (Exception e) {
+            throw new MallfeException(ExceptionEnum.USER_UPDATE_FAILURE);
+        }
+
+        if(i !=1 ){
+            throw new MallfeException(ExceptionEnum.USER_NOT_EXISTS);
+        }
     }
 
 

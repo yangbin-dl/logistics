@@ -35,7 +35,7 @@ public class UserController {
     @PostMapping("update")
     public ResponseEntity<User> update(@RequestBody User user){
         userService.update(user);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
 

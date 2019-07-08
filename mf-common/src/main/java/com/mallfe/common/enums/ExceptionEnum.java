@@ -17,7 +17,9 @@ public enum ExceptionEnum {
     PINM_CANNOT_BE_NULL(400,"品名不能为空"),
     XINGH_CANNOT_BE_NULL(400,"型号不能为空"),
     CODE_CANNOT_BE_NULL(400,"编码不能为空"),
-    NAME_CANNOT_BE_NULL(400,"名称不能为空")
+    NAME_CANNOT_BE_NULL(400,"名称不能为空"),
+    USER_NOT_EXISTS(404,"用户不存在!"),
+    USER_UPDATE_FAILURE(404,"用户名重复!")
     ;
     private int code;
     private String msg;
