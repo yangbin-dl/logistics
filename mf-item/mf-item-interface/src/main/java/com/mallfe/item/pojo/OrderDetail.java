@@ -1,34 +1,33 @@
 package com.mallfe.item.pojo;
 
-import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
 
 /**
  * 描述
- * 通用类
- * @author Yangbin
- * @since 2019/07/05
+ *
+ * @author yangbin
+ * @since 2019-07-10
  */
-@Data
-class BaseBean {
+class OrderDetail {
     @Id
     @KeySql(useGeneratedKeys=true)
     private Long id;
 
     /**
-     * 编码
+     * 流水号
      */
-    private String code;
+    private String lsh;
 
     /**
-     * 名称
+     * 货号
      */
-    private String name;
+    private Integer hh;
 
     /**
-     * 状态，0-禁用，1-可用
+     * 数量
      */
-    private Integer status;
+    private Long sl;
+
 }

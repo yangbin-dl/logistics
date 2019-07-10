@@ -18,7 +18,19 @@ public class Kucn {
     @Id
     @KeySql(useGeneratedKeys=true)
     private Long id;
+
+    /**
+     * 货号
+     */
     private Integer hh;
+
+    /**
+     * 类型
+     */
     private Integer lx;
+
+    /**
+     * 库存
+     */
     private Long kucn;
 }

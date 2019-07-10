@@ -7,17 +7,13 @@ import javax.persistence.Table;
 
 /**
  * 描述
- * 司机类
- * @author Yangbin
- * @since 2019/07/05
+ * 退货单
+ * @author yangbin
+ * @since 2019-07-10
  */
 @EqualsAndHashCode(callSuper = true)
-@Table(name="mf_driver")
 @Data
-public class Driver extends BaseBean{
+@Table(name="mf_th")
+public class Th extends Bill {
 
-    /**
-     * 司机电话
-     */
-    private String phone;
 }
