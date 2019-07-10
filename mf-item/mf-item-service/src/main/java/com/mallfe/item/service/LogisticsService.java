@@ -58,7 +58,7 @@ public class LogisticsService {
         //查询
         List<Driver> list = driverMapper.selectByExample(example);
         if(CollectionUtils.isEmpty(list)){
-            throw new MallfeException(ExceptionEnum.SP_NOT_EXISTS);
+            throw new MallfeException(ExceptionEnum.DRIVER_NOT_EXISTS);
         }
 
         //解析分页结果
@@ -94,7 +94,7 @@ public class LogisticsService {
         //查询
         List<Path> list = pathMapper.selectByExample(example);
         if(CollectionUtils.isEmpty(list)){
-            throw new MallfeException(ExceptionEnum.SP_NOT_EXISTS);
+            throw new MallfeException(ExceptionEnum.PATH_NOT_EXISTS);
         }
 
         //解析分页结果

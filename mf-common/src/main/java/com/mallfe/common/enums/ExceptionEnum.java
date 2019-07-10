@@ -19,7 +19,9 @@ public enum ExceptionEnum {
     CODE_CANNOT_BE_NULL(400,"编码不能为空"),
     NAME_CANNOT_BE_NULL(400,"名称不能为空"),
     USER_NOT_EXISTS(404,"用户不存在!"),
-    USER_UPDATE_FAILURE(404,"用户名重复!")
+    USER_UPDATE_FAILURE(404,"用户名重复!"),
+    DRIVER_NOT_EXISTS(404,"司机不存在!"),
+    PATH_NOT_EXISTS(404,"路线不存在!")
     ;
     private int code;
     private String msg;
