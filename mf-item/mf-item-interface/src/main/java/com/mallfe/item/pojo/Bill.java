@@ -31,7 +31,7 @@ class Bill {
     /**
      * 录入人用户名
      */
-    private String userame;
+    private String lruserame;
 
     /**
      * 录入人真实姓名
@@ -96,12 +96,12 @@ class Bill {
     /**
      * 期望时间
      */
-    private Date sj1;
+    private Date qwsj;
 
     /**
      * 送达时间
      */
-    private Date sj2;
+    private Date sdsj;
 
     /**
      * 司机
