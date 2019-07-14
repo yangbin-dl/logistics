@@ -127,4 +127,10 @@ public class UserService {
         return new PageResult<>(info.getTotal(), list);
 
     }
+
+    public User selectById(Integer id) {
+        Example example = new Example(User.class);
+        example.createCriteria().andEqualTo("id",id);
+        return  userMapper.selectOneByExample(example);
+    }
 }
