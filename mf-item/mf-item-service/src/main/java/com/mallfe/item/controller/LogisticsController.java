@@ -62,4 +62,9 @@ public class LogisticsController {
         Driver driver = logisticsService.selectDriverById(id);
         return ResponseEntity.status(HttpStatus.CREATED).body(driver);
     }
+    @GetMapping("path/{id}")
+    public ResponseEntity<Path> queryPathById(@PathVariable("id") Integer id){
+        Path paths = logisticsService.selectPathById(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(paths);
+    }
 }

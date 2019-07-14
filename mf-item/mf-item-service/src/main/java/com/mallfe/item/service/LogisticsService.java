@@ -145,4 +145,14 @@ public class LogisticsService {
         }
         return  driverMapper.selectByPrimaryKey(id);
     }
+
+    public Path selectPathById(Integer id) {
+
+        if(null == id){
+            throw new MallfeException(ExceptionEnum.CODE_CANNOT_BE_NULL);
+        }
+        return  pathMapper.selectByPrimaryKey(id);
+    }
+
+    }
 }
