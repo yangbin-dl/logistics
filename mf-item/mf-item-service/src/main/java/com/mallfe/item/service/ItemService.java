@@ -89,8 +89,8 @@ public class ItemService {
         //条件过滤
         Example example = new Example(Sp.class);
         if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("name","%"+key+"%")
-                    .orEqualTo("letter",key.toUpperCase());
+            example.createCriteria().orLike("pinm","%"+key+"%")
+                    .orEqualTo("hh",key.toUpperCase());
         }
         //排序
         if(StringUtils.isNotBlank(sortBy)){
