@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import java.util.List;
 
 /**
  * 描述
@@ -15,6 +17,6 @@ import javax.persistence.Table;
 @Data
 @Table(name="mf_gj")
 public class Gj extends Order {
-
-
+    @Transient
+    private List<GjDetail> list;
 }

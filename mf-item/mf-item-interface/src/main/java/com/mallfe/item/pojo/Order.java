@@ -1,11 +1,10 @@
 package com.mallfe.item.pojo;
 
+import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
-import javax.persistence.Transient;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 描述
@@ -13,6 +12,7 @@ import java.util.List;
  * @author yangbin
  * @since 2019-07-10
  */
+@Data
 class Order {
     @Id
     @KeySql(useGeneratedKeys=true)
@@ -50,10 +50,4 @@ class Order {
      * 类型
      */
     private Integer lx;
-
-    /**
-     * 单据明细
-     */
-    @Transient
-    private List<OrderDetail> list;
 }

@@ -21,7 +21,9 @@ public enum ExceptionEnum {
     USER_NOT_EXISTS(404,"用户不存在!"),
     USER_UPDATE_FAILURE(404,"用户名重复!"),
     DRIVER_NOT_EXISTS(404,"司机不存在!"),
-    PATH_NOT_EXISTS(404,"路线不存在!")
+    PATH_NOT_EXISTS(404,"路线不存在!"),
+    BILL_SAVE_FALURE(404,"单据保存失败!"),
+    GET_BILLBUMBER_FALURE(404,"获取单据号失败!")
     ;
     private int code;
     private String msg;

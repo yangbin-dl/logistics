@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.Table;
+import java.util.List;
 
 /**
  * 描述
@@ -16,4 +17,5 @@ import javax.persistence.Table;
 @Table(name="mf_fc")
 public class Fc extends Order {
 
+    private List<FcDetail> list;
 }
