@@ -9,10 +9,7 @@ import com.mallfe.item.mapper.GjMapper;
 import com.mallfe.item.mapper.GjMxMapper;
 import com.mallfe.item.mapper.KucnInMapper;
 import com.mallfe.item.mapper.KucnMapper;
-import com.mallfe.item.pojo.Gj;
-import com.mallfe.item.pojo.GjDetail;
-import com.mallfe.item.pojo.Kucn;
-import com.mallfe.item.pojo.KucnIn;
+import com.mallfe.item.pojo.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -165,6 +162,15 @@ public class GjService {
         gj.setList(list);
 
         return gj;
+    }
+
+    public void deleteBill(Gj gj) {
+        try {
+            gjMapper.updateBillStatus(9,gj.getLsh());
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
     }
 
 }

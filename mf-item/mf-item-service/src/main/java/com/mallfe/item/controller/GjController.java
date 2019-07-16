@@ -19,20 +19,40 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("gj")
 public class GjController {
     @Autowired
-    GjService gjServcie;
+    GjService gjService;
 
+    /**
+     * 新增
+     * @param gj
+     * @return
+     */
     @PostMapping("insert")
     public ResponseEntity<Gj> insert(@RequestBody Gj gj){
-        gjServcie.insertBill(gj);
+        gjService.insertBill(gj);
         return ResponseEntity.status(HttpStatus.CREATED).body(gj);
     }
 
+
+    /**
+     * 提交
+     * @param gj
+     * @return
+     */
     @PostMapping("commit")
     public ResponseEntity<Null> commit(@RequestBody Gj gj){
-        gjServcie.commitBill(gj);
+        gjService.commitBill(gj);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * 分页查询
+     * @param page
+     * @param rows
+     * @param sortBy
+     * @param desc
+     * @param key
+     * @return
+     */
     @GetMapping("page")
     public ResponseEntity<PageResult<Gj>> queryByPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -41,13 +61,29 @@ public class GjController {
             @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
             @RequestParam(value = "key", required = false) String key
     ) {
-        PageResult<Gj> result = gjServcie.queryGjByPage(page, rows, sortBy, desc, key);
+        PageResult<Gj> result = gjService.queryGjByPage(page, rows, sortBy, desc, key);
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 查询明细
+     * @param lsh 包含流水号的bean
+     * @return 单据明细
+     */
     @GetMapping("bill")
     public ResponseEntity<Gj> queryBill(@RequestParam(value = "lsh",required = true) String lsh){
-        Gj result = gjServcie.queryBill(lsh);
+        Gj result = gjService.queryBill(lsh);
         return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 作废单据
+     * @param gj 包含流水号的bean
+     * @return 200
+     */
+    @PostMapping("delete")
+    public ResponseEntity<Null> delete(@RequestBody Gj gj){
+        gjService.deleteBill(gj);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

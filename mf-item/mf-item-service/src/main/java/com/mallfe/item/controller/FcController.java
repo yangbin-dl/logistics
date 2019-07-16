@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * 描述
- *
+ * 注释参考购进
  * @author Yangbin
  * @since 2019/07/16
  */
@@ -32,6 +32,12 @@ public class FcController {
     public ResponseEntity<Null> commit(@RequestBody Fc fc){
         fcService.commitBill(fc);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("delete")
+    public ResponseEntity<Null> delete(@RequestBody Fc fc){
+        fcService.deleteBill(fc);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("page")

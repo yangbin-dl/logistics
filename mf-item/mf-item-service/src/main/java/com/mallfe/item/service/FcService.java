@@ -95,9 +95,10 @@ public class FcService {
                 kc.setLx(fc.getLx());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
-                long i = kc.getKucn();
                 if(result == null){
+                    kc.setKucn(-1 * kc.getKucn());
                     kucnMapper.insert(kc);
+                    kc.setKucn(-1 * kc.getKucn());
                 }
                 else{
                     kucnMapper.reduceKucn(mx.getSl(),result.getId());
@@ -164,5 +165,14 @@ public class FcService {
         fc.setList(list);
 
         return fc;
+    }
+
+    public void deleteBill(Fc fc) {
+        try {
+            fcMapper.updateBillStatus(9,fc.getLsh());
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
     }
 }
