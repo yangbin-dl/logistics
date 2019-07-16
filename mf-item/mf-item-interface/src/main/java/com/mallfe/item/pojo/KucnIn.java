@@ -29,7 +29,7 @@ public class KucnIn{
      * 类型
      */
     private Integer lx;
-    private Long sl;
+    private Integer sl;
     private String lsh;
     private Integer xh;
     private String ywbm;

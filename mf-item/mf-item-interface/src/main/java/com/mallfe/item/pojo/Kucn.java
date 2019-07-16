@@ -32,5 +32,5 @@ public class Kucn {
     /**
      * 库存
      */
-    private Long kucn;
+    private Integer kucn;
 }

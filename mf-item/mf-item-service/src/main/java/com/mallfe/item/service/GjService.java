@@ -1,7 +1,10 @@
 package com.mallfe.item.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
+import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.GjMapper;
 import com.mallfe.item.mapper.GjMxMapper;
 import com.mallfe.item.mapper.KucnInMapper;
@@ -10,10 +13,15 @@ import com.mallfe.item.pojo.Gj;
 import com.mallfe.item.pojo.GjDetail;
 import com.mallfe.item.pojo.Kucn;
 import com.mallfe.item.pojo.KucnIn;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 /**
  * 描述
@@ -23,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class GjServcie {
+public class GjService {
 
 
     @Autowired
@@ -50,9 +58,9 @@ public class GjServcie {
         //获取流水号
         String lsh = commonService.getLsh("GJ");
         gj.setLsh(lsh);
-        for (int i = 0; i < gj.getList().size(); i++) {
-            gj.getList().get(i).setLsh(lsh);
-        }
+
+
+        gj.setLrsj(CommonService.getStringDate());
         //插入单据
         try {
             gjMapper.insert(gj);
@@ -62,7 +70,9 @@ public class GjServcie {
 
         //插入明细
         try {
-            gjMxMapper.insertList(gj.getList());
+            for (GjDetail mx: gj.getList()) {
+                gjMxMapper.insertMx(lsh,mx.getHh(),mx.getSl());
+            }
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
@@ -91,7 +101,7 @@ public class GjServcie {
                     kucnMapper.insert(kc);
                 }
                 else{
-                    kucnMapper.updateKucn(mx.getSl(),result.getId());
+                    kucnMapper.addKucn(mx.getSl(),result.getId());
                 }
 
                 KucnIn kucnIn = new KucnIn();
@@ -107,4 +117,54 @@ public class GjServcie {
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
     }
+
+    public PageResult<Gj> queryGjByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+        //分页
+        PageHelper.startPage(page, rows);
+        //条件过滤
+        Example example = new Example(Gj.class);
+        if(StringUtils.isNotBlank(key)){
+            example.createCriteria().orLike("lsh",key+"%")
+                    .orLike("truename","%"+key+"%");
+        }
+        //排序
+        if(StringUtils.isNotBlank(sortBy)){
+            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
+            example.setOrderByClause(orderByClause);
+        }
+
+        //查询
+        List<Gj> list = gjMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.USER_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Gj> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+
+    }
+
+    public Gj queryBill(String lsh) {
+        Gj gj = new Gj();
+        gj.setLsh(lsh);
+
+        gj=gjMapper.selectOne(gj);
+
+        if(gj == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        List<GjDetail> list = gjMxMapper.getMx(lsh);
+
+        if(list.size() == 0){
+            throw new MallfeException(ExceptionEnum.BILL_DETAIL_NOT_EXISTS);
+        }
+
+        gj.setList(list);
+
+        return gj;
+    }
+
 }

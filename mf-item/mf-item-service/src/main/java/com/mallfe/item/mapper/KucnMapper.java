@@ -13,5 +13,8 @@ import tk.mybatis.mapper.common.Mapper;
  */
 public interface KucnMapper extends Mapper<Kucn> {
     @Update("update mf_kucn set kucn=kucn+#{sl} where id=#{id}")
-    int updateKucn(@Param("sl") Long sl,@Param("id") Integer id);
+    int addKucn(@Param("sl") Integer sl, @Param("id") Integer id);
+
+    @Update("update mf_kucn set kucn=kucn-#{sl} where id=#{id}")
+    int reduceKucn(@Param("sl") Integer sl, @Param("id") Integer id);
 }

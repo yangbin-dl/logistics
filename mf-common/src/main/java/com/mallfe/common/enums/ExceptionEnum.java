@@ -23,7 +23,9 @@ public enum ExceptionEnum {
     DRIVER_NOT_EXISTS(404,"司机不存在!"),
     PATH_NOT_EXISTS(404,"路线不存在!"),
     BILL_SAVE_FALURE(404,"单据保存失败!"),
-    GET_BILLBUMBER_FALURE(404,"获取单据号失败!")
+    GET_BILLBUMBER_FALURE(404,"获取单据号失败!"),
+    BILL_NOT_EXISTS(404,"单据不存在!"),
+    BILL_DETAIL_NOT_EXISTS(404,"单据明细不存在!")
     ;
     private int code;
     private String msg;

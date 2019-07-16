@@ -1,8 +1,8 @@
 package com.mallfe.item.controller;
 
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.item.pojo.Gj;
-import com.mallfe.item.service.GjService;
+import com.mallfe.item.pojo.Fc;
+import com.mallfe.item.service.FcService;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,41 +13,42 @@ import org.springframework.web.bind.annotation.*;
  * 描述
  *
  * @author Yangbin
- * @since 2019/07/15
+ * @since 2019/07/16
  */
 @RestController
-@RequestMapping("gj")
-public class GjController {
+@RequestMapping("fc")
+public class FcController {
     @Autowired
-    GjService gjServcie;
+    FcService fcService;
+    
 
     @PostMapping("insert")
-    public ResponseEntity<Gj> insert(@RequestBody Gj gj){
-        gjServcie.insertBill(gj);
-        return ResponseEntity.status(HttpStatus.CREATED).body(gj);
+    public ResponseEntity<Fc> insert(@RequestBody Fc fc){
+        fcService.insertBill(fc);
+        return ResponseEntity.status(HttpStatus.CREATED).body(fc);
     }
 
     @PostMapping("commit")
-    public ResponseEntity<Null> commit(@RequestBody Gj gj){
-        gjServcie.commitBill(gj);
+    public ResponseEntity<Null> commit(@RequestBody Fc fc){
+        fcService.commitBill(fc);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("page")
-    public ResponseEntity<PageResult<Gj>> queryByPage(
+    public ResponseEntity<PageResult<Fc>> queryByPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
             @RequestParam(value = "sortBy", required = false) String sortBy,
             @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
             @RequestParam(value = "key", required = false) String key
     ) {
-        PageResult<Gj> result = gjServcie.queryGjByPage(page, rows, sortBy, desc, key);
+        PageResult<Fc> result = fcService.queryFcByPage(page, rows, sortBy, desc, key);
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("bill")
-    public ResponseEntity<Gj> queryBill(@RequestParam(value = "lsh",required = true) String lsh){
-        Gj result = gjServcie.queryBill(lsh);
+    public ResponseEntity<Fc> queryBill(@RequestParam(value = "lsh",required = true) String lsh){
+        Fc result = fcService.queryBill(lsh);
         return ResponseEntity.ok(result);
     }
 }

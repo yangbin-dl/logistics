@@ -4,7 +4,6 @@ import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
-import java.util.Date;
 
 /**
  * 描述
@@ -40,11 +39,13 @@ class Order {
     /**
      * 录入时间
      */
-    private Date lrsj;
+
+    private String lrsj;
     /**
      * 入账时间
      */
-    private Date cksj;
+
+    private String cksj;
 
     /**
      * 类型

@@ -52,4 +52,10 @@ public class CommonService {
         return ywbm + sdf.format(new Date()) + Long.toString(seq+10000L).substring(1,5);
     }
 
+    public static String getStringDate() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(currentTime);
+        }
+
 }
