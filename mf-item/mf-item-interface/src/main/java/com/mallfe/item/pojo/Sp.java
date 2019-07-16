@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Sp {
     @Id
     @KeySql(useGeneratedKeys=true)
-    private Long id;
+    private Integer id;
     private Integer hh;
     private String pinm;
     private String xingh;

@@ -38,6 +38,7 @@ public class CommonService {
             throw new MallfeException(ExceptionEnum.GET_BILLBUMBER_FALURE);
         }
         else{
+            String s = sdf.format(new Date());
             if(o.getRq().equals(sdf.format(new Date()))){
                 seq = o.getLsh();
                 lshMapper.updateLsh(ywbm);

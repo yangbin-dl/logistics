@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Kucn {
     @Id
     @KeySql(useGeneratedKeys=true)
-    private Long id;
+    private Integer id;
 
     /**
      * 货号

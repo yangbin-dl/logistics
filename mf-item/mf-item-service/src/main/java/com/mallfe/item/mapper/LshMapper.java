@@ -16,7 +16,7 @@ public interface LshMapper extends Mapper<LshBean> {
     @Update("update mf_lsh set lsh = lsh+1 where ywbm=#{ywbm}")
     int updateLsh(@Param("ywbm") String ywbm);
 
-    @Update("update mf_lsh set lsh = 2 and rq=#{rq} where ywbm=#{ywbm} ")
+    @Update("update mf_lsh set lsh = 2 , rq=#{rq} where ywbm=#{ywbm} ")
     int clearLsh(@Param("ywbm") String ywbm, @Param("rq") String rq);
 
 }

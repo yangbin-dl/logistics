@@ -1,6 +1,8 @@
 package com.mallfe.item.mapper;
 
 import com.mallfe.item.pojo.Kucn;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
@@ -10,5 +12,6 @@ import tk.mybatis.mapper.common.Mapper;
  * @since 2019/07/05
  */
 public interface KucnMapper extends Mapper<Kucn> {
-
+    @Update("update mf_kucn set kucn=kucn+#{sl} where id=#{id}")
+    int updateKucn(@Param("sl") Long sl,@Param("id") Integer id);
 }

@@ -1,5 +1,6 @@
 package com.mallfe.item.pojo;
 
+import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
@@ -10,10 +11,11 @@ import javax.persistence.Id;
  * @author yangbin
  * @since 2019-07-10
  */
+@Data
 class OrderDetail {
     @Id
     @KeySql(useGeneratedKeys=true)
-    private Long id;
+    private Integer id;
 
     /**
      * 流水号

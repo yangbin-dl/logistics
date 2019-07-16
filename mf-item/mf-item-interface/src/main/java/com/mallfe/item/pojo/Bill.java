@@ -16,7 +16,7 @@ import java.util.Date;
 class Bill {
     @Id
     @KeySql(useGeneratedKeys=true)
-    private Long id;
+    private Integer id;
 
     /**
      * 单据号

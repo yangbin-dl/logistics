@@ -1,8 +1,9 @@
 package com.mallfe.item.pojo;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import tk.mybatis.mapper.annotation.KeySql;
 
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -11,10 +12,23 @@ import javax.persistence.Table;
  * @author Yangbin
  * @since 2019/07/05
  */
-@EqualsAndHashCode(callSuper = true)
+
 @Table(name="mf_kucn_out")
 @Data
-public class KucnOut extends Kucn{
+public class KucnOut{
+    @Id
+    @KeySql(useGeneratedKeys=true)
+    private Integer id;
+
+    /**
+     * 货号
+     */
+    private Integer hh;
+
+    /**
+     * 类型
+     */
+    private Integer lx;
     private Long sl;
     private String lsh;
     private Integer xh;

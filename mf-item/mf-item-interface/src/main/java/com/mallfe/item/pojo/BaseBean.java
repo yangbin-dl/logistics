@@ -15,7 +15,7 @@ import javax.persistence.Id;
 class BaseBean {
     @Id
     @KeySql(useGeneratedKeys=true)
-    private Long id;
+    private Integer id;
 
     /**
      * 编码

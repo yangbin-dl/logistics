@@ -8,6 +8,6 @@ import tk.mybatis.mapper.common.MySqlMapper;
 
 public interface GjMapper extends Mapper<Gj>, MySqlMapper<Gj> {
 
-    @Update("update mf_gj set status=#{status} where lsh=#{lsh} and status=0")
+    @Update("update mf_gj set status=#{status},cksj = now() where lsh=#{lsh} and status=0")
     int updateBillStatus(@Param("status") int status,@Param("lsh") String lsh);
 }

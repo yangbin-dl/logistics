@@ -73,7 +73,7 @@ public class ItemController {
      * @return 商品完整信息
      */
     @GetMapping("queryid")
-    public ResponseEntity<Sp> queryById(@RequestParam("hh") Long id){
+    public ResponseEntity<Sp> queryById(@RequestParam("hh") Integer id){
         Sp s = new Sp();
         s.setId(id);
         return ResponseEntity.ok(itemService.query(s));
