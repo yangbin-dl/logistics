@@ -12,7 +12,7 @@ import javax.persistence.Id;
  * @since 2019/07/05
  */
 @Data
-class BaseBean {
+public class BaseBean {
     @Id
     @KeySql(useGeneratedKeys=true)
     private Integer id;
