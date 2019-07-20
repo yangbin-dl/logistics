@@ -86,4 +86,15 @@ public class GjController {
         gjService.deleteBill(gj);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    /**
+     * 修改单据
+     * @param gj
+     * @return 200
+     */
+    @PostMapping("modify")
+    public ResponseEntity<Null> modify(@RequestBody Gj gj){
+        gjService.modifyBill(gj);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

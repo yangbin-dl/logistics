@@ -173,4 +173,29 @@ public class GjService {
         }
     }
 
+    public void modifyBill(Gj gj) {
+
+        Gj g = new Gj();
+        g.setLsh(gj.getLsh());
+        g.setStatus(0);
+
+        g=gjMapper.selectOne(g);
+
+        if(g == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        try{
+            //删除明细
+            gjMxMapper.deleteMx(gj.getLsh());
+            //插入明细
+            for (GjDetail mx: gj.getList()) {
+                gjMxMapper.insertMx(gj.getLsh(),mx.getHh(),mx.getSl());
+            }
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+    }
+
 }

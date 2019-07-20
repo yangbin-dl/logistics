@@ -9,10 +9,7 @@ import com.mallfe.item.mapper.FcMapper;
 import com.mallfe.item.mapper.FcMxMapper;
 import com.mallfe.item.mapper.KucnMapper;
 import com.mallfe.item.mapper.KucnOutMapper;
-import com.mallfe.item.pojo.Fc;
-import com.mallfe.item.pojo.FcDetail;
-import com.mallfe.item.pojo.Kucn;
-import com.mallfe.item.pojo.KucnOut;
+import com.mallfe.item.pojo.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,6 +167,31 @@ public class FcService {
     public void deleteBill(Fc fc) {
         try {
             fcMapper.updateBillStatus(9,fc.getLsh());
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+    }
+
+    public void modifyBill(Fc fc) {
+
+        Fc g = new Fc();
+        g.setLsh(fc.getLsh());
+        g.setStatus(0);
+
+        g=fcMapper.selectOne(g);
+
+        if(g == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        try{
+            //删除明细
+            fcMxMapper.deleteMx(fc.getLsh());
+            //插入明细
+            for (FcDetail mx: fc.getList()) {
+                fcMxMapper.insertMx(fc.getLsh(),mx.getHh(),mx.getSl());
+            }
         }
         catch (Exception e){
             throw new MallfeException(ExceptionEnum.OPERATION_FALURE);

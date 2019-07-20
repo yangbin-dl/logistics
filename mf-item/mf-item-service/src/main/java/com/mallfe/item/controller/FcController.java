@@ -57,4 +57,15 @@ public class FcController {
         Fc result = fcService.queryBill(lsh);
         return ResponseEntity.ok(result);
     }
+
+    /**
+     * 修改单据
+     * @param fc
+     * @return 200
+     */
+    @PostMapping("modify")
+    public ResponseEntity<Null> modify(@RequestBody Fc fc){
+        fcService.modifyBill(fc);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }
