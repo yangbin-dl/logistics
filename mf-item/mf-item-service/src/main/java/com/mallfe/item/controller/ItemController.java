@@ -115,4 +115,10 @@ public class ItemController {
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping("modify")
+    public  ResponseEntity<Sp> modify(@RequestBody Sp sp){
+        itemService.modify(sp);
+        return ResponseEntity.status(HttpStatus.OK).body(sp);
+    }
+
 }

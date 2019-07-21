@@ -109,4 +109,14 @@ public class ItemService {
 
         return new PageResult<>(info.getTotal(), list);
     }
+
+    /**
+     * 商品信息修改
+     * @param sp
+     * @return
+     */
+    public void modify(Sp sp) {
+        //按照id修改商品信息
+        spMapper.updateByPrimaryKey(sp);
+    }
 }

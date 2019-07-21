@@ -5,7 +5,6 @@ import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.Pattern;
 
 /**
  * 描述
@@ -20,7 +19,7 @@ public class Sp {
     @Id
     @KeySql(useGeneratedKeys = true)
     private Integer id;
-    @Pattern(regexp = "\\d{6}", message = "必须输入6位数字", groups = Groups.Default.class)
+    //@Pattern(regexp = "\\d{6}", message = "必须输入6位数字", groups = Groups.Default.class)
     private Integer hh;
     private String pinm;
     private String xingh;
