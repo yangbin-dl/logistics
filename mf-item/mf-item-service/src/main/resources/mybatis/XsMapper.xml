@@ -10,5 +10,10 @@
         update mf_xs set status = 9 where lsh = #{lsh} and status = 0
     </update>
 
+    <update id="updateBill" parameterType="com.mallfe.item.pojo.Xs">
+        update mf_xs set hh=#{hh},sl=#{sl},lx=#{lx},province=#{province},city=#{city},
+            district=#{district},location=#{location},phone=#{phone},contact=#{contact},
+                         qwsj=#{qwsj} where lsh = #{lsh} and status = 0
+    </update>
 
 </mapper>
