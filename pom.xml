@@ -13,8 +13,6 @@
         <module>mf-item</module>
         <module>mf-common</module>
         <module>mf-user</module>
-        <module>mf-user</module>
-        <module>mf-user</module>
     </modules>
     <packaging>pom</packaging>
 
