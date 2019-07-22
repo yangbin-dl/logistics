@@ -133,7 +133,7 @@ public class GjService {
         //查询
         List<Gj> list = gjMapper.selectByExample(example);
         if(CollectionUtils.isEmpty(list)){
-            throw new MallfeException(ExceptionEnum.USER_NOT_EXISTS);
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
 
         //解析分页结果

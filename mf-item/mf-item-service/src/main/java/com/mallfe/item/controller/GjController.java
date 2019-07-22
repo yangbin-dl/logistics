@@ -28,7 +28,7 @@ public class GjController {
      */
     @PostMapping("insert")
     public ResponseEntity<Gj> insert(@RequestBody Gj gj){
-        gjService.insertBill(gj);
+        gj = gjService.insertBill(gj);
         return ResponseEntity.status(HttpStatus.CREATED).body(gj);
     }
 
@@ -89,7 +89,7 @@ public class GjController {
 
     /**
      * 修改单据
-     * @param gj
+     * @param gj 包含流水号的bean
      * @return 200
      */
     @PostMapping("modify")

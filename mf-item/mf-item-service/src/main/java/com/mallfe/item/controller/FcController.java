@@ -24,7 +24,7 @@ public class FcController {
 
     @PostMapping("insert")
     public ResponseEntity<Fc> insert(@RequestBody Fc fc){
-        fcService.insertBill(fc);
+        fc = fcService.insertBill(fc);
         return ResponseEntity.status(HttpStatus.CREATED).body(fc);
     }
 
@@ -59,9 +59,9 @@ public class FcController {
     }
 
     /**
-     * 修改单据
+     *
      * @param fc
-     * @return 200
+     * @return
      */
     @PostMapping("modify")
     public ResponseEntity<Null> modify(@RequestBody Fc fc){
