@@ -16,6 +16,7 @@ public class GlobalCorsConfig {
         //1) 允许的域,不要写*，否则cookie就无法使用了
         config.addAllowedOrigin("http://www.mallfe.com:9001");
         config.addAllowedOrigin("http://localhost:9002");
+        config.addAllowedOrigin("http://localhost:10010");
         config.addAllowedOrigin("http://127.0.0.1:9002");
         //2) 是否发送Cookie信息
         config.setAllowCredentials(true);

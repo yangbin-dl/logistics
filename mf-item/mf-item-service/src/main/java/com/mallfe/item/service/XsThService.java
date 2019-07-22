@@ -172,4 +172,18 @@ public class XsThService {
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
     }
+
+    public Xs queryXs(String lsh){
+        Xs xs = new Xs();
+        xs.setLsh(lsh);
+        xs = xsMapper.selectOne(xs);
+        return xs;
+    }
+
+    public Th queryTh(String lsh) {
+        Th th = new Th();
+        th.setLsh(lsh);
+        th =thMapper.selectOne(th);
+        return th;
+    }
 }

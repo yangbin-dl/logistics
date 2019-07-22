@@ -135,7 +135,7 @@ public class XsThController {
      * @return
      */
     @PostMapping("committh")
-    public ResponseEntity<Xs> commitTh(@RequestBody Th th){
+    public ResponseEntity<Th> commitTh(@RequestBody Th th){
         xsThService.commitTh(th);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -146,8 +146,18 @@ public class XsThController {
      * @return
      */
     @PostMapping("deleteth")
-    public ResponseEntity<Xs> deleteTh(@RequestBody Th th){
+    public ResponseEntity<Th> deleteTh(@RequestBody Th th){
         xsThService.deleteTh(th);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @GetMapping("queryxs")
+    public ResponseEntity<Xs> queryXs(@RequestParam("lsh") String lsh) {
+        return ResponseEntity.ok(xsThService.queryXs(lsh));
+    }
+
+    @GetMapping("queryth")
+    public ResponseEntity<Th> queryTh(@RequestParam("lsh") String lsh) {
+        return ResponseEntity.ok(xsThService.queryTh(lsh));
     }
 }

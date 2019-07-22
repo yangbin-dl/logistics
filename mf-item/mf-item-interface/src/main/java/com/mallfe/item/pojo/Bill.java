@@ -31,7 +31,7 @@ class Bill {
     /**
      * 录入人用户名
      */
-    private String lruserame;
+    private String lrusername;
 
     /**
      * 录入人真实姓名
