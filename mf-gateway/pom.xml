@@ -11,6 +11,7 @@
 
     <groupId>com.mallfe.common</groupId>
     <artifactId>mf-gateway</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

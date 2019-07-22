@@ -11,7 +11,7 @@
 
     <groupId>com.mallfe.service</groupId>
     <artifactId>mf-user-interface</artifactId>
-
+    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>tk.mybatis</groupId>
