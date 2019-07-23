@@ -30,6 +30,12 @@ public class GlobalCorsConfig {
         config.addAllowedMethod("POST");
         config.addAllowedMethod("DELETE");
         config.addAllowedMethod("PATCH");
+
+        config.addAllowedHeader("Access-Control-Allow-Origin");
+        config.addAllowedHeader("Access-Control-Allow-Headers");
+        config.addAllowedHeader("Content-Type");
+        config.addAllowedHeader("x-xsrf-token");
+        config.addAllowedHeader("Authorization");
         // 4）允许的头信息
         config.addAllowedHeader("*");
 
