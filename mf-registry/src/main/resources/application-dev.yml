@@ -1,3 +1,20 @@
+
+server:
+  port: 10086
 spring:
-  profiles:
-    active: dev
+  application:
+    name: mf-registry
+eureka:
+  client:
+    #关闭eureka自我注册
+    #fetch-registry: false
+    #register-with-eureka: false
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    ip-address: 127.0.0.1
+    instance-id: ${spring.application.name}:${server.port}
+management:
+  endpoint:
+    shutdown:
+      enabled: true
