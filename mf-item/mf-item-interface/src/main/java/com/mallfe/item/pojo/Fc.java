@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.List;
 
 /**
@@ -16,6 +17,6 @@ import java.util.List;
 @Data
 @Table(name="mf_fc")
 public class Fc extends Order {
-
+    @Transient
     private List<FcDetail> list;
 }
