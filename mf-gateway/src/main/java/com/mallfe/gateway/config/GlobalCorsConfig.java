@@ -18,6 +18,8 @@ public class GlobalCorsConfig {
         config.addAllowedOrigin("http://localhost:9002");
         config.addAllowedOrigin("http://localhost:10010");
         config.addAllowedOrigin("http://127.0.0.1:9002");
+        config.addAllowedOrigin("http://172.31.53.68:80");
+        config.addAllowedOrigin("http://47.105.221.242:80");
         //2) 是否发送Cookie信息
         config.setAllowCredentials(true);
         //3) 允许的请求方式
