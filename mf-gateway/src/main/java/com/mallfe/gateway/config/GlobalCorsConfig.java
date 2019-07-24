@@ -18,8 +18,8 @@ public class GlobalCorsConfig {
         config.addAllowedOrigin("http://localhost:9002");
         config.addAllowedOrigin("http://localhost:10010");
         config.addAllowedOrigin("http://127.0.0.1:9002");
-        config.addAllowedOrigin("http://172.31.53.68:80");
-        config.addAllowedOrigin("http://47.105.221.242:80");
+        config.addAllowedOrigin("http://172.31.53.68");
+        config.addAllowedOrigin("http://47.105.221.242");
         //2) 是否发送Cookie信息
         config.setAllowCredentials(true);
         //3) 允许的请求方式
@@ -31,11 +31,7 @@ public class GlobalCorsConfig {
         config.addAllowedMethod("DELETE");
         config.addAllowedMethod("PATCH");
 
-        config.addAllowedHeader("Access-Control-Allow-Origin");
-        config.addAllowedHeader("Access-Control-Allow-Headers");
-        config.addAllowedHeader("Content-Type");
-        config.addAllowedHeader("x-xsrf-token");
-        config.addAllowedHeader("Authorization");
+
         // 4）允许的头信息
         config.addAllowedHeader("*");
 
