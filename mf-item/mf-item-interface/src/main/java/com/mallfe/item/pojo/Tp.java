@@ -1,6 +1,7 @@
 package com.mallfe.item.pojo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Table;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
  */
 @Data
 @Table(name="tp")
+@EqualsAndHashCode(callSuper = true)
 public class Tp extends WlBill {
 
     private List<TpDetail> list;

@@ -2,14 +2,8 @@ package com.mallfe.item.service;
 
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
-import com.mallfe.item.mapper.PsMapper;
-import com.mallfe.item.mapper.PsMxMapper;
-import com.mallfe.item.mapper.TpMapper;
-import com.mallfe.item.mapper.TpMxMapper;
-import com.mallfe.item.pojo.Ps;
-import com.mallfe.item.pojo.PsDetail;
-import com.mallfe.item.pojo.Tp;
-import com.mallfe.item.pojo.TpDetail;
+import com.mallfe.item.mapper.*;
+import com.mallfe.item.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,10 +33,35 @@ public class PsTpService {
     @Autowired
     private CommonService commonService;
 
+    @Autowired
+    private XsMapper xsMapper;
+
+    @Autowired
+    private ThMapper thMapper;
+
     public Ps insertPs(Ps ps){
         //获取流水号
         String lsh = commonService.getLsh("PS");
         ps.setLsh(lsh);
+
+        //插入单据
+        try {
+            psMapper.insert(ps);
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+
+        //更新销售单状态
+        try {
+            for (PsDetail mx: ps.getList()) {
+                //如果更新的行数不为1，则代表单据状态异常，回滚事务
+                if(xsMapper.updateStatusToPs(mx.getDdh(),lsh,ps.getDriverCode(),ps.getPathCode())!=1){
+                    throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+                }
+            }
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
 
         ps.setLrsj(CommonService.getStringDate());
         //插入明细
@@ -62,6 +81,26 @@ public class PsTpService {
         tp.setLsh(lsh);
 
         tp.setLrsj(CommonService.getStringDate());
+
+        //插入单据
+        try {
+            tpMapper.insert(tp);
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+
+        //更新销售单状态
+        try {
+            for (TpDetail mx: tp.getList()) {
+                //如果更新的行数不为1，则代表单据状态异常，回滚事务
+                if(thMapper.updateStatusToTp(mx.getDdh(),lsh,tp.getDriverCode(),tp.getPathCode())!=1){
+                    throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+                }
+            }
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+
         //插入明细
         try {
             for (TpDetail mx: tp.getList()) {
