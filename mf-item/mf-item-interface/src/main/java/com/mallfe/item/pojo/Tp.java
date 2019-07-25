@@ -13,7 +13,7 @@ import java.util.List;
  * @since 2019/07/23
  */
 @Data
-@Table(name="tp")
+@Table(name="mf_tp")
 @EqualsAndHashCode(callSuper = true)
 public class Tp extends WlBill {
 

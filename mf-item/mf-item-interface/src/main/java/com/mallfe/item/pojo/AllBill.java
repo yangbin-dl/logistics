@@ -1,25 +1,21 @@
 package com.mallfe.item.pojo;
 
 import lombok.Data;
-import tk.mybatis.mapper.annotation.KeySql;
 
-import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 描述
- * 销售退货单据通用类
- * @author yangbin
- * @since 2019-07-10
+ *
+ * @author Yangbin
+ * @since 2019/07/25
  */
-@Data
-public class Bill {
-    @Id
-    @KeySql(useGeneratedKeys=true)
-    private Integer id;
 
-    /**
-     * 单据号
-     */
+@Table(name="vw_xs")
+@Data
+public class AllBill {
+
+    private String billtype;
     private String lsh;
 
     /**
@@ -28,15 +24,9 @@ public class Bill {
     private Long lrid;
 
     /**
-     * 录入人用户名
-     */
-    private String lrusername;
-
-    /**
      * 录入人真实姓名
      */
     private String truename;
-
     /**
      * 单据状态
      */
@@ -55,27 +45,14 @@ public class Bill {
     /**
      * 类型
      */
-    private Integer lx;
+    private String lx;
 
     /**
      * 数量
      */
     private Long sl;
 
-    /**
-     * 省
-     */
-    private String province;
-
-    /**
-     * 市
-     */
-    private String city;
-
-    /**
-     * 区
-     */
-    private String district;
+    private String pinm;
 
     /**
      * 详细地址
@@ -102,13 +79,5 @@ public class Bill {
      */
     private String sdsj;
 
-    /**
-     * 司机
-     */
-    private String driverCode;
 
-    /**
-     * 送货路线
-     */
-    private String pathCode;
 }

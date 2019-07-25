@@ -1,6 +1,7 @@
 package com.mallfe.item.controller;
 
 import com.mallfe.common.vo.PageResult;
+import com.mallfe.item.pojo.AllBill;
 import com.mallfe.item.pojo.Th;
 import com.mallfe.item.pojo.Xs;
 import com.mallfe.item.service.XsThService;
@@ -159,5 +160,16 @@ public class XsThController {
     @GetMapping("queryth")
     public ResponseEntity<Th> queryTh(@RequestParam("lsh") String lsh) {
         return ResponseEntity.ok(xsThService.queryTh(lsh));
+    }
+
+    @GetMapping("pageall")
+    public ResponseEntity<PageResult<AllBill>> queryAll(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "lruserid", required = false) String lruserid,
+            @RequestParam(value = "phone", required = false) String phone,
+            @RequestParam(value = "contact", required = false) String contact
+    ) {
+        PageResult<AllBill> result = xsThService.queryAll(page, lruserid, phone, contact);
+        return ResponseEntity.ok(result);
     }
 }

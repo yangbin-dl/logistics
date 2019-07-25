@@ -1,6 +1,7 @@
 package com.mallfe.item.mapper;
 
 import com.mallfe.item.pojo.Ps;
+import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
@@ -11,4 +12,25 @@ import tk.mybatis.mapper.common.Mapper;
  */
 public interface PsMapper extends Mapper<Ps> {
 
+    /**
+     * 配送单作废
+     * @param lsh
+     * @return
+     */
+    int updateStatusToCancel(@Param("lsh")String lsh);
+
+
+    /**
+     * 配送单发出
+     * @param lsh
+     * @return
+     */
+    int updateStatusToOut(@Param("lsh")String lsh);
+
+    /**
+     * 配送单送达
+     * @param lsh
+     * @return
+     */
+    int updateStatusToFinish(@Param("lsh")String lsh);
 }

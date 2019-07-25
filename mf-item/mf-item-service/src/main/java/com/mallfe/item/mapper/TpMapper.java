@@ -1,6 +1,7 @@
 package com.mallfe.item.mapper;
 
 import com.mallfe.item.pojo.Tp;
+import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
@@ -11,4 +12,10 @@ import tk.mybatis.mapper.common.Mapper;
  */
 public interface TpMapper extends Mapper<Tp> {
 
+    /**
+     * 退配单作废
+     * @param lsh
+     * @return
+     */
+    int updateStatusToCancel(@Param("lsh") String lsh);
 }

@@ -27,7 +27,7 @@
                          psdh = null,
                          driver_code = null,
                          path_code = null
-        where lsh = #{lsh} and status = '1'
+        where psdh = #{lsh} and status = '1'
     </update>
 
 </mapper>

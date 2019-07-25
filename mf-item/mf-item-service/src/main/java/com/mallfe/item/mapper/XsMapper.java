@@ -44,9 +44,8 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
     /**
      * 将已配车更新为待配车
      * @param lsh
-     * @param psdh
      * @return
      */
-    int updateStatusToUnPs(@Param("lsh") String lsh,
-                           @Param("psdh") String psdh);
+    int updateStatusToUnPs(@Param("lsh") String lsh);
+
 }

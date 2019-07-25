@@ -41,6 +41,5 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
                          @Param("driver") String driver,
                          @Param("path") String path);
 
-    int updateStatusToUnTp(@Param("lsh") String lsh,
-                           @Param("psdh") String psdh);
+    int updateStatusToUnTp(@Param("lsh") String lsh);
 }

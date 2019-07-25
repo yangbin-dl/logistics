@@ -5,8 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
 import com.mallfe.common.vo.PageResult;
+import com.mallfe.item.mapper.AllBillMapper;
 import com.mallfe.item.mapper.ThMapper;
 import com.mallfe.item.mapper.XsMapper;
+import com.mallfe.item.pojo.AllBill;
 import com.mallfe.item.pojo.Th;
 import com.mallfe.item.pojo.Xs;
 import org.apache.commons.lang3.StringUtils;
@@ -36,6 +38,9 @@ public class XsThService {
 
     @Autowired
     CommonService commonService;
+
+    @Autowired
+    AllBillMapper allBillMapper;
 
     public Xs insertXs(@NotNull Xs xs){
         String lsh = commonService.getLsh("XS");
@@ -185,5 +190,36 @@ public class XsThService {
         th.setLsh(lsh);
         th =thMapper.selectOne(th);
         return th;
+    }
+
+    public PageResult<AllBill> queryAll(Integer page, String lruserid, String phone, String contact) {
+        //分页
+        PageHelper.startPage(page, 10);
+        //条件过滤
+        Example example = new Example(Th.class);
+        if(StringUtils.isNotBlank(lruserid)){
+            example.createCriteria().andEqualTo("lrid",lruserid);
+        }
+
+        if(StringUtils.isNotBlank(phone)){
+            example.createCriteria().andEqualTo("phone",phone);
+        }
+
+        if(StringUtils.isNotBlank(contact)){
+            example.createCriteria().andEqualTo("contact",contact);
+        }
+        //排序
+
+        example.setOrderByClause("lrsj desc");
+        //查询
+        List<AllBill> list = allBillMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<AllBill> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
     }
 }
