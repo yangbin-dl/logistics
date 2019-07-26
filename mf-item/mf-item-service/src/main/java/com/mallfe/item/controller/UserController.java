@@ -1,8 +1,8 @@
-package com.mallfe.user.controller;
+package com.mallfe.item.controller;
 
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.user.pojo.User;
-import com.mallfe.user.service.UserService;
+import com.mallfe.item.pojo.User;
+import com.mallfe.item.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,7 +55,7 @@ public class UserController {
 
     @GetMapping("query")
     public ResponseEntity<User> login(@RequestParam("username") String username,
-                                      @RequestParam("password") String password) {
+                                          @RequestParam("password") String password) {
         return ResponseEntity.ok(userService.verify(username, password));
     }
 

@@ -1,6 +1,6 @@
-package com.mallfe.user.mapper;
+package com.mallfe.item.mapper;
 
-import com.mallfe.user.pojo.User;
+import com.mallfe.item.pojo.User;
 import tk.mybatis.mapper.common.Mapper;
 
 

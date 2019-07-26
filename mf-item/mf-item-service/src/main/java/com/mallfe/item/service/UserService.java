@@ -1,12 +1,12 @@
-package com.mallfe.user.service;
+package com.mallfe.item.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.user.mapper.UserMapper;
-import com.mallfe.user.pojo.User;
+import com.mallfe.item.mapper.UserMapper;
+import com.mallfe.item.pojo.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
