@@ -35,7 +35,7 @@ class Order {
     /**
      * 单据状态
      */
-    private Integer status;
+    private Integer status = 0;
     /**
      * 录入时间
      */

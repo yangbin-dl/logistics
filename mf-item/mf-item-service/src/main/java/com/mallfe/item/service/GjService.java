@@ -85,12 +85,14 @@ public class GjService {
 
         try {
             //更新单据状态
-            gjMapper.updateBillStatus(1,gj.getLsh());
+            if(gjMapper.updateBillStatus(1,gj.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
+            }
 
             for(GjDetail mx: gj.getList()){
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
-                kc.setKucn(mx.getSl());
+                //kc.setKucn(mx.getSl());
                 kc.setLx(gj.getLx());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存

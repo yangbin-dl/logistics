@@ -83,12 +83,14 @@ public class FcService {
 
         try {
             //更新单据状态
-            fcMapper.updateBillStatus(1,fc.getLsh());
+            if(fcMapper.updateBillStatus(1,fc.getLsh()) !=1){
+                throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
+            }
 
             for(FcDetail mx: fc.getList()){
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
-                kc.setKucn(mx.getSl());
+                //kc.setKucn(mx.getSl());
                 kc.setLx(fc.getLx());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存

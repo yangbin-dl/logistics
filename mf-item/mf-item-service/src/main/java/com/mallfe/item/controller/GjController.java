@@ -41,7 +41,7 @@ public class GjController {
     @PostMapping("commit")
     public ResponseEntity<Null> commit(@RequestBody Gj gj){
         gjService.commitBill(gj);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.ok().build();
     }
 
     /**

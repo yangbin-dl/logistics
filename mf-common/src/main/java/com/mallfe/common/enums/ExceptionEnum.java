@@ -26,7 +26,8 @@ public enum ExceptionEnum {
     GET_BILLBUMBER_FALURE(404,"获取单据号失败!"),
     BILL_NOT_EXISTS(404,"单据不存在!"),
     BILL_DETAIL_NOT_EXISTS(404,"单据明细不存在!"),
-    OPERATION_FALURE(404,"操作失败!")
+    OPERATION_FALURE(404,"操作失败!"),
+    BILL_STATUS_ERROR(404,"单据状态异常!")
     ;
     private int code;
     private String msg;

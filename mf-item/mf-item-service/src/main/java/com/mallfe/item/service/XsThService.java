@@ -46,6 +46,7 @@ public class XsThService {
         String lsh = commonService.getLsh("XS");
         xs.setLsh(lsh);
         xs.setStatus(0);
+        xs.setLrsj(CommonService.getStringDate());
         try {
             xsMapper.insert(xs);
         } catch (Exception e){
@@ -59,6 +60,7 @@ public class XsThService {
         String lsh = commonService.getLsh("TH");
         th.setLsh(lsh);
         th.setStatus(0);
+        th.setLrsj(CommonService.getStringDate());
         try {
             thMapper.insert(th);
         } catch (Exception e){

@@ -5,6 +5,7 @@ import com.mallfe.item.pojo.AllBill;
 import com.mallfe.item.pojo.Th;
 import com.mallfe.item.pojo.Xs;
 import com.mallfe.item.service.XsThService;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +51,7 @@ public class XsThController {
      * @return
      */
     @PostMapping("modifyxs")
-    public ResponseEntity<Xs> modifyXs(@RequestBody Xs xs){
+    public ResponseEntity<Null> modifyXs(@RequestBody Xs xs){
         xsThService.modifyXs(xs);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -61,7 +62,7 @@ public class XsThController {
      * @return
      */
     @PostMapping("modifyth")
-    public ResponseEntity<Th> modifyTh(@RequestBody Th th){
+    public ResponseEntity<Null> modifyTh(@RequestBody Th th){
         xsThService.modifyTh(th);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -114,7 +115,7 @@ public class XsThController {
      * @return
      */
     @PostMapping("commitxs")
-    public ResponseEntity<Xs> commitXs(@RequestBody Xs xs){
+    public ResponseEntity<Null> commitXs(@RequestBody Xs xs){
         xsThService.commitXs(xs);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -125,7 +126,7 @@ public class XsThController {
      * @return
      */
     @PostMapping("deletexs")
-    public ResponseEntity<Xs> deleteXs(@RequestBody Xs xs){
+    public ResponseEntity<Null> deleteXs(@RequestBody Xs xs){
         xsThService.deleteXs(xs);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -136,7 +137,7 @@ public class XsThController {
      * @return
      */
     @PostMapping("committh")
-    public ResponseEntity<Th> commitTh(@RequestBody Th th){
+    public ResponseEntity<Null> commitTh(@RequestBody Th th){
         xsThService.commitTh(th);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -147,7 +148,7 @@ public class XsThController {
      * @return
      */
     @PostMapping("deleteth")
-    public ResponseEntity<Th> deleteTh(@RequestBody Th th){
+    public ResponseEntity<Null> deleteTh(@RequestBody Th th){
         xsThService.deleteTh(th);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
