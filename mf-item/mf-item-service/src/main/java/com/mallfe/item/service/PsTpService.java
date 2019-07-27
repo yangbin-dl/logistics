@@ -1,13 +1,20 @@
 package com.mallfe.item.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
+import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.*;
 import com.mallfe.item.pojo.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
+
+import java.util.List;
 
 /**
  * 描述
@@ -254,5 +261,58 @@ public class PsTpService {
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
+    }
+
+    public PageResult<Ps> queryPsByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+        //分页
+        PageHelper.startPage(page, rows);
+        //条件过滤
+        Example example = new Example(Ps.class);
+        if(StringUtils.isNotBlank(key)){
+            example.createCriteria().orLike("lsh",key+"%");
+        }
+        //排序
+        if(StringUtils.isNotBlank(sortBy)){
+            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
+            example.setOrderByClause(orderByClause);
+        }
+
+        //查询
+        List<Ps> list = psMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Ps> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+    }
+
+    public PageResult<Tp> queryTpByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+        //分页
+        PageHelper.startPage(page, rows);
+        //条件过滤
+        Example example = new Example(Tp.class);
+        if(StringUtils.isNotBlank(key)){
+            example.createCriteria().orLike("lsh",key+"%");
+        }
+        //排序
+        if(StringUtils.isNotBlank(sortBy)){
+            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
+            example.setOrderByClause(orderByClause);
+        }
+
+        //查询
+        List<Tp> list = tpMapper.selectByExample(example);
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Tp> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+
     }
 }

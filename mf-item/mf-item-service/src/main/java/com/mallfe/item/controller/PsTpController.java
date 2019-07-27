@@ -1,15 +1,13 @@
 package com.mallfe.item.controller;
 
+import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.Ps;
 import com.mallfe.item.pojo.Tp;
 import com.mallfe.item.service.PsTpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 描述
@@ -83,5 +81,29 @@ public class PsTpController {
     public ResponseEntity<Tp> deletePs(@RequestBody Tp tp){
         psTpService.deleteTp(tp);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("pageps")
+    public ResponseEntity<PageResult<Ps>> queryPsByPage(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key
+    ) {
+        PageResult<Ps> result = psTpService.queryPsByPage(page, rows, sortBy, desc, key);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("pagetp")
+    public ResponseEntity<PageResult<Tp>> queryTpByPage(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key
+    ) {
+        PageResult<Tp> result = psTpService.queryTpByPage(page, rows, sortBy, desc, key);
+        return ResponseEntity.ok(result);
     }
 }
