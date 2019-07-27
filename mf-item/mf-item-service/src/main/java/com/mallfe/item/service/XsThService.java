@@ -6,9 +6,11 @@ import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.AllBillMapper;
+import com.mallfe.item.mapper.ConsumerMapper;
 import com.mallfe.item.mapper.ThMapper;
 import com.mallfe.item.mapper.XsMapper;
 import com.mallfe.item.pojo.AllBill;
+import com.mallfe.item.pojo.Consumer;
 import com.mallfe.item.pojo.Th;
 import com.mallfe.item.pojo.Xs;
 import org.apache.commons.lang3.StringUtils;
@@ -42,6 +44,8 @@ public class XsThService {
     @Autowired
     AllBillMapper allBillMapper;
 
+    @Autowired
+    ConsumerMapper consumerMapper;
     public Xs insertXs(@NotNull Xs xs){
         String lsh = commonService.getLsh("XS");
         xs.setLsh(lsh);
@@ -223,5 +227,10 @@ public class XsThService {
         PageInfo<AllBill> info = new PageInfo<>(list);
 
         return new PageResult<>(info.getTotal(), list);
+    }
+
+    public List<Consumer> queryByPhone(String phone) {
+        List<Consumer> list = consumerMapper.queryByPhone(phone);
+        return list;
     }
 }

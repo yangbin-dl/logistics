@@ -2,6 +2,7 @@ package com.mallfe.item.controller;
 
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.AllBill;
+import com.mallfe.item.pojo.Consumer;
 import com.mallfe.item.pojo.Th;
 import com.mallfe.item.pojo.Xs;
 import com.mallfe.item.service.XsThService;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 描述
@@ -172,5 +175,10 @@ public class XsThController {
     ) {
         PageResult<AllBill> result = xsThService.queryAll(page, lruserid, phone, contact);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("phone")
+    public ResponseEntity<List<Consumer>> queryByPhone(@RequestParam("lsh") String lsh) {
+        return ResponseEntity.ok(xsThService.queryByPhone(lsh));
     }
 }
