@@ -13,6 +13,6 @@ import java.util.List;
  * @since 2019-07-27
  */
 public interface ConsumerMapper extends Mapper<Consumer> {
-    @Select("select distinct location,phone,contact from vw_xs where phone like '#{phone}%'")
+    @Select("select distinct location,phone,contact from vw_xs where phone like concat(#{phone},'%')")
     List<Consumer> queryByPhone(String phone);
 }
