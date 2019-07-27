@@ -154,5 +154,12 @@ public class LogisticsService {
         return  pathMapper.selectByPrimaryKey(id);
     }
 
+    public List<Driver> queryDriverList() {
+        return driverMapper.list();
     }
+
+    public List<Path> queryPathList() {
+        return pathMapper.list();
+    }
+}
 

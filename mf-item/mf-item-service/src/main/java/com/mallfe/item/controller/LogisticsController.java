@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * 描述
  *
@@ -33,6 +35,13 @@ public class LogisticsController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("driverlist")
+    public ResponseEntity<List<Driver>> queryDriverList(){
+        List<Driver> result=logisticsService.queryDriverList();
+        return ResponseEntity.ok(result);
+    }
+
+
     @GetMapping("path")
     public ResponseEntity<PageResult<Path>> queryPathByPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -42,6 +51,12 @@ public class LogisticsController {
             @RequestParam(value = "key", required = false) String key
     ){
         PageResult<Path> result=logisticsService.queryPathByPage(page,rows,sortBy,desc,key);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("pathlist")
+    public ResponseEntity<List<Path>> queryPathList(){
+        List<Path> result=logisticsService.queryPathList();
         return ResponseEntity.ok(result);
     }
 
