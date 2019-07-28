@@ -16,18 +16,18 @@
                          qwsj=#{qwsj} where lsh = #{lsh} and status = 0
     </update>
     <update id="updateStatusToPs">
-        update mf_xs set status  = '1',
+        update mf_xs set status  = '2',
                          psdh = #{psdh},
                          driver_code = #{driver},
                          path_code = #{path}
-        where lsh = #{lsh} and status = '0'
+        where lsh = #{lsh} and status = '1'
     </update>
     <update id="updateStatusToUnPs">
-        update mf_xs set status  = '0',
+        update mf_xs set status  = '1',
                          psdh = null,
                          driver_code = null,
                          path_code = null
-        where psdh = #{lsh} and status = '1'
+        where psdh = #{lsh} and status = '2'
     </update>
 
     <select id="selectXsWithLsh" resultType="com.mallfe.item.pojo.Xs">

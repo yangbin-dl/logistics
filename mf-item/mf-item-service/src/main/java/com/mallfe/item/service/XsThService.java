@@ -241,7 +241,7 @@ public class XsThService {
             list = xsMapper.selectXsWithLsh(lsh);
         } else{
             Xs xs = new Xs();
-            xs.setStatus(0);
+            xs.setStatus(1);
             list = xsMapper.select(xs);
         }
 
