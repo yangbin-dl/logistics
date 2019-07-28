@@ -90,7 +90,7 @@ public class ItemService {
         Example example = new Example(Sp.class);
         if(StringUtils.isNotBlank(key)){
             example.createCriteria().orLike("pinm","%"+key+"%")
-                    .orEqualTo("hh",key.toUpperCase());
+                    .orLike("hh",key.toUpperCase()+"%");
         }
         //排序
         if(StringUtils.isNotBlank(sortBy)){

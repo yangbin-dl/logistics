@@ -181,4 +181,9 @@ public class XsThController {
     public ResponseEntity<List<Consumer>> queryByPhone(@RequestParam("lsh") String lsh) {
         return ResponseEntity.ok(xsThService.queryByPhone(lsh));
     }
+
+    @GetMapping("psmx")
+    public ResponseEntity<List<Xs>> queryXsForPs(@RequestParam(value = "lsh" ,required = false) String lsh){
+        return ResponseEntity.ok(xsThService.queryXsForPs(lsh));
+    }
 }

@@ -30,4 +30,12 @@
         where psdh = #{lsh} and status = '1'
     </update>
 
+    <select id="selectXsWithLsh" resultType="com.mallfe.item.pojo.Xs">
+        select id, lsh, hh, sl, lx, province, city, district, location, phone,
+               contact, qwsj, lrid, lrusername, truename, status, driver_code, path_code,
+               lrsj, cksj, zfsj, pcsj, fcsj, sdsj From mf_xs where lsh in(
+                   select ddh from mf_ps_mx where lsh=#{lsh}
+            )
+    </select>
+
 </mapper>

@@ -233,4 +233,18 @@ public class XsThService {
         List<Consumer> list = consumerMapper.queryByPhone(phone);
         return list;
     }
+
+    public List<Xs> queryXsForPs(String lsh) {
+        List<Xs> list;
+
+        if(StringUtils.isNotBlank(lsh)){
+            list = xsMapper.selectXsWithLsh(lsh);
+        } else{
+            Xs xs = new Xs();
+            xs.setStatus(0);
+            list = xsMapper.select(xs);
+        }
+
+        return list;
+    }
 }
