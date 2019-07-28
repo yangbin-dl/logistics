@@ -6,6 +6,7 @@ import com.mallfe.item.pojo.Consumer;
 import com.mallfe.item.pojo.Th;
 import com.mallfe.item.pojo.Xs;
 import com.mallfe.item.service.XsThService;
+import com.sun.corba.se.pept.transport.ListenerThread;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -183,7 +184,12 @@ public class XsThController {
     }
 
     @GetMapping("psmx")
-    public ResponseEntity<List<Xs>> queryXsForPs(@RequestParam(value = "lsh" ,required = false) String lsh){
+    public ResponseEntity<List<Xs>> queryXsForPs(@RequestParam(value = "lsh", required = false) String lsh){
         return ResponseEntity.ok(xsThService.queryXsForPs(lsh));
+    }
+
+    @GetMapping("tpmx")
+    public ResponseEntity<List<Th>> queryThForTp(@RequestParam(value = "lsh", required = false) String lsh){
+        return ResponseEntity.ok(xsThService.queryThForTp(lsh));
     }
 }

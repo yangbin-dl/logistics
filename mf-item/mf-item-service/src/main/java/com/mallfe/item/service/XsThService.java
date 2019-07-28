@@ -247,4 +247,18 @@ public class XsThService {
 
         return list;
     }
+
+
+    public List<Th> queryThForTp(String lsh) {
+        List<Th> list;
+
+        if(StringUtils.isNotBlank(lsh)){
+            list = thMapper.selectThWithLsh(lsh);
+        } else{
+            Th th = new Th();
+            th.setStatus(1);
+            list = thMapper.select(th);
+        }
+        return list;
+    }
 }

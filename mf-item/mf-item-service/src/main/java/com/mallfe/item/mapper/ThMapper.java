@@ -5,6 +5,8 @@ import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;
 
+import java.util.List;
+
 public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
 
     /**
@@ -42,4 +44,6 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
                          @Param("path") String path);
 
     int updateStatusToUnTp(@Param("lsh") String lsh);
+
+    List<Th> selectThWithLsh(@Param("lsh") String lsh);
 }

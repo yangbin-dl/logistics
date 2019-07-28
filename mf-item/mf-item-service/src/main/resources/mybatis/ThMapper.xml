@@ -16,17 +16,24 @@
                          qwsj=#{qwsj} where lsh = #{lsh} and status = 0
     </update>
     <update id="updateStatusToTp">
-        update mf_th set status  = '1',
+        update mf_th set status  = '2',
                          psdh = #{psdh},
                          driver_code = #{driver},
                          path_code = #{path}
-        where lsh = #{lsh} and status = '0'
+        where lsh = #{lsh} and status = '1'
     </update>
     <update id="updateStatusToUnTp">
-        update mf_th set status  = '0',
+        update mf_th set status  = '1',
                          psdh = null,
                          driver_code = null,
                          path_code = null
-        where psdh = #{lsh} and status = '1'
+        where psdh = #{lsh} and status = '2'
     </update>
+    <select id="selectThWithLsh" resultType="com.mallfe.item.pojo.Th">
+        select id, lsh, hh, sl, lx, province, city, district, location, phone,
+               contact, qwsj, lrid, lrusername, truename, status, driver_code, path_code,
+               lrsj, cksj, zfsj, pcsj, fcsj, sdsj From mf_th where lsh in(
+            select ddh from mf_tp_mx where lsh=#{lsh}
+        )
+    </select>
 </mapper>
