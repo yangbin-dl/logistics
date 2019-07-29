@@ -112,4 +112,10 @@ public class PsTpController {
         Ps reulut = psTpService.queryPsByLsh(lsh);
         return ResponseEntity.ok(reulut);
     }
+
+    @GetMapping("querytp")
+    public ResponseEntity<Tp> queryTpByLsh(@RequestParam("lsh")String lsh){
+        Tp reulut = psTpService.queryTpByLsh(lsh);
+        return ResponseEntity.ok(reulut);
+    }
 }

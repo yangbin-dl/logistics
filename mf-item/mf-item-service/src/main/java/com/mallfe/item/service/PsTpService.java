@@ -320,8 +320,16 @@ public class PsTpService {
         Ps ps = new Ps();
         ps.setLsh(lsh);
         ps = psMapper.selectOne(ps);
-        
+
         ps.setXsList(xsMapper.selectXsWithLsh(lsh));
         return ps;
+    }
+
+    public Tp queryTpByLsh(String lsh) {
+        Tp tp = new Tp();
+        tp.setLsh(lsh);
+        tp = tpMapper.selectOne(tp);
+        tp.setThList(thMapper.selectThWithLsh(lsh));
+        return tp;
     }
 }

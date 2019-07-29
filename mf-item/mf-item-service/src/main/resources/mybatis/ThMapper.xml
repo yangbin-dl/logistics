@@ -30,10 +30,11 @@
         where psdh = #{lsh} and status = '2'
     </update>
     <select id="selectThWithLsh" resultType="com.mallfe.item.pojo.Th">
-        select id, lsh, hh, sl, lx, province, city, district, location, phone,
-               contact, qwsj, lrid, lrusername, truename, status, driver_code, path_code,
-               lrsj, cksj, zfsj, pcsj, fcsj, sdsj From mf_th where lsh in(
-            select ddh from mf_tp_mx where lsh=#{lsh}
-        )
+        select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, b.location, b.phone,
+               b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, a.status,
+               b.driver_code, b.path_code,
+               b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj
+        From mf_tp_mx a left join mf_th b on a.ddh = b.lsh
+        where a.lsh = #{lsh}
     </select>
 </mapper>
