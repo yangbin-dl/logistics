@@ -168,7 +168,9 @@ public class FcService {
 
     public void deleteBill(Fc fc) {
         try {
-            fcMapper.updateBillStatus(9,fc.getLsh());
+            if(fcMapper.updateBillStatus(9,fc.getLsh()) != 1){
+                throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+            }
         }
         catch (Exception e){
             throw new MallfeException(ExceptionEnum.OPERATION_FALURE);

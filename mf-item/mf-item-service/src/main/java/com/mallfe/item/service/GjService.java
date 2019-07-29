@@ -168,7 +168,9 @@ public class GjService {
 
     public void deleteBill(Gj gj) {
         try {
-            gjMapper.updateBillStatus(9,gj.getLsh());
+            if(gjMapper.updateBillStatus(9,gj.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+            }
         }
         catch (Exception e){
             throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
