@@ -31,11 +31,12 @@
     </update>
 
     <select id="selectXsWithLsh" resultType="com.mallfe.item.pojo.Xs">
-        select id, lsh, hh, sl, lx, province, city, district, location, phone,
-               contact, qwsj, lrid, lrusername, truename, status, driver_code, path_code,
-               lrsj, cksj, zfsj, pcsj, fcsj, sdsj From mf_xs where lsh in(
-                   select ddh from mf_ps_mx where lsh=#{lsh}
-            )
+        select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, b.location, b.phone,
+               b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, a.status,
+               b.driver_code, b.path_code,
+               b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj
+        From mf_ps_mx a left join mf_xs b on a.ddh = b.lsh
+        where a.lsh = #{lsh}
     </select>
 
 </mapper>

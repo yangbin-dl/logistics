@@ -106,4 +106,10 @@ public class PsTpController {
         PageResult<Tp> result = psTpService.queryTpByPage(page, rows, sortBy, desc, key);
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("queryps")
+    public ResponseEntity<Ps> queryPsByLsh(@RequestParam("lsh")String lsh){
+        Ps reulut = psTpService.queryPsByLsh(lsh);
+        return ResponseEntity.ok(reulut);
+    }
 }

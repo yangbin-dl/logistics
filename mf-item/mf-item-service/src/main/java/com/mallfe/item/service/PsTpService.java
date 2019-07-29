@@ -315,4 +315,13 @@ public class PsTpService {
         return new PageResult<>(info.getTotal(), list);
 
     }
+
+    public Ps queryPsByLsh(String lsh) {
+        Ps ps = new Ps();
+        ps.setLsh(lsh);
+        ps = psMapper.selectOne(ps);
+        
+        ps.setXsList(xsMapper.selectXsWithLsh(lsh));
+        return ps;
+    }
 }

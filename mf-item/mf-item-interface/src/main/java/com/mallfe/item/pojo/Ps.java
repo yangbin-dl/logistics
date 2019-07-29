@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.List;
 
 /**
@@ -17,4 +18,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 public class Ps extends WlBill {
     private List<PsDetail> list;
+
+    @Transient
+    private List<Xs> xsList;
 }
