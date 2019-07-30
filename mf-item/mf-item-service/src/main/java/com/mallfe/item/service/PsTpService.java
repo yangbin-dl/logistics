@@ -418,4 +418,37 @@ public class PsTpService {
     public void inStorePs(Ps ps) {
 
     }
+
+    public PageResult<Psrk> queryPsrkByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+        //分页
+        PageHelper.startPage(page, rows);
+        //条件过滤
+        Example example = new Example(Psrk.class);
+        if(StringUtils.isNotBlank(key)){
+            example.createCriteria().orLike("lsh",key+"%");
+        }
+        //排序
+        if(StringUtils.isNotBlank(sortBy)){
+            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
+            example.setOrderByClause(orderByClause);
+        }
+
+        //查询
+        List<Psrk> list = psrkMapper.selectPsrk(0);
+
+
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Psrk> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+    }
+
+    public Psrk queryPsrkByLsh(String lsh) {
+        return null;
+
+    }
 }

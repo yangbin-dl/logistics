@@ -4,6 +4,8 @@ import com.mallfe.item.pojo.Psrk;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
  * 描述
  *
@@ -16,4 +18,6 @@ public interface PsrkMapper extends Mapper<Psrk> {
     int insertPsrkMx(@Param("lsh") String lsh);
 
     int insertFromPs(@Param("lsh") String lsh);
+
+    List<Psrk> selectPsrk(int i);
 }

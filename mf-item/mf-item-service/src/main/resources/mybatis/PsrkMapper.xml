@@ -11,4 +11,12 @@
         insert into mf_psrk_mx(lsh,ddh,status)
         select  lsh,ddh,status from mf_ps_mx where lsh=#{lsh} and status=2
     </insert>
+    <select id="selectPsrk" resultType="com.mallfe.item.pojo.Psrk">
+        select lsh,a.lrid,concat(a.driver_code,'-',b.driver_name) as driverCode,
+               concat(a.path_code,'-',c.path_name) as pathCode,a.lrsj,a.fcsj,a.sdsj,a.status
+        from mf_psrk a left join mf_driver b on a.driver_code = b.driver_code
+                     left join mf_path c on a.path_code = c.path_code
+
+        order by a.lsh desc
+    </select>
 </mapper>

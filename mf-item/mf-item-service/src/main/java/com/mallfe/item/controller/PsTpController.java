@@ -2,6 +2,7 @@ package com.mallfe.item.controller;
 
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.Ps;
+import com.mallfe.item.pojo.Psrk;
 import com.mallfe.item.pojo.Tp;
 import com.mallfe.item.service.PsTpService;
 import org.apache.ibatis.jdbc.Null;
@@ -174,5 +175,32 @@ public class PsTpController {
     public ResponseEntity<Null> inStorePs(@RequestBody Ps ps){
         psTpService.inStorePs(ps);
         return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 配送入库分页查询
+     * @param page
+     * @param rows
+     * @param sortBy
+     * @param desc
+     * @param key
+     * @return
+     */
+    @GetMapping("pagepsrk")
+    public ResponseEntity<PageResult<Psrk>> pagePsrk(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key
+    ){
+        PageResult<Psrk> result = psTpService.queryPsrkByPage(page, rows, sortBy, desc, key);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("querypsrk")
+    public ResponseEntity<Psrk> queryPsrk(@RequestParam("lsh") String lsh){
+        Psrk reulut = psTpService.queryPsrkByLsh(lsh);
+        return ResponseEntity.ok(reulut);
     }
 }
