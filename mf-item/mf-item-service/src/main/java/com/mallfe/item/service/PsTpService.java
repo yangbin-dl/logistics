@@ -68,6 +68,7 @@ public class PsTpService {
         //获取流水号
         String lsh = commonService.getLsh("PS");
         ps.setLsh(lsh);
+        ps.setLrsj(CommonService.getStringDate());
 
         //插入单据
         try {
@@ -159,7 +160,6 @@ public class PsTpService {
         //获取流水号
         String lsh = commonService.getLsh("TP");
         tp.setLsh(lsh);
-
         tp.setLrsj(CommonService.getStringDate());
 
         //插入单据
@@ -448,7 +448,13 @@ public class PsTpService {
     }
 
     public Psrk queryPsrkByLsh(String lsh) {
-        return null;
+
+        Psrk psrk = new Psrk();
+        psrk.setLsh(lsh);
+        psrk = psrkMapper.selectOne(psrk);
+
+        psrk.setXsList(xsMapper.selectXsWithLshForRk(lsh));
+        return psrk;
 
     }
 }
