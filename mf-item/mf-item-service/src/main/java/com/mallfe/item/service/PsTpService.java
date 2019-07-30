@@ -56,6 +56,9 @@ public class PsTpService {
     @Autowired
     private KucnInMapper kucnInMapper;
 
+    @Autowired
+    private PsrkMapper psrkMapper;
+
     /**
      * 新增配送单
      * @param ps
@@ -385,7 +388,27 @@ public class PsTpService {
     }
 
     public void arrivedPs(Ps ps) {
+        try {
+            //更新配送单状态
+            if(psMapper.updateStatusToFinish(ps.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
 
+            //更新明细状态
+            for(PsDetail mx : ps.getList()){
+                psMxMapper.updateStatus(ps.getLsh(),mx.getDdh(),mx.getStatus());
+            }
+
+            //插入配送入库信息
+            if(psrkMapper.insertPsrkMx(ps.getLsh())!=0){
+                if(psrkMapper.insertFromPs(ps.getLsh())!=1){
+                    throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+                }
+            }
+
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
     }
 
     public void arrivedTp(Tp tp) {

@@ -11,7 +11,7 @@
         update mf_ps set status = 1 where lsh = #{lsh} and status = 0
     </update>
     <update id="updateStatusToFinish">
-        update mf_ps set status = 1 where lsh = #{lsh} and status = 0
+        update mf_ps set status = 2 where lsh = #{lsh} and status = 1
     </update>
     <select id="selectPs" resultType="com.mallfe.item.pojo.Ps">
         select lsh,a.lrid,concat(a.driver_code,'-',b.driver_name) as driverCode,

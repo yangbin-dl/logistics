@@ -20,7 +20,7 @@ zuul:
     item-service: /item/**
     user-service: /user/**
 ribbon:
-  ConnectTimeout: 1000 # 连接超时时间(ms)
+  ConnectTimeout: 3000 # 连接超时时间(ms)
   ReadTimeout: 3500 # 通信超时时间(ms)
   MaxAutoRetriesNextServer: 0 # 同一服务不同实例的重试次数
   MaxAutoRetries: 0 # 同一实例的重试次数

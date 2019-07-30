@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallfe.item.mapper.PsrkMapper">
+
+    <insert id="insertFromPs">
+        insert into mf_psrk(lsh, lrid, lrusername, truename, status, lrsj, cksj, fcsj, sdsj, driver_code, path_code)
+        select lsh, lrid, lrusername, truename, 2, lrsj, cksj, fcsj, sdsj, driver_code, path_code from mf_ps
+        where lsh=#{lsh}
+    </insert>
+    <insert id="insertPsrkMx">
+        insert into mf_psrk_mx(lsh,ddh,status)
+        select  lsh,ddh,status from mf_ps_mx where lsh=#{lsh} and status=2
+    </insert>
+</mapper>

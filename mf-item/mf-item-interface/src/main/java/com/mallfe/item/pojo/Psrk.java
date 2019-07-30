@@ -21,4 +21,9 @@ public class Psrk extends WlBill {
 
     @Transient
     private List<Xs> xsList;
+
+    /**
+     * 入库时间
+     */
+    private String rksj;
 }
