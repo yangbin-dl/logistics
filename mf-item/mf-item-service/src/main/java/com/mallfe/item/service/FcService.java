@@ -9,9 +9,11 @@ import com.mallfe.item.mapper.FcMapper;
 import com.mallfe.item.mapper.FcMxMapper;
 import com.mallfe.item.mapper.KucnMapper;
 import com.mallfe.item.mapper.KucnOutMapper;
-import com.mallfe.item.pojo.*;
+import com.mallfe.item.pojo.Fc;
+import com.mallfe.item.pojo.FcDetail;
+import com.mallfe.item.pojo.Kucn;
+import com.mallfe.item.pojo.KucnOut;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,21 +92,19 @@ public class FcService {
             for(FcDetail mx: fc.getList()){
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
-                //kc.setKucn(mx.getSl());
                 kc.setLx(fc.getLx());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
                 if(result == null){
-                    kc.setKucn(-1 * kc.getKucn());
+                    kc.setKucn(-1 * mx.getSl());
                     kucnMapper.insert(kc);
-                    kc.setKucn(-1 * kc.getKucn());
                 }
                 else{
                     kucnMapper.reduceKucn(mx.getSl(),result.getId());
                 }
 
                 KucnOut kucnOut = new KucnOut();
-                BeanUtils.copyProperties(kc,kucnOut);
+                kucnOut.setHh(mx.getHh());
                 kucnOut.setYwbm("FC");
                 kucnOut.setSl(mx.getSl());
                 kucnOut.setLsh(fc.getLsh());

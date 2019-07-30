@@ -14,6 +14,6 @@ import java.util.List;
  */
 public interface PathMapper extends Mapper<Path> {
 
-    @Select("select id,code,name,status from mf_path order by code")
+    @Select("select id,path_code as pathCode,path_name as pathName,status from mf_path order by path_code")
     List<Path> list();
 }

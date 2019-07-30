@@ -31,7 +31,7 @@ public class FcController {
     @PostMapping("commit")
     public ResponseEntity<Null> commit(@RequestBody Fc fc){
         fcService.commitBill(fc);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("delete")

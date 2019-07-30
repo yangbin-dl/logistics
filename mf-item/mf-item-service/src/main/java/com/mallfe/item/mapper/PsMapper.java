@@ -4,6 +4,8 @@ import com.mallfe.item.pojo.Ps;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
  * 描述
  *
@@ -33,4 +35,6 @@ public interface PsMapper extends Mapper<Ps> {
      * @return
      */
     int updateStatusToFinish(@Param("lsh")String lsh);
+
+    List<Ps> selectPs(@Param("status")Integer status);
 }

@@ -4,6 +4,7 @@ import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.Ps;
 import com.mallfe.item.pojo.Tp;
 import com.mallfe.item.service.PsTpService;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,9 +51,9 @@ public class PsTpController {
      * @return
      */
     @PostMapping("modifyps")
-    public ResponseEntity<Ps> modifyPs(@RequestBody Ps ps){
+    public ResponseEntity<Null> modifyPs(@RequestBody Ps ps){
         psTpService.modifyPs(ps);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     /**
@@ -61,9 +62,9 @@ public class PsTpController {
      * @return
      */
     @PostMapping("modifytp")
-    public ResponseEntity<Tp> modifyPs(@RequestBody Tp tp){
+    public ResponseEntity<Null> modifyPs(@RequestBody Tp tp){
         psTpService.modifyTp(tp);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     /**
@@ -72,15 +73,15 @@ public class PsTpController {
      * @return
      */
     @PostMapping("deleteps")
-    public ResponseEntity<Ps> deletePs(@RequestBody Ps ps){
+    public ResponseEntity<Null> deletePs(@RequestBody Ps ps){
         psTpService.deletePs(ps);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("deletetp")
-    public ResponseEntity<Tp> deletePs(@RequestBody Tp tp){
+    public ResponseEntity<Null> deletePs(@RequestBody Tp tp){
         psTpService.deleteTp(tp);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("pageps")
@@ -117,5 +118,61 @@ public class PsTpController {
     public ResponseEntity<Tp> queryTpByLsh(@RequestParam("lsh")String lsh){
         Tp reulut = psTpService.queryTpByLsh(lsh);
         return ResponseEntity.ok(reulut);
+    }
+
+    /**
+     * 配送单发出
+     * @param ps
+     * @return
+     */
+    @PostMapping("psfc")
+    public ResponseEntity<Null> commitPs(@RequestBody Ps ps){
+        psTpService.commitPs(ps);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 退配单发出
+     * @param tp
+     * @return
+     */
+    @PostMapping("tpfc")
+    public ResponseEntity<Null> commitPs(@RequestBody Tp tp){
+        psTpService.commitTp(tp);
+        return ResponseEntity.ok().build();
+    }
+
+
+    /**
+     * 配送到货
+     * @param ps
+     * @return
+     */
+    @PostMapping("psdh")
+    public ResponseEntity<Null> arrivedPs(@RequestBody Ps ps){
+        psTpService.arrivedPs(ps);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 退配到货
+     * @param tp
+     * @return
+     */
+    @PostMapping("tpdh")
+    public ResponseEntity<Null> arrivedTp(@RequestBody Tp tp){
+        psTpService.arrivedTp(tp);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
+     * 配送入库
+     * @param ps
+     * @return
+     */
+    @PostMapping("psrk")
+    public ResponseEntity<Null> inStorePs(@RequestBody Ps ps){
+        psTpService.inStorePs(ps);
+        return ResponseEntity.ok().build();
     }
 }

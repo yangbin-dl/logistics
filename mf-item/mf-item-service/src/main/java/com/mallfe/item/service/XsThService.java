@@ -229,9 +229,9 @@ public class XsThService {
         return new PageResult<>(info.getTotal(), list);
     }
 
-    public List<Consumer> queryByPhone(String phone) {
-        List<Consumer> list = consumerMapper.queryByPhone(phone);
-        return list;
+    public Consumer queryByPhone(String phone) {
+        Consumer consumer = consumerMapper.queryByPhone(phone);
+        return consumer;
     }
 
     public List<Xs> queryXsForPs(String lsh) {

@@ -13,5 +13,14 @@
     <update id="updateStatusToFinish">
         update mf_ps set status = 1 where lsh = #{lsh} and status = 0
     </update>
+    <select id="selectPs" resultType="com.mallfe.item.pojo.Ps">
+        select lsh,a.lrid,concat(a.driver_code,'-',b.driver_name) as driverCode,
+               concat(a.path_code,'-',c.path_name) as pathCode,a.lrsj,a.fcsj,a.status
+        from mf_ps a left join mf_driver b on a.driver_code = b.driver_code
+        left join mf_path c on a.path_code = c.path_code
+
+        order by a.lsh desc
+
+    </select>
 
 </mapper>

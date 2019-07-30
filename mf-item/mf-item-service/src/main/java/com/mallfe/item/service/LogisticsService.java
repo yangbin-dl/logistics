@@ -109,11 +109,11 @@ public class LogisticsService {
      * @return 司机完整信息
      */
     public Driver insertDriver(Driver driver) {
-        if(driver.getCode() == null){
+        if(driver.getDriverCode() == null){
             throw new MallfeException(ExceptionEnum.CODE_CANNOT_BE_NULL);
         }
 
-        if(driver.getName()== null){
+        if(driver.getDriverName()== null){
             throw new MallfeException(ExceptionEnum.NAME_CANNOT_BE_NULL);
         }
 
@@ -125,11 +125,11 @@ public class LogisticsService {
     }
 
     public Path insertPath(Path path){
-        if(path.getCode() == null){
+        if(path.getPathCode() == null){
             throw new MallfeException(ExceptionEnum.CODE_CANNOT_BE_NULL);
         }
 
-        if(path.getName()== null){
+        if(path.getPathName()== null){
             throw new MallfeException(ExceptionEnum.NAME_CANNOT_BE_NULL);
         }
 

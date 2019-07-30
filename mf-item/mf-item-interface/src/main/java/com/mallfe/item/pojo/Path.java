@@ -1,8 +1,9 @@
 package com.mallfe.item.pojo;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import tk.mybatis.mapper.annotation.KeySql;
 
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -11,9 +12,25 @@ import javax.persistence.Table;
  * @author Yangbin
  * @since 2019/07/05
  */
-@EqualsAndHashCode(callSuper = true)
 @Table(name="mf_path")
 @Data
-public class Path extends BaseBean{
+public class Path {
+    @Id
+    @KeySql(useGeneratedKeys=true)
+    private Integer id;
 
+    /**
+     * 编码
+     */
+    private String pathCode;
+
+    /**
+     * 名称
+     */
+    private String pathName;
+
+    /**
+     * 状态，0-禁用，1-可用
+     */
+    private Integer status;
 }

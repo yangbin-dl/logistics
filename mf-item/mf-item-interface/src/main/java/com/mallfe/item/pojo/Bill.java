@@ -60,7 +60,7 @@ public class Bill {
     /**
      * 数量
      */
-    private Long sl;
+    private Integer sl;
 
     /**
      * 省

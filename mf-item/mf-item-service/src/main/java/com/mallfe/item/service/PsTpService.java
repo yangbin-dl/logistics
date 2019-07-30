@@ -47,6 +47,15 @@ public class PsTpService {
     @Autowired
     private ThMapper thMapper;
 
+    @Autowired
+    private KucnMapper kucnMapper;
+
+    @Autowired
+    private KucnOutMapper kucnOutMapper;
+
+    @Autowired
+    private KucnInMapper kucnInMapper;
+
     /**
      * 新增配送单
      * @param ps
@@ -278,7 +287,10 @@ public class PsTpService {
         }
 
         //查询
-        List<Ps> list = psMapper.selectByExample(example);
+//        List<Ps> list = psMapper.selectByExample(example);
+        List<Ps> list = psMapper.selectPs(0);
+
+
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -331,5 +343,56 @@ public class PsTpService {
         tp = tpMapper.selectOne(tp);
         tp.setThList(thMapper.selectThWithLsh(lsh));
         return tp;
+    }
+
+    public void commitPs(Ps ps) {
+        try{
+            if(psMapper.updateStatusToOut(ps.getLsh()) != 1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
+
+            ps = queryPsByLsh(ps.getLsh());
+            for(Xs mx : ps.getXsList()){
+                Kucn kc = new Kucn();
+                kc.setHh(mx.getHh());
+                kc.setLx(mx.getLx());
+                Kucn result = kucnMapper.selectOne(kc);
+                //更新库存
+                if(result == null){
+                    kc.setKucn(-1 * mx.getSl());
+                    kucnMapper.insert(kc);
+                }
+                else{
+                    kucnMapper.reduceKucn(mx.getSl(),result.getId());
+                }
+
+                KucnOut kucnOut = new KucnOut();
+                kucnOut.setHh(mx.getHh());
+                kucnOut.setYwbm("PS");
+                kucnOut.setSl(mx.getSl());
+                kucnOut.setLsh(ps.getLsh());
+                kucnOut.setLx(mx.getLx());
+                //插入出库记录
+                kucnOutMapper.insert(kucnOut);
+            }
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
+
+    public void commitTp(Tp tp) {
+
+    }
+
+    public void arrivedPs(Ps ps) {
+
+    }
+
+    public void arrivedTp(Tp tp) {
+
+    }
+
+    public void inStorePs(Ps ps) {
+
     }
 }

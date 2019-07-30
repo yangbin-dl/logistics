@@ -14,7 +14,8 @@ import java.util.List;
  */
 public interface DriverMapper extends Mapper<Driver> {
 
-    @Select("select id,code,name,status,phone from mf_driver order by code")
+    @Select("select id,driver_code as driverCode,driver_name as driverName,status,phone from mf_driver order by " +
+            "driver_code")
     List<Driver> list();
 
 }

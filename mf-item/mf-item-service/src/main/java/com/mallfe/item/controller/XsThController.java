@@ -6,7 +6,6 @@ import com.mallfe.item.pojo.Consumer;
 import com.mallfe.item.pojo.Th;
 import com.mallfe.item.pojo.Xs;
 import com.mallfe.item.service.XsThService;
-import com.sun.corba.se.pept.transport.ListenerThread;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -179,8 +178,8 @@ public class XsThController {
     }
 
     @GetMapping("phone")
-    public ResponseEntity<List<Consumer>> queryByPhone(@RequestParam("lsh") String lsh) {
-        return ResponseEntity.ok(xsThService.queryByPhone(lsh));
+    public ResponseEntity<Consumer> queryByPhone(@RequestParam("phone") String phone) {
+        return ResponseEntity.ok(xsThService.queryByPhone(phone));
     }
 
     @GetMapping("psmx")
