@@ -9,9 +9,9 @@ eureka:
     #fetch-registry: false
     #register-with-eureka: false
     service-url:
-      defaultZone: http://172.31.53.68:10086/eureka
+      defaultZone: http://172.17.196.112:10086/eureka
   instance:
-    ip-address: 172.31.53.68
+    ip-address: 172.17.196.112
     instance-id: ${spring.application.name}:${server.port}
 management:
   endpoint:
