@@ -292,8 +292,7 @@ public class PsTpService {
         }
 
         //查询
-//        List<Ps> list = psMapper.selectByExample(example);
-        List<Ps> list = psMapper.selectPs(0);
+        List<Ps> list = psMapper.selectPs(0,null);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -336,7 +335,11 @@ public class PsTpService {
     public Ps queryPsByLsh(String lsh) {
         Ps ps = new Ps();
         ps.setLsh(lsh);
-        ps = psMapper.selectOne(ps);
+
+        List<Ps> t = psMapper.selectPs(null,lsh);
+        if(!t.isEmpty()){
+            ps = t.get(0);
+        }
 
         ps.setXsList(xsMapper.selectXsWithLsh(lsh));
         return ps;

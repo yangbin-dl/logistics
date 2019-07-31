@@ -25,7 +25,14 @@
                end as statusMsg
         from mf_ps a left join mf_driver b on a.driver_code = b.driver_code
         left join mf_path c on a.path_code = c.path_code
-
+        <where>
+            <if test="lsh != null">
+                a.lsh = #{lsh}
+            </if>
+            <if test="status != null">
+                and a.status = #{status}
+            </if>
+        </where>
         order by a.lsh desc
 
     </select>
