@@ -68,6 +68,7 @@ public class PsTpService {
         //获取流水号
         String lsh = commonService.getLsh("PS");
         ps.setLsh(lsh);
+        ps.setStatus(0);
         ps.setLrsj(CommonService.getStringDate());
 
         //插入单据
@@ -160,6 +161,7 @@ public class PsTpService {
         //获取流水号
         String lsh = commonService.getLsh("TP");
         tp.setLsh(lsh);
+        tp.setStatus(0);
         tp.setLrsj(CommonService.getStringDate());
 
         //插入单据
