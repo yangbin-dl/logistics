@@ -6,6 +6,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Aspect
@@ -24,8 +25,8 @@ public class OperationInterceptor {
         String action = proceedingJoinPoint.getTarget().getClass().getSimpleName();
         log.info(String.format("Request: %s.%s  参数: %s", action, method, jsonMapper.toJson(proceedingJoinPoint.getArgs())));
         long before = System.currentTimeMillis();
-        JsonObject result;
-        result = (JsonObject) proceedingJoinPoint.proceed();
+        ResponseEntity result;
+        result = (ResponseEntity) proceedingJoinPoint.proceed();
         log.info(String.format("Response: %s.%s  耗时: %s ms 返回: %s", action, method, System.currentTimeMillis() - before, jsonMapper.toJson(result)));
         return result;
     }
