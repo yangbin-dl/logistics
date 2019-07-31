@@ -51,6 +51,5 @@ class Order {
     /**
      * 类型
      */
-    @JsonProperty("lx")
-    private GoodsTypeEnum lx;
+    private int lx;
 }

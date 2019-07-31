@@ -39,7 +39,6 @@
     <springProfile name="dev">
         <root level="INFO">
             <appender-ref ref="consoleAppender" />
-            <appender-ref ref="asyncFileAppender" />
         </root>
     </springProfile>
 

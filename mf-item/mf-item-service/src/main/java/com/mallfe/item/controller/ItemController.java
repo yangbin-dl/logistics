@@ -91,6 +91,7 @@ public class ItemController {
     public ResponseEntity<Sp> queryById(@RequestParam("hh") Integer id) {
         Sp s = new Sp();
         s.setId(id);
+
         return ResponseEntity.ok(itemService.query(s));
     }
 
