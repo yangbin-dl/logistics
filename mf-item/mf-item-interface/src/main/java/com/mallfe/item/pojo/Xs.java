@@ -19,4 +19,6 @@ public class Xs extends Bill {
     @Transient
     private String statusMsg;
 
+
+
 }

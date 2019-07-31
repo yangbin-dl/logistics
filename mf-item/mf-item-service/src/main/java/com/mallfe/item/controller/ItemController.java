@@ -1,5 +1,6 @@
 package com.mallfe.item.controller;
 
+import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.Groups;
 import com.mallfe.item.pojo.Sp;
@@ -59,6 +60,13 @@ public class ItemController {
         s.setHh(hh);
         return ResponseEntity.ok(itemService.query(s));
     }
+
+    @GetMapping("findhh")
+    public JsonObject findSp(@RequestParam("hh") Integer hh){
+        return itemService.findHh(hh);
+    }
+
+
 
     /**
      * 按条码查询商品

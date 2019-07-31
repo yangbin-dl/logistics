@@ -11,6 +11,6 @@ import tk.mybatis.mapper.common.Mapper;
  * @since 2019-07-27
  */
 public interface ConsumerMapper extends Mapper<Consumer> {
-    @Select("select distinct location,phone,contact from vw_xs where phone = #{phone} ")
+    @Select("select distinct location,phone,contact from vw_xs where phone = #{phone} order by location limit 1")
     Consumer queryByPhone(String phone);
 }

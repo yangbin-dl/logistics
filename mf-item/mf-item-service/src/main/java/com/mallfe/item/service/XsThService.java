@@ -4,6 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
+import com.mallfe.common.json.JsonData;
+import com.mallfe.common.json.JsonError;
+import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.AllBillMapper;
 import com.mallfe.item.mapper.ConsumerMapper;
@@ -198,7 +201,7 @@ public class XsThService {
         return th;
     }
 
-    public PageResult<AllBill> queryAll(Integer page, String lruserid, String phone, String contact) {
+    public JsonObject queryAll(Integer page, String lruserid, String phone, String contact) {
         //分页
         PageHelper.startPage(page, 10);
         //条件过滤
@@ -226,12 +229,12 @@ public class XsThService {
         //解析分页结果
         PageInfo<AllBill> info = new PageInfo<>(list);
 
-        return new PageResult<>(info.getTotal(), list);
+        return new JsonData(new PageResult<>(info.getTotal(), list));
     }
 
-    public Consumer queryByPhone(String phone) {
+    public JsonObject queryByPhone(String phone) {
         Consumer consumer = consumerMapper.queryByPhone(phone);
-        return consumer;
+        return new JsonData(consumer);
     }
 
     public List<Xs> queryXsForPs(String lsh) {
@@ -260,5 +263,68 @@ public class XsThService {
             list = thMapper.select(th);
         }
         return list;
+    }
+
+    public JsonObject appInsertXs(Xs xs) {
+
+        String lsh = commonService.getLsh("XS");
+        xs.setLsh(lsh);
+        xs.setStatus(0);
+        xs.setLrsj(CommonService.getStringDate());
+        try {
+            xsMapper.insert(xs);
+        } catch (Exception e){
+            return new JsonError("单据保存失败");
+        }
+
+        return new JsonData(xs);
+
+    }
+
+    public JsonObject appInsertTh(Th th) {
+        String lsh = commonService.getLsh("TH");
+        th.setLsh(lsh);
+        th.setStatus(0);
+        th.setLrsj(CommonService.getStringDate());
+        try {
+            thMapper.insert(th);
+        } catch (Exception e){
+            return new JsonError("单据保存失败");
+        }
+
+        return new JsonData(th);
+    }
+
+    public JsonObject appCommitXs(Xs xs) {
+        try {
+            xsMapper.updateStatusToCommited(xs);
+        } catch (Exception e){
+            return new JsonError("单据保存失败");
+        }
+
+        return new JsonData("提交成功");
+    }
+
+    public JsonObject appCommitTh(Th th){
+        try {
+            thMapper.updateStatusToCommited(th);
+        } catch (Exception e){
+            return new JsonError("单据保存失败");
+        }
+        return new JsonData("提交成功");
+    }
+
+    public JsonObject appQueryXs(String lsh) {
+        Xs xs = new Xs();
+        xs.setLsh(lsh);
+        xs = xsMapper.selectOne(xs);
+        return new JsonData(xs);
+    }
+
+    public JsonObject appQueryTh(String lsh) {
+        Th th = new Th();
+        th.setLsh(lsh);
+        th =thMapper.selectOne(th);
+        return new JsonData(th);
     }
 }
