@@ -35,3 +35,12 @@ management:
   endpoint:
     shutdown:
       enabled: true
+# JWT
+jwt:
+  header: Authorization
+  secret: mySecret
+  #token有效期一天
+  expiration: 86400
+  tokenHead: "Bearer "
+  pubKeyPath: "D:\\logistics\\mf-gateway\\src\\main\\resources\\pub.key"
+  cookieName: "lucky"
