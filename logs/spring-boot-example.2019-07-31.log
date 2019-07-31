@@ -1,0 +1,57 @@
+2019-07-31 08:19:05.250 [main] INFO  com.mallfe.MfItemService - The following profiles are active: dev
+2019-07-31 08:19:06.308 [main] WARN  org.mybatis.spring.mapper.ClassPathMapperScanner - No MyBatis mapper was found in '[com.mallfe]' package. Please check your configuration.
+2019-07-31 08:19:06.732 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2019-07-31 08:19:07.049 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=359b8a27-701f-3111-9e94-86a42ec5a2d5
+2019-07-31 08:19:07.248 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$dcca7e9e] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-07-31 08:19:07.284 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$f8e4819b] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-07-31 08:19:07.689 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8081 (http)
+2019-07-31 08:19:07.728 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2019-07-31 08:19:07.729 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.19]
+2019-07-31 08:19:07.981 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2019-07-31 08:19:07.981 [main] INFO  org.springframework.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 2709 ms
+2019-07-31 08:19:08.132 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2019-07-31 08:19:08.132 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-07-31 08:19:08.147 [main] INFO  com.netflix.config.DynamicPropertyFactory - DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@1386313f
+2019-07-31 08:19:12.841 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2019-07-31 08:19:12.841 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-07-31 08:19:13.122 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2019-07-31 08:19:13.341 [main] INFO  t.mybatis.mapper.autoconfigure.MapperCacheDisabler - Clear tk.mybatis.mapper.util.MsUtil CLASS_CACHE cache.
+2019-07-31 08:19:13.341 [main] INFO  t.mybatis.mapper.autoconfigure.MapperCacheDisabler - Clear tk.mybatis.mapper.genid.GenIdUtil CACHE cache.
+2019-07-31 08:19:13.341 [main] INFO  t.mybatis.mapper.autoconfigure.MapperCacheDisabler - Clear tk.mybatis.mapper.version.VersionUtil CACHE cache.
+2019-07-31 08:19:13.341 [main] INFO  t.mybatis.mapper.autoconfigure.MapperCacheDisabler - Clear EntityHelper entityTableMap cache.
+2019-07-31 08:19:15.731 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-07-31 08:19:15.903 [main] INFO  o.s.cloud.netflix.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2019-07-31 08:19:15.950 [main] INFO  com.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2019-07-31 08:19:17.840 [main] INFO  c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON encoding codec LegacyJacksonJson
+2019-07-31 08:19:17.840 [main] INFO  c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON decoding codec LegacyJacksonJson
+2019-07-31 08:19:18.043 [main] INFO  c.n.discovery.provider.DiscoveryJerseyProvider - Using XML encoding codec XStreamXml
+2019-07-31 08:19:18.043 [main] INFO  c.n.discovery.provider.DiscoveryJerseyProvider - Using XML decoding codec XStreamXml
+2019-07-31 08:19:18.402 [main] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-07-31 08:19:19.824 [main] INFO  com.netflix.discovery.DiscoveryClient - Disable delta property : false
+2019-07-31 08:19:19.824 [main] INFO  com.netflix.discovery.DiscoveryClient - Single vip registry refresh property : null
+2019-07-31 08:19:19.824 [main] INFO  com.netflix.discovery.DiscoveryClient - Force full registry fetch : false
+2019-07-31 08:19:19.824 [main] INFO  com.netflix.discovery.DiscoveryClient - Application is null : false
+2019-07-31 08:19:19.824 [main] INFO  com.netflix.discovery.DiscoveryClient - Registered Applications size is zero : true
+2019-07-31 08:19:19.824 [main] INFO  com.netflix.discovery.DiscoveryClient - Application version is -1: true
+2019-07-31 08:19:19.824 [main] INFO  com.netflix.discovery.DiscoveryClient - Getting all instance registry info from the eureka server
+2019-07-31 08:19:20.245 [main] INFO  com.netflix.discovery.DiscoveryClient - The response status is 200
+2019-07-31 08:19:20.245 [main] INFO  com.netflix.discovery.DiscoveryClient - Starting heartbeat executor: renew interval is: 5
+2019-07-31 08:19:20.245 [main] INFO  com.netflix.discovery.InstanceInfoReplicator - InstanceInfoReplicator onDemand update allowed rate per min is 4
+2019-07-31 08:19:20.261 [main] INFO  com.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1564532360245 with initial instances count: 2
+2019-07-31 08:19:20.261 [main] INFO  o.s.c.n.e.serviceregistry.EurekaServiceRegistry - Registering application ITEM-SERVICE with eureka with status UP
+2019-07-31 08:19:20.261 [main] INFO  com.netflix.discovery.DiscoveryClient - Saw local status change event StatusChangeEvent [timestamp=1564532360261, current=UP, previous=STARTING]
+2019-07-31 08:19:20.261 [DiscoveryClient-InstanceInfoReplicator-0] INFO  com.netflix.discovery.DiscoveryClient - DiscoveryClient_ITEM-SERVICE/item-service:8081: registering service...
+2019-07-31 08:19:20.339 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8081 (http) with context path ''
+2019-07-31 08:19:20.339 [main] INFO  o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 8081
+2019-07-31 08:19:20.355 [main] INFO  com.mallfe.MfItemService - Started MfItemService in 21.129 seconds (JVM running for 25.12)
+2019-07-31 08:19:20.355 [DiscoveryClient-InstanceInfoReplicator-0] INFO  com.netflix.discovery.DiscoveryClient - DiscoveryClient_ITEM-SERVICE/item-service:8081 - registration status: 204
+2019-07-31 08:19:22.307 [RMI TCP Connection(1)-192.168.56.1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-07-31 08:19:22.307 [RMI TCP Connection(1)-192.168.56.1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2019-07-31 08:19:22.307 [RMI TCP Connection(2)-192.168.56.1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2019-07-31 08:19:22.339 [RMI TCP Connection(1)-192.168.56.1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 32 ms
+2019-07-31 08:19:26.666 [RMI TCP Connection(2)-192.168.56.1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2019-07-31 08:24:19.843 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-07-31 08:29:19.844 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-07-31 08:34:19.852 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-07-31 08:39:19.860 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2019-07-31 08:44:19.870 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration

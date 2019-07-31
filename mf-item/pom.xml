@@ -12,6 +12,7 @@
     <groupId>com.mallfe.service</groupId>
     <artifactId>mf-item</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>mf-item-interface</module>
         <module>mf-item-service</module>
