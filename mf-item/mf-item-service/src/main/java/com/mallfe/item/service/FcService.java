@@ -92,7 +92,7 @@ public class FcService {
             for(FcDetail mx: fc.getList()){
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
-                kc.setLx(fc.getLx());
+                kc.setLx(fc.getLx().ordinal());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
                 if(result == null){
@@ -108,7 +108,7 @@ public class FcService {
                 kucnOut.setYwbm("FC");
                 kucnOut.setSl(mx.getSl());
                 kucnOut.setLsh(fc.getLsh());
-                kucnOut.setLx(fc.getLx());
+                kucnOut.setLx(fc.getLx().ordinal());
                 //插入出库记录
                 kucnOutMapper.insert(kucnOut);
             }

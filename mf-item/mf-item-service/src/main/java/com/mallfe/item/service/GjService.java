@@ -93,7 +93,7 @@ public class GjService {
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
                 //kc.setKucn(mx.getSl());
-                kc.setLx(gj.getLx());
+                kc.setLx(gj.getLx().ordinal());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
                 if(result == null){
@@ -108,7 +108,7 @@ public class GjService {
                 kucnIn.setYwbm("GJ");
                 kucnIn.setSl(mx.getSl());
                 kucnIn.setLsh(gj.getLsh());
-                kucnIn.setLx(gj.getLx());
+                kucnIn.setLx(gj.getLx().ordinal());
                 //插入入库记录
                 kucnInMapper.insert(kucnIn);
             }

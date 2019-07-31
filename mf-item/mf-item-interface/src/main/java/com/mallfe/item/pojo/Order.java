@@ -1,5 +1,6 @@
 package com.mallfe.item.pojo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
@@ -50,5 +51,6 @@ class Order {
     /**
      * 类型
      */
-    private Integer lx;
+    @JsonProperty("lx")
+    private GoodsTypeEnum lx;
 }
