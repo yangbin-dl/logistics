@@ -80,6 +80,10 @@ public class WlBill {
      */
     private Integer status;
 
-
+    /**
+     * 状态描述
+     */
+    @Transient
+    private String statusInfo;
 
 }

@@ -20,8 +20,5 @@ public class Ps extends WlBill {
     private List<PsDetail> list;
 
     @Transient
-    private String statusMsg;
-
-    @Transient
     private List<Xs> xsList;
 }

@@ -5,6 +5,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 描述
@@ -33,4 +34,9 @@ public class Path {
      * 状态，0-禁用，1-可用
      */
     private Integer status;
+    /**
+     * 状态描述
+     */
+    @Transient
+    private String statusInfo;
 }

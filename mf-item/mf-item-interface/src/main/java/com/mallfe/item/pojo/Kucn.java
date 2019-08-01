@@ -5,6 +5,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 描述
@@ -28,6 +29,11 @@ public class Kucn {
      * 类型
      */
     private Integer lx;
+    /**
+     * 类型描述
+     */
+    @Transient
+    private String lxInfo;
 
     /**
      * 库存

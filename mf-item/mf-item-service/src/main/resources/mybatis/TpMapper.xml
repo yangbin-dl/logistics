@@ -15,7 +15,7 @@
         when 1 then '已发出'
         when 2 then '已送达'
         when 9 then '已作废'
-        end as statusMsg
+        end as statusInfo
         from mf_tp a left join mf_driver b on a.driver_code = b.driver_code
         left join mf_path c on a.path_code = c.path_code
         <where>
