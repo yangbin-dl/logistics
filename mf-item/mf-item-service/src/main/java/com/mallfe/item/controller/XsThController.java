@@ -170,9 +170,11 @@ public class XsThController {
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "lruserid", required = false) String lruserid,
             @RequestParam(value = "phone", required = false) String phone,
-            @RequestParam(value = "contact", required = false) String contact
+            @RequestParam(value = "hh", required = false) Integer hh,
+            @RequestParam(value = "lsh", required = false) String lsh
+
     ) {
-        JsonObject result = xsThService.queryAll(page, lruserid, phone, contact);
+        JsonObject result = xsThService.queryAll(page, lruserid, phone, hh, lsh);
         return result;
     }
 
