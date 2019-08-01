@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -102,21 +101,11 @@ public class XsThService {
     public PageResult<Xs> queryXsByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
         //分页
         PageHelper.startPage(page, rows);
-        //条件过滤
-        Example example = new Example(Xs.class);
-        if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("lsh",key+"%")
-                    .orLike("truename","%"+key+"%")
-                    .orLike("contact","%"+key+"%");
-        }
-        //排序
-        if(StringUtils.isNotBlank(sortBy)){
-            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
 
         //查询
-        List<Xs> list = xsMapper.selectByExample(example);
+        List<Xs> list = xsMapper.selectXs(key);
+
+
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -130,21 +119,8 @@ public class XsThService {
     public PageResult<Th> queryThByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
         //分页
         PageHelper.startPage(page, rows);
-        //条件过滤
-        Example example = new Example(Th.class);
-        if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("lsh",key+"%")
-                    .orLike("truename","%"+key+"%")
-                    .orLike("contact","%"+key+"%");
-        }
-        //排序
-        if(StringUtils.isNotBlank(sortBy)){
-            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
 
-        //查询
-        List<Th> list = thMapper.selectByExample(example);
+        List<Th> list = thMapper.selectTh(key);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -205,29 +181,11 @@ public class XsThService {
         //分页
         PageHelper.startPage(page, 10);
         //条件过滤
-        Example example = new Example(Th.class);
-        if(StringUtils.isNotBlank(lruserid)){
-            example.createCriteria().andEqualTo("lrid",lruserid);
-        }
 
-        if(StringUtils.isNotBlank(phone)){
-            example.createCriteria().andEqualTo("phone",phone);
-        }
-
-        if(StringUtils.isNotBlank(lsh)){
-            example.createCriteria().andEqualTo("lsh",lsh);
-        }
-
-        if(hh != null){
-            example.createCriteria().andEqualTo("hh",hh);
-        }
-        //排序
-
-        example.setOrderByClause("lrsj desc");
         //查询
-        List<AllBill> list = allBillMapper.selectByExample(example);
+        List<AllBill> list = xsMapper.selectAllBill(lruserid,phone,lsh,hh);
         if(CollectionUtils.isEmpty(list)){
-            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+            return new JsonError("未查询到单据！");
         }
 
         //解析分页结果

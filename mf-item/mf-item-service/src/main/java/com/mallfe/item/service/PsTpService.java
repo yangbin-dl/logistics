@@ -259,9 +259,7 @@ public class PsTpService {
     public void deleteTp(Tp tp) {
         //修改销售单为待配送
         try {
-            for (TpDetail mx: tp.getList()) {
-                thMapper.updateStatusToUnTp(tp.getLsh());
-            }
+            thMapper.updateStatusToUnTp(tp.getLsh());
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
@@ -325,7 +323,11 @@ public class PsTpService {
     public Tp queryTpByLsh(String lsh) {
         Tp tp = new Tp();
         tp.setLsh(lsh);
-        tp = tpMapper.selectOne(tp);
+
+        List<Tp> t = tpMapper.selectTp(null,lsh);
+        if(!t.isEmpty()){
+            tp = t.get(0);
+        }
         tp.setThList(thMapper.selectThWithLsh(lsh));
         return tp;
     }

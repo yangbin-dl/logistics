@@ -1,5 +1,6 @@
 package com.mallfe.item.mapper;
 
+import com.mallfe.item.pojo.AllBill;
 import com.mallfe.item.pojo.Xs;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
@@ -53,4 +54,11 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
     List<Xs> selectXsWithLsh(@Param("lsh") String lsh);
 
     List<Xs> selectXsWithLshForRk(@Param("lsh") String lsh);
+
+    List<Xs> selectXs(@Param("key") String key);
+
+    List<AllBill> selectAllBill(@Param("lrid") String lrid,
+                                @Param("phone")String phone,
+                                @Param("lsh") String lsh,
+                                @Param("hh") Integer hh);
 }

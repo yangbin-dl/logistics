@@ -46,4 +46,6 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
     int updateStatusToUnTp(@Param("lsh") String lsh);
 
     List<Th> selectThWithLsh(@Param("lsh") String lsh);
+
+    List<Th> selectTh(@Param("key") String key);
 }

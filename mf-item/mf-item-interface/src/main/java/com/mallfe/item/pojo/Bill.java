@@ -44,6 +44,12 @@ public class Bill {
     private Integer status;
 
     /**
+     * 状态描述
+     */
+    @Transient
+    private String statusInfo;
+
+    /**
      * 录入时间
      */
     private String lrsj;
