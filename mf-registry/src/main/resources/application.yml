@@ -1,3 +1,6 @@
+
 spring:
+  application:
+    name: mf-registry
   profiles:
     active: dev

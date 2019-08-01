@@ -1,8 +1,6 @@
 server:
   port: 8081
 spring:
-  application:
-    name: item-service
   datasource:
     url: jdbc:mysql://rm-m5es50j9lfj56x323jo.mysql.rds.aliyuncs.com:3306/logistics?allowMulitQueries=true&useUnicode=true&characterEncoding=utf8
     username: logiuser
@@ -25,3 +23,12 @@ mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations: classpath*:/mybatis/*.xml
+# 开启和暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
