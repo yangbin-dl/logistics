@@ -68,6 +68,8 @@ public class PsTpService {
         //获取流水号
         String lsh = commonService.getLsh("PS");
         ps.setLsh(lsh);
+        ps.setStatus(0);
+        ps.setLrsj(CommonService.getStringDate());
 
         //插入单据
         try {
@@ -159,7 +161,7 @@ public class PsTpService {
         //获取流水号
         String lsh = commonService.getLsh("TP");
         tp.setLsh(lsh);
-
+        tp.setStatus(0);
         tp.setLrsj(CommonService.getStringDate());
 
         //插入单据
@@ -290,8 +292,7 @@ public class PsTpService {
         }
 
         //查询
-//        List<Ps> list = psMapper.selectByExample(example);
-        List<Ps> list = psMapper.selectPs(0);
+        List<Ps> list = psMapper.selectPs(0,null);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -334,7 +335,11 @@ public class PsTpService {
     public Ps queryPsByLsh(String lsh) {
         Ps ps = new Ps();
         ps.setLsh(lsh);
-        ps = psMapper.selectOne(ps);
+
+        List<Ps> t = psMapper.selectPs(null,lsh);
+        if(!t.isEmpty()){
+            ps = t.get(0);
+        }
 
         ps.setXsList(xsMapper.selectXsWithLsh(lsh));
         return ps;
@@ -448,7 +453,13 @@ public class PsTpService {
     }
 
     public Psrk queryPsrkByLsh(String lsh) {
-        return null;
+
+        Psrk psrk = new Psrk();
+        psrk.setLsh(lsh);
+        psrk = psrkMapper.selectOne(psrk);
+
+        psrk.setXsList(xsMapper.selectXsWithLshForRk(lsh));
+        return psrk;
 
     }
 }

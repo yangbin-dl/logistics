@@ -1,5 +1,6 @@
 package com.mallfe.item.controller;
 
+import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.User;
 import com.mallfe.item.service.UserService;
@@ -57,6 +58,12 @@ public class UserController {
     public ResponseEntity<User> login(@RequestParam("username") String username,
                                           @RequestParam("password") String password) {
         return ResponseEntity.ok(userService.verify(username, password));
+    }
+
+    @GetMapping("find")
+    public JsonObject checkUser(@RequestParam("username") String username,
+                                @RequestParam("password") String password) {
+        return userService.checkUser(username, password);
     }
 
 

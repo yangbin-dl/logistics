@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 描述
@@ -15,6 +16,9 @@ import javax.persistence.Table;
 @Data
 @Table(name="mf_xs")
 public class Xs extends Bill {
+    @Transient
+    private String statusMsg;
+
 
 
 }

@@ -1,8 +1,7 @@
 package com.mallfe.item.controller;
 
+import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.item.pojo.AllBill;
-import com.mallfe.item.pojo.Consumer;
 import com.mallfe.item.pojo.Th;
 import com.mallfe.item.pojo.Xs;
 import com.mallfe.item.service.XsThService;
@@ -167,19 +166,19 @@ public class XsThController {
     }
 
     @GetMapping("pageall")
-    public ResponseEntity<PageResult<AllBill>> queryAll(
+    public JsonObject queryAll(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "lruserid", required = false) String lruserid,
             @RequestParam(value = "phone", required = false) String phone,
             @RequestParam(value = "contact", required = false) String contact
     ) {
-        PageResult<AllBill> result = xsThService.queryAll(page, lruserid, phone, contact);
-        return ResponseEntity.ok(result);
+        JsonObject result = xsThService.queryAll(page, lruserid, phone, contact);
+        return result;
     }
 
     @GetMapping("phone")
-    public ResponseEntity<Consumer> queryByPhone(@RequestParam("phone") String phone) {
-        return ResponseEntity.ok(xsThService.queryByPhone(phone));
+    public JsonObject queryByPhone(@RequestParam("phone") String phone) {
+        return xsThService.queryByPhone(phone);
     }
 
     @GetMapping("psmx")
@@ -190,5 +189,66 @@ public class XsThController {
     @GetMapping("tpmx")
     public ResponseEntity<List<Th>> queryThForTp(@RequestParam(value = "lsh", required = false) String lsh){
         return ResponseEntity.ok(xsThService.queryThForTp(lsh));
+    }
+
+    /**
+     * App销售单新增
+     * @param xs
+     * @return
+     */
+    @PostMapping("appinsertxs")
+    public JsonObject appInsertXs(@RequestBody Xs xs){
+        return xsThService.appInsertXs(xs);
+    }
+
+    /**
+     * App退货单新增
+     * @param th
+     * @return
+     */
+    @PostMapping("appinsertth")
+    public JsonObject appInsertTh(@RequestBody Th th){
+
+        return xsThService.appInsertTh(th);
+    }
+
+    /**
+     * App销售单提交
+     * @param xs
+     * @return
+     */
+    @PostMapping("appcommitxs")
+    public JsonObject appCommitXs(@RequestBody Xs xs){
+        return xsThService.appCommitXs(xs);
+    }
+
+    /**
+     * App退货单提交
+     * @param th
+     * @return
+     */
+    @PostMapping("appcommitth")
+    public JsonObject appCommitTh(@RequestBody Th th){
+        return xsThService.appCommitTh(th);
+    }
+
+    /**
+     * App查询销售明细
+     * @param lsh
+     * @return
+     */
+    @GetMapping("appqueryxs")
+    public JsonObject appQueryXs(@RequestParam("lsh") String lsh) {
+        return xsThService.appQueryXs(lsh);
+    }
+
+    /**
+     * App查询退货明细
+     * @param lsh
+     * @return
+     */
+    @GetMapping("appqueryth")
+    public JsonObject appQueryTh(@RequestParam("lsh") String lsh) {
+        return xsThService.appQueryTh(lsh);
     }
 }

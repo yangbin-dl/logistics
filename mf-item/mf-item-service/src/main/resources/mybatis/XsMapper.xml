@@ -31,11 +31,26 @@
     </update>
 
     <select id="selectXsWithLsh" resultType="com.mallfe.item.pojo.Xs">
+        select b.id, b.lsh , b.hh, b.sl, b.lx, b.province, b.city, b.district, b.location, b.phone,
+               b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, a.status,
+               b.driver_code, b.path_code,
+               b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,
+               c.pinm,c.xingh,c.tm,
+               case a.status when 0 then '配送中' when 1 then '已送达' when 2 then '未送达' end as statusMsg
+        From mf_ps_mx a left join mf_xs b on a.ddh = b.lsh
+                        left join mf_sp c on b.hh=c.hh
+        where a.lsh = #{lsh}
+    </select>
+    <select id="selectXsWithLshForRk" resultType="com.mallfe.item.pojo.Xs">
         select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, b.location, b.phone,
                b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, a.status,
                b.driver_code, b.path_code,
                b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj
-        From mf_ps_mx a left join mf_xs b on a.ddh = b.lsh
+                ,
+               c.pinm,c.xingh,c.tm,
+               case a.status when 0 then '配送中' when 1 then '已送达' when 2 then '未送达' end as statusMsg
+        From mf_psrk_mx a left join mf_xs b on a.ddh = b.lsh
+                          left join mf_sp c on b.hh=c.hh
         where a.lsh = #{lsh}
     </select>
 

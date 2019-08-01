@@ -4,6 +4,7 @@ import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  * 描述
@@ -111,4 +112,19 @@ public class Bill {
      * 送货路线
      */
     private String pathCode;
+
+    @Transient
+    private String pinm;
+    @Transient
+    private String xingh;
+    @Transient
+    private String tm;
+    @Transient
+    private Long zhongl;
+    @Transient
+    private Long chang;
+    @Transient
+    private Long kuan;
+    @Transient
+    private Long gao;
 }

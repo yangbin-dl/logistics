@@ -8,17 +8,31 @@
     </update>
 
     <update id="updateStatusToOut">
-        update mf_ps set status = 1 where lsh = #{lsh} and status = 0
+        update mf_ps set status = 1,fcsj = now() where lsh = #{lsh} and status = 0
     </update>
     <update id="updateStatusToFinish">
-        update mf_ps set status = 2 where lsh = #{lsh} and status = 1
+        update mf_ps set status = 2,sdsj = now() where lsh = #{lsh} and status = 1
     </update>
     <select id="selectPs" resultType="com.mallfe.item.pojo.Ps">
-        select lsh,a.lrid,concat(a.driver_code,'-',b.driver_name) as driverCode,
-               concat(a.path_code,'-',c.path_name) as pathCode,a.lrsj,a.fcsj,a.status
+        select a.id,a.lsh,a.driver_code as driverCode,b.driver_name as driverName,
+               a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.status,
+               a.lrid,a.lrusername,a.truename,
+               case a.status
+                   when 0 then '新增'
+                   when 1 then '已发出'
+                   when 2 then '已送达'
+                   when 9 then '已作废'
+               end as statusMsg
         from mf_ps a left join mf_driver b on a.driver_code = b.driver_code
         left join mf_path c on a.path_code = c.path_code
-
+        <where>
+            <if test="lsh != null">
+                a.lsh = #{lsh}
+            </if>
+            <if test="status != null">
+                and a.status = #{status}
+            </if>
+        </where>
         order by a.lsh desc
 
     </select>
