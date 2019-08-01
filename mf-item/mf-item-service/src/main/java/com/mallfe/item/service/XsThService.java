@@ -201,7 +201,7 @@ public class XsThService {
         return th;
     }
 
-    public JsonObject queryAll(Integer page, String lruserid, String phone, String contact) {
+    public JsonObject queryAll(Integer page, String lruserid, String phone, Integer hh, String lsh) {
         //分页
         PageHelper.startPage(page, 10);
         //条件过滤
@@ -214,8 +214,12 @@ public class XsThService {
             example.createCriteria().andEqualTo("phone",phone);
         }
 
-        if(StringUtils.isNotBlank(contact)){
-            example.createCriteria().andEqualTo("contact",contact);
+        if(StringUtils.isNotBlank(lsh)){
+            example.createCriteria().andEqualTo("lsh",lsh);
+        }
+
+        if(hh != null){
+            example.createCriteria().andEqualTo("hh",hh);
         }
         //排序
 
