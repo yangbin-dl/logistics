@@ -118,9 +118,9 @@ public class XsThController {
      * @return
      */
     @PostMapping("commitxs")
-    public ResponseEntity<Null> commitXs(@RequestBody Xs xs){
-        xsThService.commitXs(xs);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public JsonObject commitXs(@RequestBody Xs xs){
+
+        return xsThService.commitXs(xs);
     }
 
     /**
@@ -129,9 +129,9 @@ public class XsThController {
      * @return
      */
     @PostMapping("deletexs")
-    public ResponseEntity<Null> deleteXs(@RequestBody Xs xs){
-        xsThService.deleteXs(xs);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public JsonObject deleteXs(@RequestBody Xs xs){
+
+        return xsThService.deleteXs(xs);
     }
 
     /**
@@ -140,9 +140,9 @@ public class XsThController {
      * @return
      */
     @PostMapping("committh")
-    public ResponseEntity<Null> commitTh(@RequestBody Th th){
-        xsThService.commitTh(th);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public JsonObject commitTh(@RequestBody Th th){
+
+        return xsThService.commitTh(th);
     }
 
     /**
@@ -151,9 +151,9 @@ public class XsThController {
      * @return
      */
     @PostMapping("deleteth")
-    public ResponseEntity<Null> deleteTh(@RequestBody Th th){
-        xsThService.deleteTh(th);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public JsonObject deleteTh(@RequestBody Th th){
+
+        return xsThService.deleteTh(th);
     }
 
     @GetMapping("queryxs")

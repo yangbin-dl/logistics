@@ -131,36 +131,48 @@ public class XsThService {
         return new PageResult<>(info.getTotal(), list);
     }
 
-    public void commitXs(Xs xs){
+    public JsonObject commitXs(Xs xs){
         try {
-            xsMapper.updateStatusToCommited(xs);
+            if(xsMapper.updateStatusToCommited(xs)!=1){
+                return new JsonError("单据状态异常，提交失败！");
+            }
         } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            return new JsonError("系统异常，提交失败！");
         }
+        return new JsonData("提交成功！");
     }
 
-    public void deleteXs(Xs xs){
+    public JsonObject deleteXs(Xs xs){
         try {
-            xsMapper.updateStatusToCancel(xs);
+            if(xsMapper.updateStatusToCancel(xs)!=1){
+                return new JsonError("单据状态异常，作废失败！");
+            }
         } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            return new JsonError("系统异常，作废失败！");
         }
+        return new JsonData("作废成功！");
     }
 
-    public void commitTh(Th th){
+    public JsonObject commitTh(Th th){
         try {
-            thMapper.updateStatusToCommited(th);
+            if(thMapper.updateStatusToCommited(th)!=1){
+                return new JsonError("单据状态异常，提交失败！");
+            }
         } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            return new JsonError("系统异常，提交失败！");
         }
+        return new JsonData("提交成功！");
     }
 
-    public void deleteTh(Th th){
+    public JsonObject deleteTh(Th th){
         try {
-            thMapper.updateStatusToCancel(th);
+            if(thMapper.updateStatusToCancel(th)!=1) {
+                return new JsonError("单据状态异常，作废失败！");
+            }
         } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            return new JsonError("系统异常，作废失败！");
         }
+        return new JsonData("作废成功！");
     }
 
     public AllBill queryBill(String lsh){
