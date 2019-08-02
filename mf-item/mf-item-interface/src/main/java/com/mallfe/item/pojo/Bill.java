@@ -65,6 +65,12 @@ public class Bill {
     private Integer lx;
 
     /**
+     * 类型
+     */
+    @Transient
+    private String lxInfo;
+
+    /**
      * 数量
      */
     private Integer sl;

@@ -103,7 +103,7 @@ public class XsThService {
         PageHelper.startPage(page, rows);
 
         //查询
-        List<Xs> list = xsMapper.selectXsList(key);
+        List<Xs> list = xsMapper.selectXsList(key,null);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -120,7 +120,7 @@ public class XsThService {
         //分页
         PageHelper.startPage(page, rows);
 
-        List<Th> list = thMapper.selectTh(key);
+        List<Th> list = thMapper.selectThList(key,null);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -210,9 +210,7 @@ public class XsThService {
         if(StringUtils.isNotBlank(lsh)){
             list = xsMapper.selectXsWithLsh(lsh);
         } else{
-            Xs xs = new Xs();
-            xs.setStatus(1);
-            list = xsMapper.select(xs);
+            list = xsMapper.selectXsList(null,1);
         }
 
         return list;
@@ -282,16 +280,12 @@ public class XsThService {
     }
 
     public JsonObject appQueryXs(String lsh) {
-        Xs xs = new Xs();
-        xs.setLsh(lsh);
-        xs = xsMapper.selectOne(xs);
-        return new JsonData(xs);
+        AllBill bill = xsMapper.selectOneBill(lsh);
+        return new JsonData(bill);
     }
 
     public JsonObject appQueryTh(String lsh) {
-        Th th = new Th();
-        th.setLsh(lsh);
-        th =thMapper.selectOne(th);
-        return new JsonData(th);
+        AllBill bill = xsMapper.selectOneBill(lsh);
+        return new JsonData(bill);
     }
 }
