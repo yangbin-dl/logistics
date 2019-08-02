@@ -52,7 +52,7 @@
                           left join mf_sp c on b.hh=c.hh
         where a.lsh = #{lsh}
     </select>
-    <select id="selectXs" resultType="com.mallfe.item.pojo.Xs">
+    <select id="selectXsList" resultType="com.mallfe.item.pojo.Xs">
         select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, b.location, b.phone,
                b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, b.status,
                b.driver_code, b.path_code,

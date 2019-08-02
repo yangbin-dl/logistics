@@ -103,7 +103,7 @@ public class XsThService {
         PageHelper.startPage(page, rows);
 
         //查询
-        List<Xs> list = xsMapper.selectXs(key);
+        List<Xs> list = xsMapper.selectXsList(key);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -163,18 +163,15 @@ public class XsThService {
         }
     }
 
-    public Xs queryXs(String lsh){
-        Xs xs = new Xs();
-        xs.setLsh(lsh);
-        xs = xsMapper.selectOne(xs);
-        return xs;
-    }
+    public AllBill queryBill(String lsh){
+        AllBill bill= new AllBill();
 
-    public Th queryTh(String lsh) {
-        Th th = new Th();
-        th.setLsh(lsh);
-        th =thMapper.selectOne(th);
-        return th;
+        List<AllBill> billList = xsMapper.selectAllBill(null,null,lsh,null);
+
+        if(billList != null){
+            return billList.get(0);
+        }
+        return bill;
     }
 
     public JsonObject queryAll(Integer page, String lruserid, String phone, Integer hh, String lsh) {

@@ -2,6 +2,7 @@ package com.mallfe.item.controller;
 
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
+import com.mallfe.item.pojo.AllBill;
 import com.mallfe.item.pojo.Th;
 import com.mallfe.item.pojo.Xs;
 import com.mallfe.item.service.XsThService;
@@ -156,13 +157,13 @@ public class XsThController {
     }
 
     @GetMapping("queryxs")
-    public ResponseEntity<Xs> queryXs(@RequestParam("lsh") String lsh) {
-        return ResponseEntity.ok(xsThService.queryXs(lsh));
+    public ResponseEntity<AllBill> queryXs(@RequestParam("lsh") String lsh) {
+        return ResponseEntity.ok(xsThService.queryBill(lsh));
     }
 
     @GetMapping("queryth")
-    public ResponseEntity<Th> queryTh(@RequestParam("lsh") String lsh) {
-        return ResponseEntity.ok(xsThService.queryTh(lsh));
+    public ResponseEntity<AllBill> queryTh(@RequestParam("lsh") String lsh) {
+        return ResponseEntity.ok(xsThService.queryBill(lsh));
     }
 
     @GetMapping("pageall")
