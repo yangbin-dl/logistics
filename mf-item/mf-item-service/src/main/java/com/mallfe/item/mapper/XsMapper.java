@@ -61,4 +61,6 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
                                 @Param("phone")String phone,
                                 @Param("lsh") String lsh,
                                 @Param("hh") Integer hh);
+
+    AllBill selectOneBill(@Param("lsh") String lsh);
 }

@@ -164,13 +164,9 @@ public class XsThService {
     }
 
     public AllBill queryBill(String lsh){
-        AllBill bill= new AllBill();
 
-        List<AllBill> billList = xsMapper.selectAllBill(null,null,lsh,null);
+        AllBill bill = xsMapper.selectOneBill(lsh);
 
-        if(billList != null){
-            return billList.get(0);
-        }
         return bill;
     }
 
