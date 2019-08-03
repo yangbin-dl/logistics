@@ -4,6 +4,8 @@ import com.mallfe.item.pojo.Tp;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
  * 描述
  *
@@ -18,4 +20,6 @@ public interface TpMapper extends Mapper<Tp> {
      * @return
      */
     int updateStatusToCancel(@Param("lsh") String lsh);
+
+    List<Tp> selectTp(@Param("status")Integer status, @Param("lsh") String lsh);
 }

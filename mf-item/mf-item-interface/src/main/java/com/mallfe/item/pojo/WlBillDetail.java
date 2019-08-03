@@ -2,6 +2,8 @@ package com.mallfe.item.pojo;
 
 import lombok.Data;
 
+import javax.persistence.Transient;
+
 /**
  * 描述
  *
@@ -25,5 +27,10 @@ public class WlBillDetail {
      * 送达状态，0-配送中，1-送达，2-未送达
      */
     private Integer status;
+    /**
+     * 状态描述
+     */
+    @Transient
+    private String statusInfo;
 
 }

@@ -132,7 +132,7 @@ public class ItemService {
             return new JsonError("商品未找到");
         }
 
-        return new JsonData(sp);
+        return new JsonData(t);
 
     }
 }

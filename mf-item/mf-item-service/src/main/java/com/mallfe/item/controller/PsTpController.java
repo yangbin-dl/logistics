@@ -91,9 +91,10 @@ public class PsTpController {
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
             @RequestParam(value = "sortBy", required = false) String sortBy,
             @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
-            @RequestParam(value = "key", required = false) String key
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "status", required = false) Integer status
     ) {
-        PageResult<Ps> result = psTpService.queryPsByPage(page, rows, sortBy, desc, key);
+        PageResult<Ps> result = psTpService.queryPsByPage(page,rows, status);
         return ResponseEntity.ok(result);
     }
 
@@ -103,9 +104,10 @@ public class PsTpController {
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
             @RequestParam(value = "sortBy", required = false) String sortBy,
             @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
-            @RequestParam(value = "key", required = false) String key
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "status", required = false) Integer status
     ) {
-        PageResult<Tp> result = psTpService.queryTpByPage(page, rows, sortBy, desc, key);
+        PageResult<Tp> result = psTpService.queryTpByPage(page, rows, status);
         return ResponseEntity.ok(result);
     }
 

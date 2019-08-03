@@ -3,6 +3,7 @@ package com.mallfe.item.pojo;
 import lombok.Data;
 
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 描述
@@ -33,6 +34,12 @@ public class AllBill {
     private Integer status;
 
     /**
+     * 状态描述
+     */
+    @Transient
+    private String statusInfo;
+
+    /**
      * 录入时间
      */
     private String lrsj;
@@ -45,7 +52,7 @@ public class AllBill {
     /**
      * 类型
      */
-    private String lx;
+    private Integer lx;
 
     /**
      * 数量

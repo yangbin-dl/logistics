@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import tk.mybatis.mapper.entity.Example;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -102,21 +101,11 @@ public class XsThService {
     public PageResult<Xs> queryXsByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
         //分页
         PageHelper.startPage(page, rows);
-        //条件过滤
-        Example example = new Example(Xs.class);
-        if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("lsh",key+"%")
-                    .orLike("truename","%"+key+"%")
-                    .orLike("contact","%"+key+"%");
-        }
-        //排序
-        if(StringUtils.isNotBlank(sortBy)){
-            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
 
         //查询
-        List<Xs> list = xsMapper.selectByExample(example);
+        List<Xs> list = xsMapper.selectXsList(key,null);
+
+
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -130,21 +119,8 @@ public class XsThService {
     public PageResult<Th> queryThByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
         //分页
         PageHelper.startPage(page, rows);
-        //条件过滤
-        Example example = new Example(Th.class);
-        if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("lsh",key+"%")
-                    .orLike("truename","%"+key+"%")
-                    .orLike("contact","%"+key+"%");
-        }
-        //排序
-        if(StringUtils.isNotBlank(sortBy)){
-            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
 
-        //查询
-        List<Th> list = thMapper.selectByExample(example);
+        List<Th> list = thMapper.selectThList(key,null);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -155,75 +131,66 @@ public class XsThService {
         return new PageResult<>(info.getTotal(), list);
     }
 
-    public void commitXs(Xs xs){
+    public JsonObject commitXs(Xs xs){
         try {
-            xsMapper.updateStatusToCommited(xs);
+            if(xsMapper.updateStatusToCommited(xs)!=1){
+                return new JsonError("单据状态异常，提交失败！");
+            }
         } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            return new JsonError("系统异常，提交失败！");
         }
+        return new JsonData("提交成功！");
     }
 
-    public void deleteXs(Xs xs){
+    public JsonObject deleteXs(Xs xs){
         try {
-            xsMapper.updateStatusToCancel(xs);
+            if(xsMapper.updateStatusToCancel(xs)!=1){
+                return new JsonError("单据状态异常，作废失败！");
+            }
         } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            return new JsonError("系统异常，作废失败！");
         }
+        return new JsonData("作废成功！");
     }
 
-    public void commitTh(Th th){
+    public JsonObject commitTh(Th th){
         try {
-            thMapper.updateStatusToCommited(th);
+            if(thMapper.updateStatusToCommited(th)!=1){
+                return new JsonError("单据状态异常，提交失败！");
+            }
         } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            return new JsonError("系统异常，提交失败！");
         }
+        return new JsonData("提交成功！");
     }
 
-    public void deleteTh(Th th){
+    public JsonObject deleteTh(Th th){
         try {
-            thMapper.updateStatusToCancel(th);
+            if(thMapper.updateStatusToCancel(th)!=1) {
+                return new JsonError("单据状态异常，作废失败！");
+            }
         } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            return new JsonError("系统异常，作废失败！");
         }
+        return new JsonData("作废成功！");
     }
 
-    public Xs queryXs(String lsh){
-        Xs xs = new Xs();
-        xs.setLsh(lsh);
-        xs = xsMapper.selectOne(xs);
-        return xs;
+    public AllBill queryBill(String lsh){
+
+        AllBill bill = xsMapper.selectOneBill(lsh);
+
+        return bill;
     }
 
-    public Th queryTh(String lsh) {
-        Th th = new Th();
-        th.setLsh(lsh);
-        th =thMapper.selectOne(th);
-        return th;
-    }
-
-    public JsonObject queryAll(Integer page, String lruserid, String phone, String contact) {
+    public JsonObject queryAll(Integer page, String lruserid, String phone, Integer hh, String lsh) {
         //分页
         PageHelper.startPage(page, 10);
         //条件过滤
-        Example example = new Example(Th.class);
-        if(StringUtils.isNotBlank(lruserid)){
-            example.createCriteria().andEqualTo("lrid",lruserid);
-        }
 
-        if(StringUtils.isNotBlank(phone)){
-            example.createCriteria().andEqualTo("phone",phone);
-        }
-
-        if(StringUtils.isNotBlank(contact)){
-            example.createCriteria().andEqualTo("contact",contact);
-        }
-        //排序
-
-        example.setOrderByClause("lrsj desc");
         //查询
-        List<AllBill> list = allBillMapper.selectByExample(example);
+        List<AllBill> list = xsMapper.selectAllBill(lruserid,phone,lsh,hh);
         if(CollectionUtils.isEmpty(list)){
-            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+            return new JsonError("未查询到单据！");
         }
 
         //解析分页结果
@@ -243,9 +210,7 @@ public class XsThService {
         if(StringUtils.isNotBlank(lsh)){
             list = xsMapper.selectXsWithLsh(lsh);
         } else{
-            Xs xs = new Xs();
-            xs.setStatus(1);
-            list = xsMapper.select(xs);
+            list = xsMapper.selectXsList(null,1);
         }
 
         return list;
@@ -315,16 +280,12 @@ public class XsThService {
     }
 
     public JsonObject appQueryXs(String lsh) {
-        Xs xs = new Xs();
-        xs.setLsh(lsh);
-        xs = xsMapper.selectOne(xs);
-        return new JsonData(xs);
+        AllBill bill = xsMapper.selectOneBill(lsh);
+        return new JsonData(bill);
     }
 
     public JsonObject appQueryTh(String lsh) {
-        Th th = new Th();
-        th.setLsh(lsh);
-        th =thMapper.selectOne(th);
-        return new JsonData(th);
+        AllBill bill = xsMapper.selectOneBill(lsh);
+        return new JsonData(bill);
     }
 }
