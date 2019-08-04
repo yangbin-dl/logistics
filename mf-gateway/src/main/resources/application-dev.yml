@@ -42,5 +42,14 @@ jwt:
   #token有效期一天
   expiration: 86400
   tokenHead: "Bearer "
-  pubKeyPath: "D:\\logistics\\mf-gateway\\src\\main\\resources\\pub.key"
+  pubKeyPath: "/Users/xudong/Desktop/logistics/mf-gateway/src/main/resources/pub.key"
   cookieName: "lucky"
+filter:
+  allowPaths:
+    - /api/auth
+    - /api/search
+    - /api/user/register
+    - /api/user/check
+    - /api/user/send
+    - /api/item
+    - /api/item/user/
