@@ -38,7 +38,7 @@ public class AuthController {
      * @return
      */
     @PostMapping("accredit")
-    public ResponseEntity<Void> authorization(
+    public  ResponseEntity<UserInfo> authorization(
             @RequestParam("username") String username,
             @RequestParam("password") String password,
             HttpServletRequest request,
@@ -46,12 +46,13 @@ public class AuthController {
             ) throws Exception {
         UserInfo info = this.authService.getToken(username,password);
         String token = JwtUtils.generateToken(info, jwtProperties.getPrivateKey(), jwtProperties.getExpire());
+        info.setToken(token);
         if (StringUtils.isBlank(token)){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         //将令牌放到cookie中,httponly设置为true，防止js修改
         CookieUtils.setCookie(request,response,jwtProperties.getCookieName(),token,jwtProperties.getCookieMaxAge(),null,true);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(info);
     }
 
     /**
@@ -63,7 +64,7 @@ public class AuthController {
      */
     @GetMapping("verify")
     public ResponseEntity<UserInfo> getUserInfo(
-            @CookieValue("LY_TOKEN") String token,
+            @CookieValue("lucky") String token,
             HttpServletRequest request,
             HttpServletResponse response
     ){
