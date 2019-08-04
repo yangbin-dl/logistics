@@ -38,18 +38,12 @@ management:
 # JWT
 jwt:
   header: Authorization
-  secret: mySecret
+  secret: luck
   #token有效期一天
   expiration: 86400
-  tokenHead: "Bearer "
-  pubKeyPath: "/Users/xudong/Desktop/logistics/mf-gateway/src/main/resources/pub.key"
+  pubKeyPath: "../logistics/mf-gateway/src/main/resources/pub.key"
   cookieName: "lucky"
 filter:
   allowPaths:
-    - /api/auth
-    - /api/search
-    - /api/user/register
-    - /api/user/check
-    - /api/user/send
-    - /api/item
     - /api/item/user/
+    - /api/item/accredit

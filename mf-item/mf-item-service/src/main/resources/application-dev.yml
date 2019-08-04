@@ -39,8 +39,8 @@ management:
 
 jwt:
     secret: luck # 登录校验的密钥
-    pubKeyPath: "/Users/xudong/Desktop/logistics/mf-gateway/src/main/resources/pub.key"
-    priKeyPath: "/Users/xudong/Desktop/logistics/mf-gateway/src/main/resources/pri.key"
+    pubKeyPath: "../logistics/mf-gateway/src/main/resources/pub.key"
+    priKeyPath: "../logistics/mf-gateway/src/main/resources/pri.key"
     expire: 30 # 过期时间,单位分钟
     cookieMaxAge: 1800
     cookieName: lucky
