@@ -4,6 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
+import com.mallfe.common.json.JsonData;
+import com.mallfe.common.json.JsonError;
+import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.UserMapper;
 import com.mallfe.item.pojo.User;
@@ -132,5 +135,17 @@ public class UserService {
         Example example = new Example(User.class);
         example.createCriteria().andEqualTo("id",id);
         return  userMapper.selectOneByExample(example);
+    }
+
+    public JsonObject checkUser(String username, String password) {
+        User t =new User();
+        t.setUsername(username);
+        t.setPassword(password);
+        User user =userMapper.selectOne(t);
+        if(user == null){
+            return new JsonError("用户名或密码错误");
+        }
+
+        return new JsonData(user);
     }
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 /**
  * 描述
@@ -36,6 +37,13 @@ class Order {
      * 单据状态
      */
     private Integer status;
+
+    /**
+     * 状态描述
+     */
+    @Transient
+    private String statusInfo;
+
     /**
      * 录入时间
      */
@@ -50,5 +58,11 @@ class Order {
     /**
      * 类型
      */
-    private Integer lx;
+    private int lx;
+
+    /**
+     * 类型描述
+     */
+    @Transient
+    private String lxInfo;
 }

@@ -111,9 +111,7 @@ public class PsTpService {
 
         //修改销售单为待配送
         try {
-            for (PsDetail mx: ps.getList()) {
-                xsMapper.updateStatusToUnPs(ps.getLsh());
-            }
+            xsMapper.updateStatusToUnPs(ps.getLsh());
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
@@ -245,9 +243,7 @@ public class PsTpService {
     public void deletePs(Ps ps) {
         //修改销售单为待配送
         try {
-            for (PsDetail mx: ps.getList()) {
-                xsMapper.updateStatusToUnPs(ps.getLsh());
-            }
+            xsMapper.updateStatusToUnPs(ps.getLsh());
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
@@ -263,9 +259,7 @@ public class PsTpService {
     public void deleteTp(Tp tp) {
         //修改销售单为待配送
         try {
-            for (TpDetail mx: tp.getList()) {
-                thMapper.updateStatusToUnTp(tp.getLsh());
-            }
+            thMapper.updateStatusToUnTp(tp.getLsh());
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
@@ -277,23 +271,12 @@ public class PsTpService {
         }
     }
 
-    public PageResult<Ps> queryPsByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+    public PageResult<Ps> queryPsByPage(Integer page, Integer rows, Integer status) {
         //分页
         PageHelper.startPage(page, rows);
-        //条件过滤
-        Example example = new Example(Ps.class);
-        if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("lsh",key+"%");
-        }
-        //排序
-        if(StringUtils.isNotBlank(sortBy)){
-            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
 
         //查询
-//        List<Ps> list = psMapper.selectByExample(example);
-        List<Ps> list = psMapper.selectPs(0);
+        List<Ps> list = psMapper.selectPs(status,null);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -306,22 +289,13 @@ public class PsTpService {
         return new PageResult<>(info.getTotal(), list);
     }
 
-    public PageResult<Tp> queryTpByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+    public PageResult<Tp> queryTpByPage(Integer page, Integer rows, Integer status) {
         //分页
         PageHelper.startPage(page, rows);
-        //条件过滤
-        Example example = new Example(Tp.class);
-        if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("lsh",key+"%");
-        }
-        //排序
-        if(StringUtils.isNotBlank(sortBy)){
-            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
 
         //查询
-        List<Tp> list = tpMapper.selectByExample(example);
+        List<Tp> list = tpMapper.selectTp(status,null);
+
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -336,7 +310,11 @@ public class PsTpService {
     public Ps queryPsByLsh(String lsh) {
         Ps ps = new Ps();
         ps.setLsh(lsh);
-        ps = psMapper.selectOne(ps);
+
+        List<Ps> t = psMapper.selectPs(null,lsh);
+        if(!t.isEmpty()){
+            ps = t.get(0);
+        }
 
         ps.setXsList(xsMapper.selectXsWithLsh(lsh));
         return ps;
@@ -345,7 +323,11 @@ public class PsTpService {
     public Tp queryTpByLsh(String lsh) {
         Tp tp = new Tp();
         tp.setLsh(lsh);
-        tp = tpMapper.selectOne(tp);
+
+        List<Tp> t = tpMapper.selectTp(null,lsh);
+        if(!t.isEmpty()){
+            tp = t.get(0);
+        }
         tp.setThList(thMapper.selectThWithLsh(lsh));
         return tp;
     }

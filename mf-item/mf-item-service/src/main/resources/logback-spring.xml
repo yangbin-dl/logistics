@@ -39,22 +39,10 @@
     <springProfile name="dev">
         <root level="INFO">
             <appender-ref ref="consoleAppender" />
-            <appender-ref ref="asyncFileAppender" />
         </root>
     </springProfile>
 
-    <springProfile name="junit">
-        <root level="INFO">
-            <appender-ref ref="consoleAppender" />
-
-        </root>
-    </springProfile>
-    <springProfile name="test">
-        <root level="INFO">
-            <appender-ref ref="asyncFileAppender" />
-        </root>
-    </springProfile>
-    <springProfile name="pro">
+    <springProfile name="prod">
         <root level="INFO">
             <appender-ref ref="asyncFileAppender" />
         </root>

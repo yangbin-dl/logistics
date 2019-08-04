@@ -27,3 +27,12 @@ mybatis:
   mapper-locations: classpath*:/mybatis/*.xml
 logging:
   config: classpath:logback-spring.xml
+# 开启和暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

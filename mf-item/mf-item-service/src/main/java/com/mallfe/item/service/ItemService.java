@@ -4,6 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
+import com.mallfe.common.json.JsonData;
+import com.mallfe.common.json.JsonError;
+import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.SpMapper;
 import com.mallfe.item.pojo.Sp;
@@ -118,5 +121,18 @@ public class ItemService {
     public void modify(Sp sp) {
         //按照id修改商品信息
         spMapper.updateByPrimaryKey(sp);
+    }
+
+    public JsonObject findHh(Integer hh) {
+        Sp sp = new Sp();
+        sp.setHh(hh);
+        Sp t = spMapper.selectOne(sp);
+
+        if(t == null){
+            return new JsonError("商品未找到");
+        }
+
+        return new JsonData(t);
+
     }
 }
