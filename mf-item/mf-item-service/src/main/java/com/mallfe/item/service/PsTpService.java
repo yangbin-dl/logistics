@@ -8,6 +8,7 @@ import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.*;
 import com.mallfe.item.pojo.*;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -402,7 +403,45 @@ public class PsTpService {
 
     }
 
-    public void inStorePs(Ps ps) {
+    public void inStorePs(Psrk psrk) {
+        //更新库存
+
+        //插入库存入库记录
+
+        try {
+            //更新配送入库单状态
+            if(psrkMapper.updatePsrkStatus(psrk.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
+            }
+
+            List<PsrkDetail> list = psrkMapper.selectPsrkMx(psrk.getLsh());
+
+            for(PsrkDetail mx: list){
+                Kucn kc = new Kucn();
+                kc.setHh(mx.getHh());
+                kc.setLx(mx.getLx());
+                Kucn result = kucnMapper.selectOne(kc);
+                //更新库存
+                if(result == null){
+                    kc.setKucn(mx.getSl());
+                    kucnMapper.insert(kc);
+                }
+                else{
+                    kucnMapper.addKucn(mx.getSl(),result.getId());
+                }
+
+                KucnIn kucnIn = new KucnIn();
+                BeanUtils.copyProperties(kc,kucnIn);
+                kucnIn.setYwbm("PSRK");
+                kucnIn.setSl(mx.getSl());
+                kucnIn.setLsh(mx.getLsh());
+                kucnIn.setLx(mx.getLx());
+                //插入入库记录
+                kucnInMapper.insert(kucnIn);
+            }
+        } catch (Exception e) {
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
 
     }
 

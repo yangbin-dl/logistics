@@ -170,12 +170,12 @@ public class PsTpController {
 
     /**
      * 配送入库
-     * @param ps
+     * @param psrk
      * @return
      */
     @PostMapping("psrk")
-    public ResponseEntity<Null> inStorePs(@RequestBody Ps ps){
-        psTpService.inStorePs(ps);
+    public ResponseEntity<Null> inStorePs(@RequestBody Psrk psrk){
+        psTpService.inStorePs(psrk);
         return ResponseEntity.ok().build();
     }
 

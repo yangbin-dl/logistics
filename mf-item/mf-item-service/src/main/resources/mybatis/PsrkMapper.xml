@@ -11,6 +11,9 @@
         insert into mf_psrk_mx(lsh,ddh,status)
         select  lsh,ddh,status from mf_ps_mx where lsh=#{lsh} and status=2
     </insert>
+    <update id="updatePsrkStatus">
+        update mf_psrk set status = 3 where lsh=#{lsh} and status=2
+    </update>
     <select id="selectPsrk" resultType="com.mallfe.item.pojo.Psrk">
         select lsh,a.lrid,a.driver_code as driverCode,b.driver_name as driverName,
                lrusername, truename,
@@ -21,5 +24,10 @@
                      left join mf_path c on a.path_code = c.path_code
 
         order by a.lsh desc
+    </select>
+    <select id="selectPsrkMx" resultType="com.mallfe.item.pojo.PsrkDetail">
+        select a.lsh,a.ddh,b.sl,b.lx,b.hh from mf_psrk_mx a left join
+            mf_xs b on a.ddh=b.lsh
+            where a.lsh=#{lsh}
     </select>
 </mapper>

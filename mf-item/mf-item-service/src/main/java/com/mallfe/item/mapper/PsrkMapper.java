@@ -1,6 +1,7 @@
 package com.mallfe.item.mapper;
 
 import com.mallfe.item.pojo.Psrk;
+import com.mallfe.item.pojo.PsrkDetail;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -20,4 +21,9 @@ public interface PsrkMapper extends Mapper<Psrk> {
     int insertFromPs(@Param("lsh") String lsh);
 
     List<Psrk> selectPsrk(int i);
+
+    int updatePsrkStatus(@Param("lsh") String lsh);
+
+
+    List<PsrkDetail> selectPsrkMx(@Param("lsh")String lsh);
 }

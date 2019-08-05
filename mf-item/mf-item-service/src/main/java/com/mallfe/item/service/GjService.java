@@ -93,11 +93,11 @@ public class GjService {
             for(GjDetail mx: gj.getList()){
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
-                //kc.setKucn(mx.getSl());
                 kc.setLx(gj.getLx());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
                 if(result == null){
+                    kc.setKucn(mx.getSl());
                     kucnMapper.insert(kc);
                 }
                 else{
