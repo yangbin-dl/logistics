@@ -1,10 +1,9 @@
 package com.mallfe.item.interceptor;
 
- import com.mallfe.common.entity.UserInfo;
- import com.mallfe.common.utils.CookieUtils;
- import com.mallfe.common.utils.JwtUtils;
- import com.mallfe.item.config.JwtProperties;
- import com.sun.istack.internal.Nullable;
+import com.mallfe.common.entity.UserInfo;
+import com.mallfe.common.utils.CookieUtils;
+import com.mallfe.common.utils.JwtUtils;
+import com.mallfe.item.config.JwtProperties;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -17,9 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * @date 2018/6/13
  */
 public class LoginInterceptor extends HandlerInterceptorAdapter {
-
     private JwtProperties jwtProperties;
-
     //一个线程域，存放登陆的对象
     private static final ThreadLocal<UserInfo> t_user = new ThreadLocal<>();
 
@@ -54,7 +51,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,   Exception ex) throws Exception {
         t_user.remove();
     }
 
