@@ -13,7 +13,7 @@ import javax.persistence.Transient;
  * @since 2019-07-10
  */
 @Data
-class Order {
+public class Order {
     @Id
     @KeySql(useGeneratedKeys=true)
     private Integer id;
