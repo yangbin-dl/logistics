@@ -9,14 +9,15 @@ import com.mallfe.item.mapper.GjMapper;
 import com.mallfe.item.mapper.GjMxMapper;
 import com.mallfe.item.mapper.KucnInMapper;
 import com.mallfe.item.mapper.KucnMapper;
-import com.mallfe.item.pojo.*;
-import org.apache.commons.lang3.StringUtils;
+import com.mallfe.item.pojo.Gj;
+import com.mallfe.item.pojo.GjDetail;
+import com.mallfe.item.pojo.Kucn;
+import com.mallfe.item.pojo.KucnIn;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -120,20 +121,8 @@ public class GjService {
     public PageResult<Gj> queryGjByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
         //分页
         PageHelper.startPage(page, rows);
-        //条件过滤
-        Example example = new Example(Gj.class);
-        if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("lsh",key+"%")
-                    .orLike("truename","%"+key+"%");
-        }
-        //排序
-        if(StringUtils.isNotBlank(sortBy)){
-            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
 
-        //查询
-        List<Gj> list = gjMapper.selectByExample(example);
+        List<Gj> list = gjMapper.selectBill(key);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }

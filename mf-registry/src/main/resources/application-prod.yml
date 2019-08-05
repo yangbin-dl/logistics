@@ -1,9 +1,8 @@
 server:
   port: 10086
-spring:
-  application:
-    name: mf-registry
 eureka:
+  datacenter: prod
+  environment: prod
   client:
     #关闭eureka自我注册
     #fetch-registry: false

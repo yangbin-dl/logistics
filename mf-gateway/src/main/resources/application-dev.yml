@@ -1,9 +1,7 @@
 
 server:
   port: 10010
-spring:
-  application:
-    name: mf-gateway
+
 eureka:
   client:
     service-url:
@@ -31,10 +29,15 @@ hystrix:
         isolation:
           thread:
             timeoutInMillisecond: 5000 # 熔断超时时长：5000ms
+# 开启和暴露所有端点
 management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
   endpoint:
-    shutdown:
-      enabled: true
+    health:
+      show-details: ALWAYS
 # JWT
 jwt:
   header: Authorization

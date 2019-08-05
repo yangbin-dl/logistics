@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Update;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;
 
+import java.util.List;
+
 /**
  * 描述
  *
@@ -15,5 +17,7 @@ import tk.mybatis.mapper.common.MySqlMapper;
 public interface FcMapper extends Mapper<Fc>, MySqlMapper<Fc> {
     @Update("update mf_fc set status=#{status},cksj = now() where lsh=#{lsh} and status=0")
     int updateBillStatus(@Param("status") int status, @Param("lsh") String lsh);
+
+    List<Fc> selectBill(@Param("lsh") String lsh);
 
 }

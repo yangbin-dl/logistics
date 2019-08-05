@@ -6,6 +6,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 public class GlobalCorsConfig {
@@ -36,7 +37,13 @@ public class GlobalCorsConfig {
 
         // 4）允许的头信息
         config.addAllowedHeader("*");
-
+//
+//        config.addAllowedHeader("Access-Control-Allow-Origin", "*");
+//        config.addAllowedHeader("Access-Control-Allow-Methods", "*");
+//        config.addAllowedHeader("Access-Control-Allow-Headers", "*");
+//        config.addAllowedHeader("Access-Control-Request-Headers","*");
+//        config.addAllowedHeader("Access-Control-Allow-Headers", "content-type,x-auth-token");
+//        config.addAllowedHeader("Access-Control-Expose-Headers", "*");
         //2.添加映射路径，我们拦截一切请求
         UrlBasedCorsConfigurationSource configSource = new UrlBasedCorsConfigurationSource();
         configSource.registerCorsConfiguration("/**", config);
