@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-class OrderDetail extends Sp{
+public class OrderDetail extends Sp{
     /**
      * 流水号
      */

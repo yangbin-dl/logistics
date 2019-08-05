@@ -86,5 +86,8 @@ public class AllBill {
      */
     private String sdsj;
 
+    private String xingh;
+    private String tm;
+
 
 }
