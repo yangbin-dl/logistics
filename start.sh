@@ -1,5 +1,6 @@
 #! /bin/shell
 
+mvn clean package
 APPLICATION="logistics"
 echo "Start Condition Experiment Time: ${APPLICATION}"
 nohup java -jar -server  -Xmx100M  mf-gateway/target/mf-gateway-1.0-SNAPSHOT.jar  >/dev/null 2>&1 &
