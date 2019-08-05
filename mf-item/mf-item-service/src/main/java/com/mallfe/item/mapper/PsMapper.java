@@ -36,5 +36,8 @@ public interface PsMapper extends Mapper<Ps> {
      */
     int updateStatusToFinish(@Param("lsh")String lsh);
 
+    void updatePsmxStatusToUnFinish(@Param("lsh")String lsh);
+
+
     List<Ps> selectPs(@Param("status")Integer status, @Param("lsh") String lsh);
 }

@@ -13,6 +13,11 @@
     <update id="updateStatusToFinish">
         update mf_ps set status = 2,sdsj = now() where lsh = #{lsh} and status = 1
     </update>
+    <update id="updatePsmxStatusToUnFinish">
+        update mf_ps_mx set status= 2 where lsh = #{lsh}
+    </update>
+
+
     <select id="selectPs" resultType="com.mallfe.item.pojo.Ps">
         select a.id,a.lsh,a.driver_code as driverCode,b.driver_name as driverName,
                a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.status,

@@ -29,6 +29,12 @@
                          path_code = null
         where psdh = #{lsh} and status = '2'
     </update>
+    <update id="updateStatusToUnPsByArrival">
+        update mf_xs set status= '1',psdh = null,
+            driver_code = null,
+            path_code = null
+        where psdh=#{lsh} and lsh not in(select ddh from mf_ps_mx where lsh=#{lsh})
+    </update>
 
     <select id="selectXsWithLsh" resultType="com.mallfe.item.pojo.Xs">
         select b.id, b.lsh , b.hh, b.sl, b.lx, b.province, b.city, b.district, b.location, b.phone,

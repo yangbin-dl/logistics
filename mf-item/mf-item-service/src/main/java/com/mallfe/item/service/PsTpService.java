@@ -378,10 +378,13 @@ public class PsTpService {
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
 
-            //更新明细状态
+            //更新明细状态,先全部更新为2，再根据送达更新为1
+            psMapper.updatePsmxStatusToUnFinish(ps.getLsh());
+
             for(PsDetail mx : ps.getList()){
                 psMxMapper.updateStatus(ps.getLsh(),mx.getDdh(),mx.getStatus());
             }
+
 
             //插入配送入库信息
             if(psrkMapper.insertPsrkMx(ps.getLsh())!=0){
