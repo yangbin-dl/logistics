@@ -13,7 +13,7 @@
                lrsj,cksj,lx, case lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo
             from mf_gj
         <where>
-            <if test="lsh != null">
+            <if test="lsh != null and lsh!= ''">
                 lsh=#{lsh}
             </if>
         </where>
