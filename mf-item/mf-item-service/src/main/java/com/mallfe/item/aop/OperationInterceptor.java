@@ -5,7 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.mallfe.common.utils.AnsiUtil;
 import com.mallfe.common.utils.DateUtil;
 import com.mallfe.common.utils.IpUtil;
+import com.mallfe.common.utils.JwtUtils;
+import com.mallfe.item.config.JwtProperties;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.asm.Advice;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -13,6 +16,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.fusesource.jansi.Ansi;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +34,9 @@ import java.util.Map;
 @Component
 @Slf4j
 public class OperationInterceptor {
+
+//    @Autowired
+    JwtProperties properties;
     /**
      * 默认的请求内容类型,表单提交
      **/
@@ -83,6 +90,10 @@ public class OperationInterceptor {
             String contentType = request.getContentType();
             map.put("contentType", contentType);
 
+            String auth = request.getHeader("Authorization");
+            JwtUtils.getInfoFromToken(auth,properties.getPublicKey());
+
+
             // 判断控制器方法参数中是否有RequestBody注解
             Annotation[][] annotations = method.getParameterAnnotations();
             boolean isRequestBody = isRequestBody(annotations);
@@ -104,7 +115,7 @@ public class OperationInterceptor {
             log.info(AnsiUtil.getAnsi(Ansi.Color.GREEN, "requestInfo:" + requestInfo));
 
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
         }
 
         // 执行目标方法,获得返回值

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.security.*;
+import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
@@ -44,10 +45,10 @@ public class RsaUtils {
      * @return
      * @throws Exception
      */
-    public static PublicKey getPublicKey(byte[] bytes) throws Exception {
+    public static RSAPublicKey   getPublicKey(byte[] bytes) throws Exception {
         X509EncodedKeySpec spec = new X509EncodedKeySpec(bytes);
         KeyFactory factory = KeyFactory.getInstance("RSA");
-        return factory.generatePublic(spec);
+        return (RSAPublicKey)factory.generatePublic(spec);
     }
 
     /**

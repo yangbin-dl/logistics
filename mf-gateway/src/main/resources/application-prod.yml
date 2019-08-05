@@ -35,5 +35,18 @@ management:
   endpoint:
     health:
       show-details: ALWAYS
-
+    shutdown:
+      enabled: true
+# JWT
+jwt:
+  header: Authorization
+  secret: luck
+  #token有效期一天
+  expiration: 86400
+  pubKeyPath: "../logistics/mf-gateway/src/main/resources/pub.key"
+  cookieName: "lucky"
+filter:
+  allowPaths:
+    - /api/item/user/
+    - /api/item/accredit
 

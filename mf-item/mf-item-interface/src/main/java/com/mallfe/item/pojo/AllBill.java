@@ -52,7 +52,7 @@ public class AllBill {
     /**
      * 类型
      */
-    private String lx;
+    private Integer lx;
 
     /**
      * 数量

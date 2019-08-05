@@ -2,6 +2,7 @@ package com.mallfe.item.controller;
 
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
+import com.mallfe.item.pojo.AllBill;
 import com.mallfe.item.pojo.Th;
 import com.mallfe.item.pojo.Xs;
 import com.mallfe.item.service.XsThService;
@@ -117,9 +118,9 @@ public class XsThController {
      * @return
      */
     @PostMapping("commitxs")
-    public ResponseEntity<Null> commitXs(@RequestBody Xs xs){
-        xsThService.commitXs(xs);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public JsonObject commitXs(@RequestBody Xs xs){
+
+        return xsThService.commitXs(xs);
     }
 
     /**
@@ -128,9 +129,9 @@ public class XsThController {
      * @return
      */
     @PostMapping("deletexs")
-    public ResponseEntity<Null> deleteXs(@RequestBody Xs xs){
-        xsThService.deleteXs(xs);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public JsonObject deleteXs(@RequestBody Xs xs){
+
+        return xsThService.deleteXs(xs);
     }
 
     /**
@@ -139,9 +140,9 @@ public class XsThController {
      * @return
      */
     @PostMapping("committh")
-    public ResponseEntity<Null> commitTh(@RequestBody Th th){
-        xsThService.commitTh(th);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public JsonObject commitTh(@RequestBody Th th){
+
+        return xsThService.commitTh(th);
     }
 
     /**
@@ -150,19 +151,19 @@ public class XsThController {
      * @return
      */
     @PostMapping("deleteth")
-    public ResponseEntity<Null> deleteTh(@RequestBody Th th){
-        xsThService.deleteTh(th);
-        return ResponseEntity.status(HttpStatus.OK).build();
+    public JsonObject deleteTh(@RequestBody Th th){
+
+        return xsThService.deleteTh(th);
     }
 
     @GetMapping("queryxs")
-    public ResponseEntity<Xs> queryXs(@RequestParam("lsh") String lsh) {
-        return ResponseEntity.ok(xsThService.queryXs(lsh));
+    public ResponseEntity<AllBill> queryXs(@RequestParam("lsh") String lsh) {
+        return ResponseEntity.ok(xsThService.queryBill(lsh));
     }
 
     @GetMapping("queryth")
-    public ResponseEntity<Th> queryTh(@RequestParam("lsh") String lsh) {
-        return ResponseEntity.ok(xsThService.queryTh(lsh));
+    public ResponseEntity<AllBill> queryTh(@RequestParam("lsh") String lsh) {
+        return ResponseEntity.ok(xsThService.queryBill(lsh));
     }
 
     @GetMapping("pageall")

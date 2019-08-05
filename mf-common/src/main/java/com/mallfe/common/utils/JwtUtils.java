@@ -5,15 +5,18 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.text.SimpleDateFormat;
 
 /**
  * @author: li
  * @create: 2018-10-23
  **/
+@Slf4j
 public class JwtUtils {
     /* 私钥加密token
      *
@@ -74,8 +77,10 @@ public class JwtUtils {
      */
     public static UserInfo getInfoFromToken(String token, PublicKey publicKey) throws Exception {
         Jws<Claims> claimsJws = parserToken(token, publicKey);
+        log.info(new SimpleDateFormat("YYYY-mm-DD").format(claimsJws.getBody().getExpiration()));
+
         Claims body = claimsJws.getBody();
-        return new UserInfo(ObjectUtils.toLong(body.get(JwtConstans.JWT_KEY_ID)), ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_USER_NAME)));
+        return new UserInfo(ObjectUtils.toLong(body.get(JwtConstans.JWT_KEY_ID)), ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_USER_NAME)), ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_TRUE_NAME)));
     }
 
     /**
@@ -89,7 +94,7 @@ public class JwtUtils {
     public static UserInfo getInfoFromToken(String token, byte[] publicKey) throws Exception {
         Jws<Claims> claimsJws = parserToken(token, publicKey);
         Claims body = claimsJws.getBody();
-        return new UserInfo(ObjectUtils.toLong(body.get(JwtConstans.JWT_KEY_ID)), ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_USER_NAME)));
+        return new UserInfo(ObjectUtils.toLong(body.get(JwtConstans.JWT_KEY_ID)), ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_USER_NAME)), ObjectUtils.toString(body.get(JwtConstans.JWT_KEY_TRUE_NAME)));
     }
 
 

@@ -103,7 +103,7 @@ public class XsThService {
         PageHelper.startPage(page, rows);
 
         //查询
-        List<Xs> list = xsMapper.selectXs(key);
+        List<Xs> list = xsMapper.selectXsList(key,null);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -120,7 +120,7 @@ public class XsThService {
         //分页
         PageHelper.startPage(page, rows);
 
-        List<Th> list = thMapper.selectTh(key);
+        List<Th> list = thMapper.selectThList(key,null);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -131,50 +131,55 @@ public class XsThService {
         return new PageResult<>(info.getTotal(), list);
     }
 
-    public void commitXs(Xs xs){
+    public JsonObject commitXs(Xs xs){
         try {
-            xsMapper.updateStatusToCommited(xs);
+            if(xsMapper.updateStatusToCommited(xs)!=1){
+                return new JsonError("单据状态异常，提交失败！");
+            }
         } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            return new JsonError("系统异常，提交失败！");
         }
+        return new JsonData("提交成功！");
     }
 
-    public void deleteXs(Xs xs){
+    public JsonObject deleteXs(Xs xs){
         try {
-            xsMapper.updateStatusToCancel(xs);
+            if(xsMapper.updateStatusToCancel(xs)!=1){
+                return new JsonError("单据状态异常，作废失败！");
+            }
         } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            return new JsonError("系统异常，作废失败！");
         }
+        return new JsonData("作废成功！");
     }
 
-    public void commitTh(Th th){
+    public JsonObject commitTh(Th th){
         try {
-            thMapper.updateStatusToCommited(th);
+            if(thMapper.updateStatusToCommited(th)!=1){
+                return new JsonError("单据状态异常，提交失败！");
+            }
         } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            return new JsonError("系统异常，提交失败！");
         }
+        return new JsonData("提交成功！");
     }
 
-    public void deleteTh(Th th){
+    public JsonObject deleteTh(Th th){
         try {
-            thMapper.updateStatusToCancel(th);
+            if(thMapper.updateStatusToCancel(th)!=1) {
+                return new JsonError("单据状态异常，作废失败！");
+            }
         } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            return new JsonError("系统异常，作废失败！");
         }
+        return new JsonData("作废成功！");
     }
 
-    public Xs queryXs(String lsh){
-        Xs xs = new Xs();
-        xs.setLsh(lsh);
-        xs = xsMapper.selectOne(xs);
-        return xs;
-    }
+    public AllBill queryBill(String lsh){
 
-    public Th queryTh(String lsh) {
-        Th th = new Th();
-        th.setLsh(lsh);
-        th =thMapper.selectOne(th);
-        return th;
+        AllBill bill = xsMapper.selectOneBill(lsh);
+
+        return bill;
     }
 
     public JsonObject queryAll(Integer page, String lruserid, String phone, Integer hh, String lsh) {
@@ -205,9 +210,7 @@ public class XsThService {
         if(StringUtils.isNotBlank(lsh)){
             list = xsMapper.selectXsWithLsh(lsh);
         } else{
-            Xs xs = new Xs();
-            xs.setStatus(1);
-            list = xsMapper.select(xs);
+            list = xsMapper.selectXsList(null,1);
         }
 
         return list;
@@ -277,16 +280,12 @@ public class XsThService {
     }
 
     public JsonObject appQueryXs(String lsh) {
-        Xs xs = new Xs();
-        xs.setLsh(lsh);
-        xs = xsMapper.selectOne(xs);
-        return new JsonData(xs);
+        AllBill bill = xsMapper.selectOneBill(lsh);
+        return new JsonData(bill);
     }
 
     public JsonObject appQueryTh(String lsh) {
-        Th th = new Th();
-        th.setLsh(lsh);
-        th =thMapper.selectOne(th);
-        return new JsonData(th);
+        AllBill bill = xsMapper.selectOneBill(lsh);
+        return new JsonData(bill);
     }
 }

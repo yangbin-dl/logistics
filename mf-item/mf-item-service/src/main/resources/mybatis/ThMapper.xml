@@ -33,6 +33,7 @@
         select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, b.location, b.phone,
                b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, a.status,
                b.driver_code, b.path_code,
+               case b.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
                b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,
                c.pinm,c.xingh,c.tm,
                case a.status when 0 then '配送中' when 1 then '已送达' when 2 then '未送达' end as statusInfo
@@ -41,10 +42,11 @@
         where a.lsh = #{lsh}
     </select>
 
-    <select id="selectTh" resultType="com.mallfe.item.pojo.Th">
+    <select id="selectThList" resultType="com.mallfe.item.pojo.Th">
         select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, b.location, b.phone,
         b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, b.status,
         b.driver_code, b.path_code,
+        case b.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
         b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,
         c.pinm,c.xingh,c.tm,
         case b.status
@@ -62,6 +64,9 @@
                 or cast(b.hh as char) = #{key}
                 or b.contact like concat('%',#{key},'%')
 
+            </if>
+            <if test="status != null">
+                and b.status=#{status}
             </if>
         </where>
         order by b.lsh desc
