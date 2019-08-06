@@ -3,17 +3,21 @@
 <mapper namespace="com.mallfe.item.mapper.UserMapper">
 
     <select id="selectUserByPage" resultType="com.mallfe.item.pojo.User">
-        select id,username,password,truename,lx,
+        select a.id,a.username,a.password,a.truename,a.lx,
+        a.store_code as storeCode,d.store_name as storename,
+        a.dept_code as deptName,e.dept_name as deptName,
                case lx
                    when 0 then '系统管理员'
                    when 1 then '库管员'
                    when 2 then '开单员'
                    when 3 then '审核员' end as lxInfo
-        from mf_user
+        from mf_user a left join  mf_store d on a.store_code =d.store_code
+        left join mf_department e on a.store_code =e.store_code and a.dept_code =e.dept_code
+
         <where>
             <if test="key != null or key != ''">
-                username like concat('%',#{key},'%')
-                or truename like concat('%',#{key},'%')
+                a.username like concat('%',#{key},'%')
+                or a.truename like concat('%',#{key},'%')
             </if>
         </where>
         order by id

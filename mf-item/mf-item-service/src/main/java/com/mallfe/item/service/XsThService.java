@@ -8,14 +8,8 @@ import com.mallfe.common.json.JsonData;
 import com.mallfe.common.json.JsonError;
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.item.mapper.AllBillMapper;
-import com.mallfe.item.mapper.ConsumerMapper;
-import com.mallfe.item.mapper.ThMapper;
-import com.mallfe.item.mapper.XsMapper;
-import com.mallfe.item.pojo.AllBill;
-import com.mallfe.item.pojo.Consumer;
-import com.mallfe.item.pojo.Th;
-import com.mallfe.item.pojo.Xs;
+import com.mallfe.item.mapper.*;
+import com.mallfe.item.pojo.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,6 +42,11 @@ public class XsThService {
 
     @Autowired
     ConsumerMapper consumerMapper;
+
+    @Autowired
+    UserService userService;
+
+
     public Xs insertXs(@NotNull Xs xs){
         String lsh = commonService.getLsh("XS");
         xs.setLsh(lsh);
@@ -187,8 +186,18 @@ public class XsThService {
         PageHelper.startPage(page, 10);
         //条件过滤
 
+        //查询用户角色
+        List<AllBill> list;
+        User u = userService.selectById(Integer.parseInt(lruserid));
+
+        if(u.getLx()==2){
+            list = xsMapper.selectAllBill(lruserid,phone,lsh,hh);
+        } else {
+            list = xsMapper.selectAllBillByStore(lruserid,phone,lsh,hh);
+        }
+
         //查询
-        List<AllBill> list = xsMapper.selectAllBill(lruserid,phone,lsh,hh);
+
         if(CollectionUtils.isEmpty(list)){
             return new JsonError("未查询到单据！");
         }

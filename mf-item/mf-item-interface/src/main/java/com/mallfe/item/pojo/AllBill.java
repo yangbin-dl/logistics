@@ -89,5 +89,27 @@ public class AllBill {
     private String xingh;
     private String tm;
 
+    /**
+     * 店铺编码
+     */
+    private String storeCode;
+
+    /**
+     * 店铺名称
+     */
+    @Transient
+    private String storeName;
+
+    /**
+     * 部门编码
+     */
+    private String deptCode;
+
+    /**
+     * 部门名称
+     */
+    @Transient
+    private String deptName;
+
 
 }

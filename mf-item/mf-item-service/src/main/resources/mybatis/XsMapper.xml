@@ -99,7 +99,9 @@
                    when 2 then '已派车'
                    when 3 then '已送达'
                    when 9 then '已作废'
-                   end as statusInfo
+                   end as statusInfo,
+               store_code as storeCode,store_name as storeName,
+               dept_code as deptCode,dept_name as deptName
         from vw_xs
         <where>
             <if test="lrid != null">
@@ -131,7 +133,44 @@
                    when 2 then '已派车'
                    when 3 then '已送达'
                    when 9 then '已作废'
-                   end as statusInfo
+                   end as statusInfo,
+               store_code as storeCode,store_name as storename,
+               dept_code as deptName,dept_name as deptName
         from vw_xs where lsh = #{lsh}
+    </select>
+    <select id="selectAllBillByStore" resultType="com.mallfe.item.pojo.AllBill">
+        select billtype, lsh, lrid, a.truename, status, lrsj, hh, pinm, sl, a.lx,
+        location, phone, contact, qwsj, sdsj,xingh,tm,
+        case status
+        when 0 then '新增'
+        when 1 then '已提交'
+        when 2 then '已派车'
+        when 3 then '已送达'
+        when 9 then '已作废'
+        end as statusInfo,
+        a.store_code as storeCode,a.store_name as storeName,
+        a.dept_code as deptCode,a.dept_name as deptName
+        from vw_xs a inner join mf_user b
+            on a.store_code = b.store_code and a.dept_code=b.dept_code
+        <where>
+            <if test="lrid != null">
+                b.id = #{lrid}
+            </if>
+
+            <if test="lrid == null">
+                and a.status = 0
+            </if>
+
+            <if test="phone != null">
+                and a.phone = #{phone}
+            </if>
+            <if test="lsh != null">
+                and a.lsh = #{lsh}
+            </if>
+            <if test="hh != null">
+                and a.hh = #{hh}
+            </if>
+        </where>
+        order by a.lrsj desc
     </select>
 </mapper>

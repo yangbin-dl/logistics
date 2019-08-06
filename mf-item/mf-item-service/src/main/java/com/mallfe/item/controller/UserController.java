@@ -2,12 +2,16 @@ package com.mallfe.item.controller;
 
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
+import com.mallfe.item.pojo.Department;
+import com.mallfe.item.pojo.Store;
 import com.mallfe.item.pojo.User;
 import com.mallfe.item.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 描述
@@ -64,6 +68,16 @@ public class UserController {
     public JsonObject checkUser(@RequestParam("username") String username,
                                 @RequestParam("password") String password) {
         return userService.checkUser(username, password);
+    }
+
+    @GetMapping("store")
+    public ResponseEntity<List<Store>> getStore() {
+        return ResponseEntity.ok(userService.selectStoreList());
+    }
+
+    @GetMapping("dept")
+    public ResponseEntity<List<Department>> getDept(@RequestParam("storecode")String stroecode) {
+        return ResponseEntity.ok(userService.selectDeptList(stroecode));
     }
 
 

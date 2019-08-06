@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallfe.item.mapper.DepartmentMapper">
+    <select id="selectDepartmentList" resultType="com.mallfe.item.pojo.Department">
+        select a.id,a.store_code as storeCode,b.store_name as storeName,
+               a.dept_code as deptCode,a.dept_name as deptName
+               from mf_department a left join mf_store b on a.store_code=b.store_code
+        where a.store_code = #{storeCode}
+            order by a.dept_code
+    </select>
+</mapper>
