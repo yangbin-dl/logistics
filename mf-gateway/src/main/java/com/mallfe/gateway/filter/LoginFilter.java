@@ -1,6 +1,5 @@
 package com.mallfe.gateway.filter;
 
-
 import com.mallfe.common.utils.CookieUtils;
 import com.mallfe.common.utils.JwtUtils;
 import com.mallfe.gateway.cart.config.FilterProperties;
@@ -21,26 +20,22 @@ import java.util.List;
  * @author Qin PengCheng
  * @date 2018/6/13
  */
-
 @Component
 @EnableConfigurationProperties(value = {JwtProperties.class, FilterProperties.class})
 public class LoginFilter extends ZuulFilter {
-
     private Logger logger = LoggerFactory.getLogger(LoginFilter.class);
-
     @Autowired
     private FilterProperties filterProperties;
-
     @Autowired
     private JwtProperties jwtProperties;
 
-    private Boolean isAllowPath(String uri){
+    private Boolean isAllowPath(String uri) {
         List<String> allowPaths = filterProperties.getAllowPaths();
         boolean isFind = false;
         for (String allowPath : allowPaths) {
-            if (uri.startsWith(allowPath)){
-             isFind = true;
-             break;
+            if (uri.startsWith(allowPath)) {
+                isFind = true;
+                break;
             }
         }
         return isFind;
@@ -61,7 +56,7 @@ public class LoginFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         String requestURI = request.getRequestURI();
-        return !isAllowPath(requestURI);
+        return ! isAllowPath(requestURI);
 
     }
 
@@ -70,15 +65,14 @@ public class LoginFilter extends ZuulFilter {
         //获取上下文
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
-        String token = CookieUtils.getCookieValue(request,jwtProperties.getCookieName());
-
+        String token = CookieUtils.getCookieValue(request, jwtProperties.getCookieName());
 
         try {
             JwtUtils.getInfoFromToken(token, jwtProperties.getPublicKey());
         } catch (Exception e) {
-            ctx.setSendZuulResponse(false);
-            ctx.setResponseStatusCode(403);
+            ctx.setSendZuulResponse(true);
         }
         return null;
     }
+
 }
