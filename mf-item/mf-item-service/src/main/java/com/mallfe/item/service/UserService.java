@@ -119,7 +119,7 @@ public class UserService {
         }
 
         //查询
-        List<User> list = userMapper.selectByExample(example);
+        List<User> list = userMapper.selectUserByPage(key);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.USER_NOT_EXISTS);
         }
