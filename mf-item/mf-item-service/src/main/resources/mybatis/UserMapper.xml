@@ -15,7 +15,7 @@
             order by lrsj desc
     </select>
     <select id="selectUserByPage" resultType="com.mallfe.item.pojo.User">
-        select "id", "username", "password", "truename", "lx",
+        select id,username,password,truename,lx,
                case lx
                    when 0 then '系统管理员'
                    when 1 then '库管员'
