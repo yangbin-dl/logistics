@@ -70,7 +70,10 @@ public class LoginFilter extends ZuulFilter {
         try {
             JwtUtils.getInfoFromToken(token, jwtProperties.getPublicKey());
         } catch (Exception e) {
-            ctx.setSendZuulResponse(true);
+            logger.error("{}", e.getMessage());
+            ctx.setSendZuulResponse(false);
+            ctx.setResponseStatusCode(403);
+
         }
         return null;
     }
