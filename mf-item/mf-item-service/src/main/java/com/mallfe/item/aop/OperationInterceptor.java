@@ -91,8 +91,9 @@ public class OperationInterceptor {
             map.put("contentType", contentType);
 
             String auth = request.getHeader("Authorization");
-            JwtUtils.getInfoFromToken(auth,properties.getPublicKey());
-
+            try {
+                JwtUtils.getInfoFromToken(auth, properties.getPublicKey());
+            }catch (Exception e){}
 
             // 判断控制器方法参数中是否有RequestBody注解
             Annotation[][] annotations = method.getParameterAnnotations();
