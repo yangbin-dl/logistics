@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallfe.item.mapper.TprkMapper">
+
+    <insert id="insertFromTp">
+        insert into mf_Tprk(lsh, lrid, lrusername, truename, status, lrsj, cksj, fcsj, sdsj, driver_code, path_code)
+        select lsh, lrid, lrusername, truename, 2, lrsj, cksj, fcsj, sdsj, driver_code, path_code from mf_tp
+        where lsh=#{lsh}
+    </insert>
+    <insert id="insertTprkMx">
+        insert into mf_tprk_mx(lsh,ddh,status)
+        select  lsh,ddh,status from mf_tp_mx where lsh=#{lsh} and status=2
+    </insert>
+    <update id="updateTprkStatus">
+        update mf_tprk set status = 3 where lsh=#{lsh} and status=2
+    </update>
+    <select id="selectTprk" resultType="com.mallfe.item.pojo.Tprk">
+        select lsh,a.lrid,a.driver_code as driverCode,b.driver_name as driverName,
+               lrusername, truename,
+               a.path_code as pathCode,c.path_name as pathName,
+               a.lrsj,a.fcsj,a.sdsj,a.status,
+               case a.status when 2 then '待入库' when 3 then '已入库' end as statusInfo
+        from mf_tprk a left join mf_driver b on a.driver_code = b.driver_code
+                     left join mf_path c on a.path_code = c.path_code
+
+        order by a.lsh desc
+    </select>
+    <select id="selectTprkMx" resultType="com.mallfe.item.pojo.TprkDetail">
+        select a.lsh,a.ddh,b.sl,b.lx,b.hh from mf_tprk_mx a left join
+            mf_xs b on a.ddh=b.lsh
+            where a.lsh=#{lsh}
+    </select>
+</mapper>

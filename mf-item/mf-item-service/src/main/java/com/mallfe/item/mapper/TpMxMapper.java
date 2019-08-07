@@ -3,6 +3,7 @@ package com.mallfe.item.mapper;
 import com.mallfe.item.pojo.TpDetail;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;
 
@@ -17,4 +18,9 @@ public interface TpMxMapper extends Mapper<TpDetail>, MySqlMapper<TpDetail> {
     int insertTpMx(@Param("lsh") String lsh,
                    @Param("ddh") String ddh,
                    @Param("status") Integer status);
+
+    @Update("update mf_tp_mx set status=#{status} where lsh=#{lsh} and ddh=#{ddh}")
+    int updateStatus(@Param("lsh")String lsh,
+                     @Param("ddh")String ddh,
+                     @Param("status")Integer status);
 }

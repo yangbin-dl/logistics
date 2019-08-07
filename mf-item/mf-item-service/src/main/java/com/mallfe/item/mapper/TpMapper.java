@@ -21,5 +21,11 @@ public interface TpMapper extends Mapper<Tp> {
      */
     int updateStatusToCancel(@Param("lsh") String lsh);
 
+    int updateStatusToCommit(@Param("lsh") String lsh);
+
+    int updateStatusToFinish(@Param("lsh") String lsh);
+
     List<Tp> selectTp(@Param("status")Integer status, @Param("lsh") String lsh);
+
+    void updateTpmxToUnFinish(@Param("lsh") String lsh);
 }

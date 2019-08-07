@@ -4,6 +4,7 @@ import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.Ps;
 import com.mallfe.item.pojo.Psrk;
 import com.mallfe.item.pojo.Tp;
+import com.mallfe.item.pojo.Tprk;
 import com.mallfe.item.service.PsTpService;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,6 +177,12 @@ public class PsTpController {
     @PostMapping("psrk")
     public ResponseEntity<Null> inStorePs(@RequestBody Psrk psrk){
         psTpService.inStorePs(psrk);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("tprk")
+    public ResponseEntity<Null> inStoreTp(@RequestBody Tprk tprk){
+        psTpService.inStoreTp(tprk);
         return ResponseEntity.ok().build();
     }
 

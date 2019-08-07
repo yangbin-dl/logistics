@@ -60,6 +60,9 @@ public class PsTpService {
     @Autowired
     private PsrkMapper psrkMapper;
 
+    @Autowired
+    private TprkMapper tprkMapper;
+
     /**
      * 新增配送单
      * @param ps
@@ -369,7 +372,13 @@ public class PsTpService {
     }
 
     public void commitTp(Tp tp) {
-
+        try{
+            if(tpMapper.updateStatusToCommit(tp.getLsh()) != 1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
     }
 
     public void arrivedPs(Ps ps) {
@@ -400,13 +409,31 @@ public class PsTpService {
     }
 
     public void arrivedTp(Tp tp) {
+        try{
+            if(tpMapper.updateStatusToFinish(tp.getLsh()) != 1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
 
+            tpMapper.updateTpmxToUnFinish(tp.getLsh());
+
+            for(TpDetail mx : tp.getList()){
+                tpMxMapper.updateStatus(tp.getLsh(),mx.getDdh(),mx.getStatus());
+            }
+
+            //插入配送入库信息
+            if(tprkMapper.insertTprkMx(tp.getLsh())!=0){
+                if(tprkMapper.insertFromTp(tp.getLsh())!=1){
+                    throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+                }
+            }
+
+
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
     }
 
     public void inStorePs(Psrk psrk) {
-        //更新库存
-
-        //插入库存入库记录
 
         try {
             //更新配送入库单状态
@@ -460,7 +487,7 @@ public class PsTpService {
         }
 
         //查询
-        List<Psrk> list = psrkMapper.selectPsrk(0);
+        List<Psrk> list = psrkMapper.selectPsrk();
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -482,5 +509,42 @@ public class PsTpService {
         psrk.setXsList(xsMapper.selectXsWithLshForRk(lsh));
         return psrk;
 
+    }
+
+    public void inStoreTp(Tprk tprk) {
+        try {
+            //更新退配入库单状态
+            if(tprkMapper.updateTprkStatus(tprk.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
+            }
+
+            List<TprkDetail> list = tprkMapper.selectTprkMx(tprk.getLsh());
+
+            for(TprkDetail mx: list){
+                Kucn kc = new Kucn();
+                kc.setHh(mx.getHh());
+                kc.setLx(mx.getLx());
+                Kucn result = kucnMapper.selectOne(kc);
+                //更新库存
+                if(result == null){
+                    kc.setKucn(mx.getSl());
+                    kucnMapper.insert(kc);
+                }
+                else{
+                    kucnMapper.addKucn(mx.getSl(),result.getId());
+                }
+
+                KucnIn kucnIn = new KucnIn();
+                BeanUtils.copyProperties(kc,kucnIn);
+                kucnIn.setYwbm("TPRK");
+                kucnIn.setSl(mx.getSl());
+                kucnIn.setLsh(mx.getLsh());
+                kucnIn.setLx(mx.getLx());
+                //插入入库记录
+                kucnInMapper.insert(kucnIn);
+            }
+        } catch (Exception e) {
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
     }
 }
