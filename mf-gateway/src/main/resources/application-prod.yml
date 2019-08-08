@@ -11,12 +11,15 @@ eureka:
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
 zuul:
   prefix: /api # 添加路由前缀
+  host:
+    connect-timeout-millis: 15000 #HTTP连接超时要比Hystrix的大
+    socket-timeout-millis: 60000   #socket超时
   routes:
     item-service: /item/**
     user-service: /user/**
 ribbon:
-  ConnectTimeout: 3000 # 连接超时时间(ms)
-  ReadTimeout: 3500 # 通信超时时间(ms)
+  ConnectTimeout: 10000 # 连接超时时间(ms)
+  ReadTimeout: 10000 # 通信超时时间(ms)
   MaxAutoRetriesNextServer: 0 # 同一服务不同实例的重试次数
   MaxAutoRetries: 0 # 同一实例的重试次数
 hystrix:
