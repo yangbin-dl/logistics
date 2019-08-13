@@ -17,6 +17,7 @@ import com.mallfe.item.pojo.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
@@ -29,6 +30,7 @@ import java.util.List;
  * @since 2019/07/05
  */
 @Service
+@Transactional
 public class UserService {
     @Autowired
     private UserMapper userMapper;
@@ -91,6 +93,10 @@ public class UserService {
 
         //2.插入用户，插入后会自动获取id
         userMapper.insertUser(user);
+        if(user.getPl().size()!=0){
+            userMapper.insertUserPl(user);
+        }
+
         return user;
     }
 

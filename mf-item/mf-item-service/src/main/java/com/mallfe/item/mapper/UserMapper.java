@@ -16,5 +16,7 @@ import java.util.List;
 public interface UserMapper extends Mapper<User> {
     List<User> selectUserByPage(@Param("key") String key);
 
-    User insertUser(@Param("user")User user);
+    int insertUser(User user);
+
+    int insertUserPl(User user);
 }
