@@ -93,7 +93,7 @@ public class UserService {
 
         //2.插入用户，插入后会自动获取id
         userMapper.insertUser(user);
-        if(user.getPl().size()!=0){
+        if(null != user.getPl() && user.getPl().size()!=0){
             userMapper.insertUserPl(user);
         }
 
