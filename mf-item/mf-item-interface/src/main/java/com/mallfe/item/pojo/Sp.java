@@ -5,6 +5,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 描述
@@ -28,5 +29,8 @@ public class Sp {
     private Long chang;
     private Long kuan;
     private Long gao;
+    private String plbm;
+    @Transient
+    private String plmc;
 
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallfe.item.mapper.PlMapper">
+
+    <select id="queryPl" resultType="com.mallfe.item.pojo.Pl">
+        select plbm,plmc,level from mf_pl
+        <where>
+            <if test="level != 0 and level != null">
+                level=#{level}
+            </if>
+        </where>
+        order by plbm
+    </select>
+</mapper>

@@ -8,7 +8,9 @@ import com.mallfe.common.json.JsonData;
 import com.mallfe.common.json.JsonError;
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
+import com.mallfe.item.mapper.PlMapper;
 import com.mallfe.item.mapper.SpMapper;
+import com.mallfe.item.pojo.Pl;
 import com.mallfe.item.pojo.Sp;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class ItemService {
 
     @Autowired
     SpMapper spMapper;
+
+    @Autowired
+    PlMapper plMapper;
 
     /**
      * 查询商品
@@ -102,7 +107,7 @@ public class ItemService {
         }
 
         //查询
-        List<Sp> list = spMapper.selectByExample(example);
+        List<Sp> list = spMapper.querySp(key);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.SP_NOT_EXISTS);
         }
@@ -134,5 +139,18 @@ public class ItemService {
 
         return new JsonData(t);
 
+    }
+
+    public List<Pl> queryPlByPage(Integer level) {
+        //分页
+
+
+        //查询
+        List<Pl> list = plMapper.queryPl(level);
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.PL_NOT_EXISTS);
+        }
+
+        return list;
     }
 }

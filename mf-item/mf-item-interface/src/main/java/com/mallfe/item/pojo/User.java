@@ -6,6 +6,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import java.util.List;
 
 /**
  * 描述
@@ -58,5 +59,11 @@ public class User {
      */
     @Transient
     private String deptName;
+
+    /**
+     * 用户品类
+     */
+    @Transient
+    private List<Pl> pl;
 
 }

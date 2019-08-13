@@ -90,7 +90,7 @@ public class UserService {
         }
 
         //2.插入用户，插入后会自动获取id
-        userMapper.insert(user);
+        userMapper.insertUser(user);
         return user;
     }
 

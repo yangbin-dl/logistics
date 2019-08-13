@@ -12,7 +12,7 @@ public enum ExceptionEnum {
     CATEGORY_NOT_DOUND(404,"商品分类未查到"),
     USER_OR_PASSWORD_NOT_CORRECT(404,"用户名或密码错误"),
     USERNAME_DUPLICATE(404,"用户名已存在"),
-    SP_NOT_EXISTS(404,"商品不存在！"),
+    SP_NOT_EXISTS(404,"商品不可用！"),
     HH_CANNOT_BE_NULL(400,"货号不能为空"),
     PINM_CANNOT_BE_NULL(400,"品名不能为空"),
     XINGH_CANNOT_BE_NULL(400,"型号不能为空"),
@@ -27,7 +27,8 @@ public enum ExceptionEnum {
     BILL_NOT_EXISTS(404,"单据不存在!"),
     BILL_DETAIL_NOT_EXISTS(404,"单据明细不存在!"),
     OPERATION_FALURE(404,"操作失败!"),
-    BILL_STATUS_ERROR(404,"单据状态异常!")
+    BILL_STATUS_ERROR(404,"单据状态异常!"),
+    PL_NOT_EXISTS(404,"品类不存在！"),
     ;
     private int code;
     private String msg;
