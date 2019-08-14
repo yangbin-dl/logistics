@@ -158,34 +158,6 @@ public class ItemService {
         List<Pl> list = plMapper.queryPl(level);
 
 
-        PlVo plVo = new PlVo();
-        plVo.setId("0");
-
-        List<PlVo> pls = new ArrayList<PlVo>();
-        list.stream().filter(o -> o.getLevel() == 1).forEach(i -> pls.add(new PlVo(i)));
-        plVo.setChildren(pls);
-
-
-        List<PlVo> pls1 = new ArrayList<PlVo>();
-        list.stream().filter(o -> o.getLevel() == 2).forEach(i -> pls1.add(new PlVo(i)));
-        plVo.getChildren().forEach(a -> {
-            pls1.forEach(b -> {
-                if (a.getId().substring(0, 2).equals(b.getId().substring(0, 2))) {
-                    a.getChildren().add(b);
-                }
-            });
-        });
-
-        List<PlVo> pls2 = new ArrayList<PlVo>();
-        list.stream().filter(o -> o.getLevel() == 3).forEach(i -> pls2.add(new PlVo(i)));
-        pls2.forEach(a -> {
-            recur(plVo, a);
-        });
-
-
-        log.info(JsonMapper.NON_NULL.toJson(plVo));
-
-
         if (CollectionUtils.isEmpty(list)) {
             throw new MallfeException(ExceptionEnum.PL_NOT_EXISTS);
         }
