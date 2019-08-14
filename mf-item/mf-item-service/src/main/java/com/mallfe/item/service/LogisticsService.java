@@ -9,11 +9,9 @@ import com.mallfe.item.mapper.DriverMapper;
 import com.mallfe.item.mapper.PathMapper;
 import com.mallfe.item.pojo.Driver;
 import com.mallfe.item.pojo.Path;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -43,20 +41,10 @@ public class LogisticsService {
     public PageResult<Driver> queryDriverByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
         //分页
         PageHelper.startPage(page, rows);
-        //条件过滤
-        Example example = new Example(Driver.class);
-        if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("name","%"+key+"%")
-                    .orEqualTo("code",key.toUpperCase());
-        }
-        //排序
-        if(StringUtils.isNotBlank(sortBy)){
-            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
+
 
         //查询
-        List<Driver> list = driverMapper.selectByExample(example);
+        List<Driver> list = driverMapper.list(key);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.DRIVER_NOT_EXISTS);
         }
@@ -147,8 +135,8 @@ public class LogisticsService {
         return  pathMapper.selectByPrimaryKey(id);
     }
 
-    public List<Driver> queryDriverList() {
-        return driverMapper.list();
+    public List<Driver> queryDriverList(String deptCode) {
+        return driverMapper.list(deptCode);
     }
 
     public List<Path> queryPathList(String deptCode) {

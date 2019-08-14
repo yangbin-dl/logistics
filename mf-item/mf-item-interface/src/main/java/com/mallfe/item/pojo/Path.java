@@ -39,6 +39,7 @@ public class Path {
      */
     @Transient
     private String statusInfo;
+
     /**
      * 地区编码
      */

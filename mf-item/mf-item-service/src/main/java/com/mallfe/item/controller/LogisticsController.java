@@ -36,8 +36,8 @@ public class LogisticsController {
     }
 
     @GetMapping("driverlist")
-    public ResponseEntity<List<Driver>> queryDriverList(){
-        List<Driver> result=logisticsService.queryDriverList();
+    public ResponseEntity<List<Driver>> queryDriverList(@RequestParam(value = "deptcode",required = false)String deptCode){
+        List<Driver> result=logisticsService.queryDriverList(deptCode);
         return ResponseEntity.ok(result);
     }
 

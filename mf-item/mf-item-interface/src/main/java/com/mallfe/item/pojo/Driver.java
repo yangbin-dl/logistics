@@ -44,4 +44,15 @@ public class Driver{
      * 司机电话
      */
     private String phone;
+
+    /**
+     * 地区编码
+     */
+    private String deptCode;
+
+    /**
+     * 地区名称
+     */
+    @Transient
+    private String deptName;
 }
