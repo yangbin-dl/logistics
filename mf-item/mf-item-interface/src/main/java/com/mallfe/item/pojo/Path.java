@@ -39,4 +39,14 @@ public class Path {
      */
     @Transient
     private String statusInfo;
+    /**
+     * 地区编码
+     */
+    private String deptCode;
+
+    /**
+     * 地区名称
+     */
+    @Transient
+    private String deptName;
 }

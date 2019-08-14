@@ -79,20 +79,10 @@ public class LogisticsService {
     public PageResult<Path> queryPathByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
         //分页
         PageHelper.startPage(page, rows);
-        //条件过滤
-        Example example = new Example(Path.class);
-        if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("name","%"+key+"%")
-                    .orEqualTo("code",key.toUpperCase());
-        }
-        //排序
-        if(StringUtils.isNotBlank(sortBy)){
-            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
+
 
         //查询
-        List<Path> list = pathMapper.selectByExample(example);
+        List<Path> list = pathMapper.list(key);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.PATH_NOT_EXISTS);
         }
@@ -129,11 +119,14 @@ public class LogisticsService {
             throw new MallfeException(ExceptionEnum.CODE_CANNOT_BE_NULL);
         }
 
-        if(path.getPathName()== null){
+        if(path.getPathName() == null){
             throw new MallfeException(ExceptionEnum.NAME_CANNOT_BE_NULL);
         }
 
         // 插入后自动获得id
+        if(path.getDeptCode() == null){
+            path.setDeptCode("0001");
+        }
         pathMapper.insert(path);
 
         return path;
@@ -158,8 +151,8 @@ public class LogisticsService {
         return driverMapper.list();
     }
 
-    public List<Path> queryPathList() {
-        return pathMapper.list();
+    public List<Path> queryPathList(String deptCode) {
+        return pathMapper.list(deptCode);
     }
 }
 

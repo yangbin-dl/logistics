@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallfe.item.mapper.PathMapper">
+
+    <select id="list" resultType="com.mallfe.item.pojo.Path">
+        select a.id,path_code as pathCode,path_name as pathName,status,
+               a.dept_code as deptcode,b.dept_name as deptname
+        from mf_path a left join mf_region b on a.dept_code=b.dept_code
+        <where>
+            <if test="deptcode != null and deptcode != ''">
+                a.dept_code = #{deptcode}
+            </if>
+        </where>
+        order by a.dept_code,path_code
+    </select>
+</mapper>

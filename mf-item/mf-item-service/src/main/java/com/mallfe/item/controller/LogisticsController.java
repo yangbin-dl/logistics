@@ -55,8 +55,8 @@ public class LogisticsController {
     }
 
     @GetMapping("pathlist")
-    public ResponseEntity<List<Path>> queryPathList(){
-        List<Path> result=logisticsService.queryPathList();
+    public ResponseEntity<List<Path>> queryPathList(@RequestParam(value = "deptcode",required = false)String deptCode){
+        List<Path> result=logisticsService.queryPathList(deptCode);
         return ResponseEntity.ok(result);
     }
 
