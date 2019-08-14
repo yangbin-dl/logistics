@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import povo.PlVo;
 
 import java.util.List;
 
@@ -136,6 +137,12 @@ public class ItemController {
     @GetMapping("pl")
     public ResponseEntity<List<Pl>> queryPlByPage(@RequestParam(value = "level", defaultValue = "0") Integer level){
         List<Pl> result = itemService.queryPlByPage(level);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("pltree")
+    public ResponseEntity<PlVo> queryPlByPage(){
+        PlVo result = itemService.queryTreeData();
         return ResponseEntity.ok(result);
     }
 
