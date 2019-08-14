@@ -1,5 +1,6 @@
 package com.mallfe.item.mapper;
 
+import com.mallfe.item.pojo.Pl;
 import com.mallfe.item.pojo.User;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
@@ -19,4 +20,14 @@ public interface UserMapper extends Mapper<User> {
     int insertUser(User user);
 
     int insertUserPl(User user);
+
+    User selectUserInfo(@Param("username") String username, @Param("password") String password);
+
+    List<Pl> selectUserPl(@Param("uid") Long uid);
+
+    void updateUserInfo(User user);
+
+    void deleteUserPl(User user);
 }
+
+

@@ -71,8 +71,8 @@ public class UserController {
     }
 
     @GetMapping("store")
-    public ResponseEntity<List<Store>> getStore() {
-        return ResponseEntity.ok(userService.selectStoreList());
+    public ResponseEntity<List<Store>> getStore(@RequestParam(value = "deptcode",required = false)String deptCode) {
+        return ResponseEntity.ok(userService.selectStoreList(deptCode));
     }
 
     @GetMapping("dept")

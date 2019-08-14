@@ -39,4 +39,6 @@ public class Kucn {
      * 库存
      */
     private Integer kucn;
+
+
 }

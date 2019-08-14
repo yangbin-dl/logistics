@@ -8,32 +8,48 @@
 
     </insert>
     <insert id="insertUserPl" parameterType="com.mallfe.item.pojo.User">
-        INSERT INTO mf_user_pl(username,plbm) values
+        INSERT INTO mf_user_pl(uid,plbm) values
         <foreach collection="pl" item="item"  index="index"  open="" separator="," close="">
-             (#{username},#{item.plbm})
+             (#{id},#{item.plbm})
         </foreach>
     </insert>
-
+    <update id="updateUserInfo" parameterType="com.mallfe.item.pojo.User">
+        update mf_user set password = #{password},
+                           truename = #{truename},
+                           store_code = #{storeCode},
+                           lx=#{lx}
+        where id=#{id}
+    </update>
+    <delete id="deleteUserPl" parameterType="com.mallfe.item.pojo.User">
+        delete from mf_user_pl where uid = #{id}
+    </delete>
 
     <select id="selectUserByPage" resultType="com.mallfe.item.pojo.User">
         select a.id,a.username,a.password,a.truename,a.lx,
         a.store_code as storeCode,d.store_name as storename,
-        a.dept_code as deptCode,e.dept_name as deptName,
-               case lx
-                   when 0 then '系统管理员'
-                   when 1 then '库管员'
-                   when 2 then '开单员'
-                   when 3 then '审核员' end as lxInfo
+               c.lxInfo,a.dept_code,e.dept_name
         from mf_user a left join  mf_store d on a.store_code =d.store_code
-        left join mf_department e on a.store_code =e.store_code and a.dept_code =e.dept_code
-
+        left join mf_user_lx c on a.lx=c.lx
+        left join mf_region e on a.dept_code = e.dept_code
         <where>
-            <if test="key != null or key != ''">
+            <if test="key != null and  key != ''">
                 a.username like concat('%',#{key},'%')
                 or a.truename like concat('%',#{key},'%')
             </if>
         </where>
         order by id
+    </select>
+    <select id="selectUserInfo" resultType="com.mallfe.item.pojo.User">
+        select a.id,a.username,a.password,a.truename,a.lx,
+            a.store_code as storeCode,d.store_name as storename,
+            c.lxInfo,a.dept_code as deptcode,e.dept_name as deptname
+        from mf_user a left join  mf_store d on a.store_code =d.store_code
+            left join mf_user_lx c on a.lx=c.lx
+            left join mf_region e on a.dept_code = e.dept_code
+        where a.username=#{username} and a.password=#{password}
+    </select>
+    <select id="selectUserPl" resultType="com.mallfe.item.pojo.Pl">
+        select a.plbm,b.plmc from mf_user_pl a left join mf_pl b on a.plbm=b.plbm where a.uid=#{uid}
     </select>
 
 

@@ -3,6 +3,11 @@
 <mapper namespace="com.mallfe.item.mapper.StoreMapper">
     <select id="selectStoreList" resultType="com.mallfe.item.pojo.Store">
         select id,store_code as storeCode,store_name as storeName from mf_store
+            <where>
+                <if test="deptcode != null and deptcode != ''">
+                    dept_code = #{deptcode}
+                </if>
+            </where>
             order by storeCode
     </select>
 </mapper>

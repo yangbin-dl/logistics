@@ -47,13 +47,12 @@ public class UserService {
      * @return 完整用户信息，包括密码
      */
     public User verify(String username, String password){
-        User t =new User();
-        t.setUsername(username);
-        t.setPassword(password);
-        User user =userMapper.selectOne(t);
+        User user = userMapper.selectUserInfo(username,password);
         if(user == null){
             throw new MallfeException(ExceptionEnum.USER_OR_PASSWORD_NOT_CORRECT);
         }
+
+        user.setPl(userMapper.selectUserPl(user.getId()));
 
         return user;
     }
@@ -65,15 +64,11 @@ public class UserService {
      * @param user 带有id的用户实体类
      */
     public void update(User user){
-        int i;
-        try {
-            i=userMapper.updateByPrimaryKeySelective(user);
-        } catch (Exception e) {
-            throw new MallfeException(ExceptionEnum.USER_UPDATE_FAILURE);
-        }
 
-        if(i !=1 ){
-            throw new MallfeException(ExceptionEnum.USER_NOT_EXISTS);
+        userMapper.updateUserInfo(user);
+        userMapper.deleteUserPl(user);
+        if(null != user.getPl() && user.getPl().size()!=0){
+            userMapper.insertUserPl(user);
         }
     }
 
@@ -91,6 +86,8 @@ public class UserService {
             throw new MallfeException(ExceptionEnum.USERNAME_DUPLICATE);
         }
 
+        //默认所属地区为0001，为将来扩展作准备
+        user.setDeptCode("0001");
         //2.插入用户，插入后会自动获取id
         userMapper.insertUser(user);
         if(null != user.getPl() && user.getPl().size()!=0){
@@ -164,8 +161,8 @@ public class UserService {
         return new JsonData(user);
     }
 
-    public List<Store> selectStoreList() {
-        return storeMapper.selectStoreList();
+    public List<Store> selectStoreList(String deptCode) {
+        return storeMapper.selectStoreList(deptCode);
     }
 
     public List<Department> selectDeptList(String stroecode) {
