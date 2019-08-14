@@ -2,10 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mallfe.item.mapper.StoreMapper">
     <select id="selectStoreList" resultType="com.mallfe.item.pojo.Store">
-        select id,store_code as storeCode,store_name as storeName from mf_store
+        select a.id,store_code as storeCode,store_name as storeName,
+               a.dept_code as deptcode, b.dept_name as deptname
+        from mf_store a
+            left join mf_region b on a.dept_code = b.dept_code
             <where>
                 <if test="deptcode != null and deptcode != ''">
-                    dept_code = #{deptcode}
+                    a.dept_code = #{deptcode}
                 </if>
             </where>
             order by storeCode

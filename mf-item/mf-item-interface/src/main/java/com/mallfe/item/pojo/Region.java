@@ -11,27 +11,16 @@ import javax.persistence.Transient;
  * @since 2019/08/06
  */
 @Data
-public class Department {
+public class Region {
 
     private Long id;
     /**
-     * 店铺编码
-     */
-    private String storeCode;
-
-    /**
-     * 店铺名称
-     */
-    @Transient
-    private String storeName;
-
-    /**
-     * 部门编码
+     * 地区编码
      */
     private String deptCode;
 
     /**
-     * 部门名称
+     * 地区名称
      */
     @Transient
     private String deptName;

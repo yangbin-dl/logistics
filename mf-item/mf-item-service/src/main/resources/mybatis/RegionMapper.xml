@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallfe.item.mapper.RegionMapper">
+    <select id="selectRegionList" resultType="com.mallfe.item.pojo.Region">
+        select id,dept_code as deptcode,dept_name  as deptname from mf_region order by dept_code
+    </select>
+</mapper>

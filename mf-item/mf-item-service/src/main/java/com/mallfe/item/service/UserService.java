@@ -8,10 +8,10 @@ import com.mallfe.common.json.JsonData;
 import com.mallfe.common.json.JsonError;
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.item.mapper.DepartmentMapper;
+import com.mallfe.item.mapper.RegionMapper;
 import com.mallfe.item.mapper.StoreMapper;
 import com.mallfe.item.mapper.UserMapper;
-import com.mallfe.item.pojo.Department;
+import com.mallfe.item.pojo.Region;
 import com.mallfe.item.pojo.Store;
 import com.mallfe.item.pojo.User;
 import org.apache.commons.lang3.StringUtils;
@@ -39,7 +39,7 @@ public class UserService {
     private StoreMapper storeMapper;
 
     @Autowired
-    private DepartmentMapper departmentMapper;
+    private RegionMapper departmentMapper;
     /**
      * 用户验证
      * @param username 用户名
@@ -165,7 +165,7 @@ public class UserService {
         return storeMapper.selectStoreList(deptCode);
     }
 
-    public List<Department> selectDeptList(String stroecode) {
-        return departmentMapper.selectDepartmentList(stroecode);
+    public List<Region> selectRegionList() {
+        return departmentMapper.selectRegionList();
     }
 }

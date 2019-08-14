@@ -2,7 +2,7 @@ package com.mallfe.item.controller;
 
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.item.pojo.Department;
+import com.mallfe.item.pojo.Region;
 import com.mallfe.item.pojo.Store;
 import com.mallfe.item.pojo.User;
 import com.mallfe.item.service.UserService;
@@ -76,8 +76,8 @@ public class UserController {
     }
 
     @GetMapping("dept")
-    public ResponseEntity<List<Department>> getDept(@RequestParam("storecode")String stroecode) {
-        return ResponseEntity.ok(userService.selectDeptList(stroecode));
+    public ResponseEntity<List<Region>> getRegion() {
+        return ResponseEntity.ok(userService.selectRegionList());
     }
 
 

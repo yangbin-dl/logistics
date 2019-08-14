@@ -26,5 +26,17 @@ public class Store {
     @Transient
     private String storeName;
 
+    /**
+     * 地区编码
+     */
+    @Transient
+    private String deptCode;
+
+    /**
+     * 地区名称
+     */
+    @Transient
+    private String deptName;
+
 
 }
