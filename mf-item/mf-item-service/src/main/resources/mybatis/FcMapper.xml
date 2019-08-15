@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mallfe.item.mapper.FcMapper">
 
-    <select id="selectBill" resultType="com.mallfe.item.pojo.Gj">
+    <select id="selectBill" resultType="com.mallfe.item.pojo.Fc">
         select id,lsh,lrid,username,truename,status,
                case status when 0 then '新增' when 1 then '已提交' when 9 then '已作废' end as statusInfo,
                lrsj,cksj,lx, case lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo

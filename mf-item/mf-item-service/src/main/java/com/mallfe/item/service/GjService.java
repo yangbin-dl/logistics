@@ -94,6 +94,9 @@ public class GjService {
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
                 kc.setLx(gj.getLx());
+                //增加区域和店铺信息
+                kc.setDeptCode(gj.getDeptCode());
+                kc.setStoreCode(gj.getStoreCode());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
                 if(result == null){
@@ -138,7 +141,7 @@ public class GjService {
         Gj gj = new Gj();
         gj.setLsh(lsh);
 
-        gj=gjMapper.selectOne(gj);
+        gj = gjMapper.selectBill(lsh).get(0);
 
         if(gj == null){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);

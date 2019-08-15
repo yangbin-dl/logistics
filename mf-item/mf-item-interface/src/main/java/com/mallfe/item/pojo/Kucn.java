@@ -20,6 +20,8 @@ public class Kucn {
     @KeySql(useGeneratedKeys=true)
     private Integer id;
 
+
+
     /**
      * 货号
      */
@@ -39,6 +41,28 @@ public class Kucn {
      * 库存
      */
     private Integer kucn;
+
+    /**
+     * 店铺编码
+     */
+    private String storeCode;
+
+    /**
+     * 店铺名称
+     */
+    @Transient
+    private String storeName;
+
+    /**
+     * 地区编码
+     */
+    private String deptCode;
+
+    /**
+     * 地区名称
+     */
+    @Transient
+    private String deptName;
 
 
 }

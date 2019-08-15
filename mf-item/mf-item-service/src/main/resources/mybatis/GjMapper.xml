@@ -2,11 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mallfe.item.mapper.GjMapper">
 
-    <insert id="insertBill" parameterType="com.mallfe.item.pojo.Gj">
-        insert into mf_gj(lsh, lrid, username, truename, status, lrsj, lx)
-            values(#{lsh},#{lrid},#{username},#{truename},#{status},now(),#{lx})
-    </insert>
-
     <select id="selectBill" resultType="com.mallfe.item.pojo.Gj">
         select id,lsh,lrid,username,truename,status,
                case status when 0 then '新增' when 1 then '已提交' when 9 then '已作废' end as statusInfo,

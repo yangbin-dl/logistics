@@ -13,4 +13,9 @@
         </where>
         order by hh
     </select>
+    <select id="selectSpInfo" resultType="com.mallfe.item.pojo.Sp">
+        select a.id, hh, pinm, xingh, tm, zhongl, chang, kuan, gao, a.plbm, b.plmc
+        from mf_sp a left join mf_pl b on a.plbm = b.plbm where hh=#{hh}
+
+    </select>
 </mapper>

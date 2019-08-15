@@ -6,6 +6,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import java.util.List;
 
 /**
  * 描述
@@ -32,5 +33,8 @@ public class Sp {
     private String plbm;
     @Transient
     private String plmc;
+
+    @Transient
+    private List<Kucn> kucnList;
 
 }

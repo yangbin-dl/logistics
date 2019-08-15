@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallfe.item.mapper.KucnMapper">
+    <update id="addKucn">
+        update mf_kucn set kucn=kucn+#{sl} where id=#{id}
+    </update>
+    <update id="reduceKucn">
+        update mf_kucn set kucn=kucn-#{sl} where id=#{id} and kucn>=#{sl}
+    </update>
+
+    <select id="selectKucn" resultType="com.mallfe.item.pojo.Kucn">
+        select kucn,lx,store_code as storecode,dept_code as deptcode from mf_kucn
+        where hh=#{hh} and store_code=#{storecode}
+    </select>
+</mapper>

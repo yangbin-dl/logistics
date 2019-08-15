@@ -14,4 +14,8 @@ import java.util.List;
  */
 public interface SpMapper extends Mapper<Sp> {
     List<Sp> querySp(@Param("key") String key);
+
+    Sp selectSpInfo(@Param("hh") Integer hh);
+
+
 }

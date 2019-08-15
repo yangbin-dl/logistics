@@ -9,6 +9,7 @@ import com.mallfe.common.json.JsonError;
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.aop.JsonMapper;
+import com.mallfe.item.mapper.KucnMapper;
 import com.mallfe.item.mapper.PlMapper;
 import com.mallfe.item.mapper.SpMapper;
 import com.mallfe.item.pojo.Pl;
@@ -39,6 +40,9 @@ public class ItemService {
 
     @Autowired
     PlMapper plMapper;
+
+    @Autowired
+    KucnMapper kucnMapper;
 
     /**
      * 查询商品
@@ -137,16 +141,16 @@ public class ItemService {
         spMapper.updateByPrimaryKey(sp);
     }
 
-    public JsonObject findHh(Integer hh) {
-        Sp sp = new Sp();
-        sp.setHh(hh);
-        Sp t = spMapper.selectOne(sp);
+    public JsonObject findHh(Integer hh,String storeCode) {
+        Sp sp = spMapper.selectSpInfo(hh);
 
-        if (t == null) {
+        if (sp == null) {
             return new JsonError("商品未找到");
         }
 
-        return new JsonData(t);
+        sp.setKucnList(kucnMapper.selectKucn(hh,storeCode));
+
+        return new JsonData(sp);
 
     }
 

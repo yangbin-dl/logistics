@@ -67,7 +67,7 @@ public class UserService {
 
         userMapper.updateUserInfo(user);
         userMapper.deleteUserPl(user);
-        if(null != user.getPl() && user.getPl().size()!=0){
+        if(!user.getPl().isEmpty()){
             userMapper.insertUserPl(user);
         }
     }
@@ -90,7 +90,7 @@ public class UserService {
         user.setDeptCode("0001");
         //2.插入用户，插入后会自动获取id
         userMapper.insertUser(user);
-        if(null != user.getPl() && user.getPl().size()!=0){
+        if(!user.getPl().isEmpty()){
             userMapper.insertUserPl(user);
         }
 

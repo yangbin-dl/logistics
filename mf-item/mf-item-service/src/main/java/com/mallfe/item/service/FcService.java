@@ -13,12 +13,10 @@ import com.mallfe.item.pojo.Fc;
 import com.mallfe.item.pojo.FcDetail;
 import com.mallfe.item.pojo.Kucn;
 import com.mallfe.item.pojo.KucnOut;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -93,14 +91,18 @@ public class FcService {
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
                 kc.setLx(fc.getLx());
+                //增加区域和店铺信息
+                kc.setDeptCode(fc.getDeptCode());
+                kc.setStoreCode(fc.getStoreCode());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
                 if(result == null){
-                    kc.setKucn(-1 * mx.getSl());
-                    kucnMapper.insert(kc);
+                    throw new MallfeException(ExceptionEnum.UNDER_STOCK);
                 }
                 else{
-                    kucnMapper.reduceKucn(mx.getSl(),result.getId());
+                    if(kucnMapper.reduceKucn(mx.getSl(),result.getId())!=1){
+                        throw new MallfeException(ExceptionEnum.UNDER_STOCK);
+                    }
                 }
 
                 KucnOut kucnOut = new KucnOut();
@@ -113,29 +115,19 @@ public class FcService {
                 kucnOutMapper.insert(kucnOut);
             }
         } catch (Exception e) {
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            throw new MallfeException(ExceptionEnum.UNDER_STOCK);
         }
     }
 
     public PageResult<Fc> queryFcByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
         //分页
         PageHelper.startPage(page, rows);
-        //条件过滤
-        Example example = new Example(Fc.class);
-        if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("lsh",key+"%")
-                    .orLike("truename","%"+key+"%");
-        }
-        //排序
-        if(StringUtils.isNotBlank(sortBy)){
-            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
+
 
         //查询
-        List<Fc> list = fcMapper.selectByExample(example);
+        List<Fc> list = fcMapper.selectBill(key);
         if(CollectionUtils.isEmpty(list)){
-            throw new MallfeException(ExceptionEnum.USER_NOT_EXISTS);
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
 
         //解析分页结果

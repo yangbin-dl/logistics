@@ -95,6 +95,10 @@ public class LogisticsService {
             throw new MallfeException(ExceptionEnum.NAME_CANNOT_BE_NULL);
         }
 
+        if(driver.getDeptCode() == null){
+            driver.setDeptCode("0001");
+        }
+
         // 插入后自动获得id
         driverMapper.insert(driver);
 
@@ -111,10 +115,11 @@ public class LogisticsService {
             throw new MallfeException(ExceptionEnum.NAME_CANNOT_BE_NULL);
         }
 
-        // 插入后自动获得id
         if(path.getDeptCode() == null){
             path.setDeptCode("0001");
         }
+
+        // 插入后自动获得id
         pathMapper.insert(path);
 
         return path;

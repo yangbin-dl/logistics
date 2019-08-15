@@ -29,6 +29,7 @@ public enum ExceptionEnum {
     OPERATION_FALURE(404,"操作失败!"),
     BILL_STATUS_ERROR(404,"单据状态异常!"),
     PL_NOT_EXISTS(404,"品类不存在！"),
+    UNDER_STOCK(404,"库存不足！"),
     ;
     private int code;
     private String msg;
