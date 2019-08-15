@@ -12,8 +12,10 @@ import com.mallfe.item.aop.JsonMapper;
 import com.mallfe.item.mapper.KucnMapper;
 import com.mallfe.item.mapper.PlMapper;
 import com.mallfe.item.mapper.SpMapper;
+import com.mallfe.item.mapper.UserMapper;
 import com.mallfe.item.pojo.Pl;
 import com.mallfe.item.pojo.Sp;
+import com.mallfe.item.pojo.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,20 +46,34 @@ public class ItemService {
     @Autowired
     KucnMapper kucnMapper;
 
-    /**
-     * 查询商品
-     *
-     * @param sp 包含查询条件的商品实体类
-     * @return 商品完整信息
-     */
-    public Sp query(Sp sp) {
-        Sp t = spMapper.selectOne(sp);
+    @Autowired
+    UserMapper userMapper;
 
-        if (t == null) {
+    /**
+     *
+     * @param hh 货号
+     * @param uid 查询人id
+     * @return
+     */
+    public Sp query(Integer hh,Long uid) {
+        Sp sp = spMapper.selectSpInfo(hh);
+
+        if (sp == null) {
             throw new MallfeException(ExceptionEnum.SP_NOT_EXISTS);
         }
 
-        return t;
+        if(uid==null){
+            return sp;
+        }
+        User user = userMapper.selectUserInfoById(uid);
+
+        if(user == null){
+            throw new MallfeException(ExceptionEnum.SP_NOT_EXISTS);
+        }
+
+        sp.setKucnList(kucnMapper.selectKucn(hh,user.getStoreCode()));
+
+        return sp;
     }
 
     public List<Sp> queryByPinm(String pinm) {

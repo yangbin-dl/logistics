@@ -40,17 +40,6 @@ public class ItemController {
     }
 
     /**
-     * 按实体类查询商品
-     *
-     * @param sp 实体类
-     * @return 商品完整信息
-     */
-    @PostMapping("query")
-    public ResponseEntity<Sp> query(@RequestBody Sp sp) {
-        return ResponseEntity.ok(itemService.query(sp));
-    }
-
-    /**
      * 按货号查询商品
      *
      * @param hh 货号
@@ -61,7 +50,7 @@ public class ItemController {
                                         @RequestParam(value = "uid",required = false) Long uid) {
         Sp s = new Sp();
         s.setHh(hh);
-        return ResponseEntity.ok(itemService.query(s));
+        return ResponseEntity.ok(itemService.query(hh,uid));
     }
 
     @GetMapping("findhh")
@@ -69,46 +58,6 @@ public class ItemController {
                              @RequestParam(value = "storecode",defaultValue = "0025") String storeCode){
 
         return itemService.findHh(hh,storeCode);
-    }
-
-
-
-    /**
-     * 按条码查询商品
-     *
-     * @param tm 条码
-     * @return 商品完整信息
-     */
-    @GetMapping("querytm")
-    public ResponseEntity<Sp> queryByHh(@RequestParam("tm") String tm) {
-        Sp s = new Sp();
-        s.setTm(tm);
-        return ResponseEntity.ok(itemService.query(s));
-    }
-
-    /**
-     * 按id查询商品
-     *
-     * @param id 商品id
-     * @return 商品完整信息
-     */
-    @GetMapping("queryid")
-    public ResponseEntity<Sp> queryById(@RequestParam("hh") Integer id) {
-        Sp s = new Sp();
-        s.setId(id);
-
-        return ResponseEntity.ok(itemService.query(s));
-    }
-
-    /**
-     * 按品名模糊查询商品
-     *
-     * @param pinm 品名
-     * @return 商品列表
-     */
-    @GetMapping("querypinm")
-    public ResponseEntity<List<Sp>> queryByPinm(@RequestParam("pinm") String pinm) {
-        return ResponseEntity.ok(itemService.queryByPinm(pinm));
     }
 
     /**

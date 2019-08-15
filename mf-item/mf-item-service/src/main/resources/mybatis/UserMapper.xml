@@ -51,6 +51,15 @@
     <select id="selectUserPl" resultType="com.mallfe.item.pojo.Pl">
         select a.plbm,b.plmc from mf_user_pl a left join mf_pl b on a.plbm=b.plbm where a.uid=#{uid}
     </select>
+    <select id="selectUserInfoById" resultType="com.mallfe.item.pojo.User">
+        select a.id,a.username,a.password,a.truename,a.lx,
+               a.store_code as storeCode,d.store_name as storename,
+               c.lxInfo,a.dept_code as deptcode,e.dept_name as deptname
+        from mf_user a left join  mf_store d on a.store_code =d.store_code
+                       left join mf_user_lx c on a.lx=c.lx
+                       left join mf_region e on a.dept_code = e.dept_code
+        where a.id=#{uid}
+    </select>
 
 
 </mapper>

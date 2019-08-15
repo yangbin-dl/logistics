@@ -25,6 +25,8 @@ public interface UserMapper extends Mapper<User> {
 
     List<Pl> selectUserPl(@Param("uid") Long uid);
 
+    User selectUserInfoById(@Param("uid") Long uid);
+
     void updateUserInfo(User user);
 
     void deleteUserPl(User user);
