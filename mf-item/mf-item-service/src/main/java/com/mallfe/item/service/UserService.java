@@ -146,7 +146,9 @@ public class UserService {
     public User selectById(Integer id) {
         Example example = new Example(User.class);
         example.createCriteria().andEqualTo("id",id);
-        return  userMapper.selectOneByExample(example);
+        User user = userMapper.selectOneByExample(example);
+        user.setPl(userMapper.selectUserPl(user.getId()));
+        return user;
     }
 
     public JsonObject checkUser(String username, String password) {
