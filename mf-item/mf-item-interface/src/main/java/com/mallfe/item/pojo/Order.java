@@ -66,6 +66,9 @@ public class Order {
     @Transient
     private String lxInfo;
 
+    /**
+     * 店铺编码
+     */
     private String storeCode = "0025";
 
     /**

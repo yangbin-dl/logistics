@@ -57,7 +57,8 @@ public class ItemController {
      * @return 商品完整信息
      */
     @GetMapping("queryhh")
-    public ResponseEntity<Sp> queryByHh(@RequestParam("hh") Integer hh) {
+    public ResponseEntity<Sp> queryByHh(@RequestParam("hh") Integer hh,
+                                        @RequestParam(value = "uid",required = false) Long uid) {
         Sp s = new Sp();
         s.setHh(hh);
         return ResponseEntity.ok(itemService.query(s));

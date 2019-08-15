@@ -150,10 +150,8 @@ public class UserService {
     }
 
     public JsonObject checkUser(String username, String password) {
-        User t =new User();
-        t.setUsername(username);
-        t.setPassword(password);
-        User user =userMapper.selectOne(t);
+
+        User user = userMapper.selectUserInfo(username,password);
         if(user == null){
             return new JsonError("用户名或密码错误");
         }

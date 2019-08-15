@@ -86,4 +86,15 @@ public class WlBill {
     @Transient
     private String statusInfo;
 
+    /**
+     * 地区编码
+     */
+    private String deptCode = "0001";
+
+    /**
+     * 地区名称
+     */
+    @Transient
+    private String deptName;
+
 }

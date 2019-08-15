@@ -139,4 +139,25 @@ public class Bill {
     private Long kuan;
     @Transient
     private Long gao;
+    /**
+     * 店铺编码
+     */
+    private String storeCode = "0025";
+
+    /**
+     * 店铺名称
+     */
+    @Transient
+    private String storeName;
+
+    /**
+     * 地区编码
+     */
+    private String deptCode = "0001";
+
+    /**
+     * 地区名称
+     */
+    @Transient
+    private String deptName;
 }
