@@ -1,7 +1,6 @@
 package com.mallfe.item.mapper;
 
-import com.mallfe.item.pojo.AllBill;
-import com.mallfe.item.pojo.Xs;
+import com.mallfe.item.pojo.*;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;
@@ -67,12 +66,20 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
     List<AllBill> selectAllBill(@Param("lrid") String lrid,
                                 @Param("phone")String phone,
                                 @Param("lsh") String lsh,
-                                @Param("hh") Integer hh);
+                                @Param("hh") Integer hh,
+                                @Param("contact") String contact);
 
-    List<AllBill> selectAllBillByStore(@Param("lrid") String lrid,
-                                @Param("phone")String phone,
-                                @Param("lsh") String lsh,
-                                @Param("hh") Integer hh);
+    List<AllBill> selectAllBillByStore(@Param("storecode") String storecode,
+                                       @Param("phone")String phone,
+                                       @Param("lsh") String lsh,
+                                       @Param("hh") Integer hh,
+                                       @Param("contact") String contact);
 
     AllBill selectOneBill(@Param("lsh") String lsh);
+
+    List<Province> selectProvince();
+
+    List<City> selectCity(@Param("province") String province);
+
+    List<District> selectDistrict(@Param("city") String city);
 }

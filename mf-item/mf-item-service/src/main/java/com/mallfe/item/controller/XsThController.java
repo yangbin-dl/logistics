@@ -169,13 +169,14 @@ public class XsThController {
     @GetMapping("pageall")
     public JsonObject queryAll(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
-            @RequestParam(value = "lruserid", required = false) String lruserid,
+            @RequestParam(value = "userid") String userid,
             @RequestParam(value = "phone", required = false) String phone,
             @RequestParam(value = "hh", required = false) Integer hh,
-            @RequestParam(value = "lsh", required = false) String lsh
+            @RequestParam(value = "lsh", required = false) String lsh,
+            @RequestParam(value = "contact", required = false) String contact
 
     ) {
-        JsonObject result = xsThService.queryAll(page, lruserid, phone, hh, lsh);
+        JsonObject result = xsThService.queryAll(page, userid, phone, hh, lsh, contact);
         return result;
     }
 
@@ -253,5 +254,20 @@ public class XsThController {
     @GetMapping("appqueryth")
     public JsonObject appQueryTh(@RequestParam("lsh") String lsh) {
         return xsThService.appQueryTh(lsh);
+    }
+
+    @GetMapping("province")
+    public JsonObject getProvince(){
+        return xsThService.getProvince();
+    }
+
+    @GetMapping("city")
+    public JsonObject getProvince(@RequestParam("province") String province){
+        return xsThService.getCity(province);
+    }
+
+    @GetMapping("district")
+    public JsonObject getDistrict(@RequestParam("city") String city){
+        return xsThService.getDistrict(city);
     }
 }

@@ -149,7 +149,7 @@ public class GjService {
 
         List<GjDetail> list = gjMxMapper.getMx(lsh);
 
-        if(list.isEmpty()){
+        if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_DETAIL_NOT_EXISTS);
         }
 

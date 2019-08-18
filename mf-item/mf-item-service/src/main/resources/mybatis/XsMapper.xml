@@ -108,10 +108,6 @@
                 lrid = #{lrid}
             </if>
 
-            <if test="lrid == null">
-                and status = 0
-            </if>
-
             <if test="phone != null">
                 and phone = #{phone}
             </if>
@@ -121,6 +117,10 @@
             <if test="hh != null">
                 and hh = #{hh}
             </if>
+            <if test="contact != null">
+                and contact = #{contact}
+            </if>
+
         </where>
         order by lrsj desc
     </select>
@@ -150,15 +150,10 @@
         end as statusInfo,
         a.store_code as storeCode,a.store_name as storeName,
         a.dept_code as deptCode,a.dept_name as deptName
-        from vw_xs a inner join mf_user b
-            on a.store_code = b.store_code and a.dept_code=b.dept_code
+        from vw_xs a
         <where>
-            <if test="lrid != null">
-                b.id = #{lrid}
-            </if>
-
-            <if test="lrid == null">
-                and a.status = 0
+            <if test="storecode != null">
+                a.store_code = #{storecode}
             </if>
 
             <if test="phone != null">
@@ -170,7 +165,19 @@
             <if test="hh != null">
                 and a.hh = #{hh}
             </if>
+            <if test="contact != null">
+                and a.contact = #{contact}
+            </if>
         </where>
         order by a.lrsj desc
+    </select>
+    <select id="selectProvince" resultType="com.mallfe.item.pojo.Province">
+        select distinct province from mf_district order by 1;
+    </select>
+    <select id="selectCity" resultType="com.mallfe.item.pojo.City">
+        select distinct province,city from mf_district where province=#{province} order by 1,2;
+    </select>
+    <select id="selectDistrict" resultType="com.mallfe.item.pojo.District">
+        select province,city,district from mf_district where city=#{city} order by id;
     </select>
 </mapper>

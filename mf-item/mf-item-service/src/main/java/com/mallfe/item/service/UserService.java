@@ -90,7 +90,7 @@ public class UserService {
         user.setDeptCode("0001");
         //2.插入用户，插入后会自动获取id
         userMapper.insertUser(user);
-        if(!user.getPl().isEmpty()){
+        if(!CollectionUtils.isEmpty(user.getPl())){
             userMapper.insertUserPl(user);
         }
 
@@ -156,6 +156,10 @@ public class UserService {
         User user = userMapper.selectUserInfo(username,password);
         if(user == null){
             return new JsonError("用户名或密码错误");
+        }
+
+        if(user.getLx() != 2  && user.getLx() != 6 && user.getLx() != 7){
+            return new JsonError("用户无App使用权限");
         }
 
         return new JsonData(user);

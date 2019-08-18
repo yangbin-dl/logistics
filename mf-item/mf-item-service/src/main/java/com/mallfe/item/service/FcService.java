@@ -13,6 +13,7 @@ import com.mallfe.item.pojo.Fc;
 import com.mallfe.item.pojo.FcDetail;
 import com.mallfe.item.pojo.Kucn;
 import com.mallfe.item.pojo.KucnOut;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,7 +107,7 @@ public class FcService {
                 }
 
                 KucnOut kucnOut = new KucnOut();
-                kucnOut.setHh(mx.getHh());
+                BeanUtils.copyProperties(kc,kucnOut);
                 kucnOut.setYwbm("FC");
                 kucnOut.setSl(mx.getSl());
                 kucnOut.setLsh(fc.getLsh());

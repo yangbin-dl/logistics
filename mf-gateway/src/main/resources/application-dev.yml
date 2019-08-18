@@ -64,3 +64,6 @@ filter:
     - /api/item/xsth/appqueryxs
     - /api/item/xsth/appqueryth
     - /api/item/xsth/pageall
+    - /api/item/xsth/province
+    - /api/item/xsth/city
+    - /api/item/xsth/district

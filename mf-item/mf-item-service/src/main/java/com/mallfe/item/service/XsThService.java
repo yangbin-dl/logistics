@@ -181,7 +181,7 @@ public class XsThService {
         return bill;
     }
 
-    public JsonObject queryAll(Integer page, String lruserid, String phone, Integer hh, String lsh) {
+    public JsonObject queryAll(Integer page, String lruserid, String phone, Integer hh, String lsh, String contact) {
         //分页
         PageHelper.startPage(page, 10);
         //条件过滤
@@ -191,9 +191,9 @@ public class XsThService {
         User u = userService.selectById(Integer.parseInt(lruserid));
 
         if(u.getLx()==2){
-            list = xsMapper.selectAllBill(lruserid,phone,lsh,hh);
+            list = xsMapper.selectAllBill(lruserid,phone,lsh,hh,contact);
         } else {
-            list = xsMapper.selectAllBillByStore(lruserid,phone,lsh,hh);
+            list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact);
         }
 
         //查询
@@ -296,5 +296,20 @@ public class XsThService {
     public JsonObject appQueryTh(String lsh) {
         AllBill bill = xsMapper.selectOneBill(lsh);
         return new JsonData(bill);
+    }
+
+    public JsonObject getProvince() {
+        List<Province> provinceList = xsMapper.selectProvince();
+        return new JsonData(provinceList);
+    }
+
+    public JsonObject getCity(String province) {
+        List<City> cityList = xsMapper.selectCity(province);
+        return new JsonData(cityList);
+    }
+
+    public JsonObject getDistrict(String city) {
+        List<District> districtList = xsMapper.selectDistrict(city);
+        return new JsonData(districtList);
     }
 }
