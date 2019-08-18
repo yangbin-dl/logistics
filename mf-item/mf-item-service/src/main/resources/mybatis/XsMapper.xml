@@ -66,7 +66,7 @@
                b.driver_code, b.path_code,
                case b.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
                b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,
-               c.pinm,c.xingh,c.tm,
+               c.pinm,c.xingh,c.tm,ifnull(d.kucn,0) as kucn,
                case b.status
                    when 0 then '新增'
                    when 1 then '已提交'
@@ -75,6 +75,7 @@
                    when 9 then '已作废'
                    end as statusInfo
         From mf_xs b left join mf_sp c on b.hh=c.hh
+        left join mf_kucn d on b.hh=d.hh and b.lx = d.lx and b.store_code = d.store_code
         <where>
             <if test="key != null">
                 b.lsh = #{key}

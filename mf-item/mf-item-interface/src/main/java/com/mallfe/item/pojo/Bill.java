@@ -139,6 +139,9 @@ public class Bill {
     private Long kuan;
     @Transient
     private Long gao;
+
+    @Transient
+    private Integer kucn;
     /**
      * 店铺编码
      */
