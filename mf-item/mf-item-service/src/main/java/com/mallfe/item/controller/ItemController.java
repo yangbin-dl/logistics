@@ -55,9 +55,9 @@ public class ItemController {
 
     @GetMapping("findhh")
     public JsonObject findSp(@RequestParam("hh") Integer hh,
-                             @RequestParam(value = "storecode",defaultValue = "0025") String storeCode){
+                             @RequestParam(value = "userid") Long userid){
 
-        return itemService.findHh(hh,storeCode);
+        return itemService.findHh(hh,userid);
     }
 
     /**

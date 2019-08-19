@@ -157,14 +157,16 @@ public class ItemService {
         spMapper.updateByPrimaryKey(sp);
     }
 
-    public JsonObject findHh(Integer hh,String storeCode) {
+    public JsonObject findHh(Integer hh,Long userid) {
         Sp sp = spMapper.selectSpInfo(hh);
 
         if (sp == null) {
             return new JsonError("商品未找到");
         }
 
-        sp.setKucnList(kucnMapper.selectKucn(hh,storeCode));
+        User user = userMapper.selectUserInfoById(userid);
+
+        sp.setKucnList(kucnMapper.selectKucn(hh,user.getStoreCode()));
 
         return new JsonData(sp);
 
