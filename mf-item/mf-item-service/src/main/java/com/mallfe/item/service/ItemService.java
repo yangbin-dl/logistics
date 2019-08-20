@@ -26,6 +26,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 描述
@@ -162,6 +163,14 @@ public class ItemService {
 
         if (sp == null) {
             return new JsonError("商品未找到");
+        }
+
+        List<Pl> plList = userMapper.selectUserPl(userid);
+
+        plList = plList.stream().filter(x -> x.getPlbm().equals(sp.getPlbm())).collect(Collectors.toList());
+
+        if(plList.isEmpty()){
+            return new JsonError("用户不能使用该商品");
         }
 
         User user = userMapper.selectUserInfoById(userid);
