@@ -8,15 +8,24 @@ import com.mallfe.common.json.JsonData;
 import com.mallfe.common.json.JsonError;
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.item.mapper.*;
+import com.mallfe.item.mapper.AllBillMapper;
+import com.mallfe.item.mapper.ConsumerMapper;
+import com.mallfe.item.mapper.ThMapper;
+import com.mallfe.item.mapper.XsMapper;
 import com.mallfe.item.pojo.*;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -311,5 +320,51 @@ public class XsThService {
     public JsonObject getDistrict(String city) {
         List<District> districtList = xsMapper.selectDistrict(city);
         return new JsonData(districtList);
+    }
+
+    public JsonObject queryCityList() {
+        JsonData jsonData = new JsonData();
+        UserResponseMessage response = new UserResponseMessage();
+
+        List<CityMessage> lastVisitCityList = new ArrayList<>();
+        List<CityMessage> hotCityList = new ArrayList<>();
+        List<CityMessage> allCityList = new ArrayList<>();
+        try {
+            ClassPathResource resource = new ClassPathResource("city.json");
+            File path = resource.getFile();
+            String cityStr = FileUtils.readFileToString(path, "UTF-8");
+            JSONObject cityObject = JSONObject.fromObject(cityStr);
+            JSONArray lastVisitCityArray = null;
+            JSONArray hotCityArray = null;
+            JSONArray allCityArray = null;
+            if (cityObject != null) {
+                lastVisitCityArray = cityObject.getJSONArray("lastVisitCityList");
+                hotCityArray = cityObject.getJSONArray("hotCityList");
+                allCityArray = cityObject.getJSONArray("allCityList");
+            }
+            lastVisitCityArray.forEach(last -> lastVisitCityList.add(buildCityMessage((JSONObject) last)));
+            hotCityArray.forEach(hot -> hotCityList.add(buildCityMessage((JSONObject) hot)));
+            allCityArray.forEach(all -> allCityList.add(buildCityMessage((JSONObject) all)));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        response.setLastVisitCityList(lastVisitCityList);
+        response.setHotCityList(hotCityList);
+        response.setAllCityList(allCityList);
+
+        jsonData.setSuccess(true);
+        jsonData.setData(response);
+        return jsonData;
+    }
+
+    private CityMessage buildCityMessage(JSONObject objects) {
+        CityMessage cityMessage = new CityMessage();
+        cityMessage.setId(objects.getString("id"));
+        cityMessage.setName(objects.getString("name"));
+        cityMessage.setSpellName(objects.getString("spellName"));
+        cityMessage.setFullName(objects.getString("fullName"));
+        cityMessage.setSortLetters(objects.getString("sortLetters"));
+        return cityMessage;
     }
 }

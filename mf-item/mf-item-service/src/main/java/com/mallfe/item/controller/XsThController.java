@@ -270,4 +270,10 @@ public class XsThController {
     public JsonObject getDistrict(@RequestParam("city") String city){
         return xsThService.getDistrict(city);
     }
+
+    @ResponseBody
+    @RequestMapping("/queryCity")
+    public JsonObject queryCityList() throws Exception {
+        return xsThService.queryCityList();
+    }
 }

@@ -67,3 +67,4 @@ filter:
     - /api/item/xsth/province
     - /api/item/xsth/city
     - /api/item/xsth/district
+    - /api/item/xsth/queryCity
