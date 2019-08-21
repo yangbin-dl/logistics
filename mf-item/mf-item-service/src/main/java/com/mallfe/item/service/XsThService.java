@@ -332,8 +332,8 @@ public class XsThService {
         try {
             ClassPathResource resource = new ClassPathResource("city.json");
             File path = resource.getFile();
-            String cityStr = FileUtils.readFileToString(path, "UTF-8");
-            JSONObject cityObject = JSONObject.fromObject(cityStr);
+            String city_str = FileUtils.readFileToString(path, "UTF-8");
+            JSONObject cityObject = JSONObject.fromObject(city_str);
             JSONArray lastVisitCityArray = null;
             JSONArray hotCityArray = null;
             JSONArray allCityArray = null;

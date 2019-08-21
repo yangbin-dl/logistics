@@ -41,4 +41,6 @@ public class KucnOut{
     private String lsh;
     private Integer xh;
     private String ywbm;
+    private String storeCode;
+    private String deptCode = "0001";
 }

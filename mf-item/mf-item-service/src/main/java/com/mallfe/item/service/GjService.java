@@ -175,9 +175,13 @@ public class GjService {
         g.setLsh(gj.getLsh());
         g.setStatus(0);
 
-        g=gjMapper.selectOne(g);
+        g=gjMapper.selectBill(gj.getLsh()).get(0);
 
         if(g == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        if(g.getStatus()!=0){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
 

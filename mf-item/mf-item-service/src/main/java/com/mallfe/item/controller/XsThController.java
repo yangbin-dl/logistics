@@ -271,9 +271,4 @@ public class XsThController {
         return xsThService.getDistrict(city);
     }
 
-    @ResponseBody
-    @RequestMapping("/queryCity")
-    public JsonObject queryCityList() throws Exception {
-        return xsThService.queryCityList();
-    }
 }

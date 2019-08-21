@@ -142,7 +142,7 @@ public class FcService {
         Fc fc = new Fc();
         fc.setLsh(lsh);
 
-        fc=fcMapper.selectOne(fc);
+        fc=fcMapper.selectBill(lsh).get(0);
 
         if(fc == null){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
@@ -176,9 +176,13 @@ public class FcService {
         g.setLsh(fc.getLsh());
         g.setStatus(0);
 
-        g=fcMapper.selectOne(g);
+        g=fcMapper.selectBill(fc.getLsh()).get(0);
 
         if(g == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        if(g.getStatus()!=0 ){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
 
