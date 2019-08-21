@@ -1,5 +1,6 @@
 package com.mallfe.item.pojo;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
@@ -9,6 +10,7 @@ import lombok.EqualsAndHashCode;
  * @since 2019-08-21
  */
 @EqualsAndHashCode(callSuper = true)
+@Data
 public class CkdbDetail extends Sp{
     /**
      * 流水号

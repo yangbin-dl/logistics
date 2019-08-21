@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2019-08-21
  */
 @RestController
-@RequestMapping("gj")
+@RequestMapping("ckdb")
 public class CkdbController {
 
     @Autowired
@@ -53,8 +53,8 @@ public class CkdbController {
     }
 
     @GetMapping("bill")
-    public ResponseEntity<Ckdb> update(@Param("lsh")String lsh){
-        ckdbService.commit(lsh);
+    public ResponseEntity<Ckdb> bill(@Param("lsh")String lsh){
+        ckdbService.bill(lsh);
         return ResponseEntity.ok().build();
     }
 
