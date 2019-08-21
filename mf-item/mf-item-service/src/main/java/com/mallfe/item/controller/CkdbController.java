@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2019-08-21
  */
 @RestController
-@RequestMapping("gj")
+@RequestMapping("ckdb")
 public class CkdbController {
 
     @Autowired
