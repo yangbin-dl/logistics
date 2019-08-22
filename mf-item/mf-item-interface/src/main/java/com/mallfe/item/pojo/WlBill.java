@@ -97,4 +97,9 @@ public class WlBill {
     @Transient
     private String deptName;
 
+
+    /**
+     * 店铺编码
+     */
+    private String storeCode ;
 }

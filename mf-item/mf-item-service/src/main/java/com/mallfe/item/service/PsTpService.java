@@ -337,6 +337,7 @@ public class PsTpService {
     }
 
     public void commitPs(Ps ps) {
+        String  storeCode = ps.getStoreCode();
         try{
             if(psMapper.updateStatusToOut(ps.getLsh()) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
@@ -347,6 +348,7 @@ public class PsTpService {
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
                 kc.setLx(mx.getLx());
+                kc.setStoreCode(storeCode);
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
                 if(result == null){
@@ -367,6 +369,7 @@ public class PsTpService {
                 kucnOutMapper.insert(kucnOut);
             }
         } catch (Exception e){
+            e.printStackTrace();
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
     }
