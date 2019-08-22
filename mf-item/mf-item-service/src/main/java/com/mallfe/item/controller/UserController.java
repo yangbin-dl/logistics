@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> queryById(@PathVariable(value = "id") Integer id) {
+    public ResponseEntity<User> queryById(@PathVariable(value = "id") Long id) {
         User result = userService.selectById(id);
         return ResponseEntity.ok(result);
     }

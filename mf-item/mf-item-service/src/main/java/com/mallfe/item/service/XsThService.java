@@ -55,6 +55,12 @@ public class XsThService {
         xs.setLsh(lsh);
         xs.setStatus(0);
         xs.setLrsj(CommonService.getStringDate());
+
+        User user = userService.selectById(xs.getLrid());
+
+        xs.setDeptCode(user.getDeptCode());
+        xs.setStoreCode(user.getStoreCode());
+
         try {
             xsMapper.insert(xs);
         } catch (Exception e){
@@ -68,6 +74,12 @@ public class XsThService {
         String lsh = commonService.getLsh("TH");
         th.setLsh(lsh);
         th.setStatus(0);
+
+        User user = userService.selectById(th.getLrid());
+
+        th.setDeptCode(user.getDeptCode());
+        th.setStoreCode(user.getStoreCode());
+
         th.setLrsj(CommonService.getStringDate());
         try {
             thMapper.insert(th);
@@ -191,7 +203,7 @@ public class XsThService {
 
         //查询用户角色
         List<AllBill> list;
-        User u = userService.selectById(Integer.parseInt(lruserid));
+        User u = userService.selectById(Long.parseLong(lruserid));
 
         if(u.getLx()==2){
             list = xsMapper.selectAllBill(lruserid,phone,lsh,hh,contact);

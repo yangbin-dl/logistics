@@ -89,7 +89,7 @@ public class WlBill {
     /**
      * 地区编码
      */
-    private String deptCode = "0001";
+    private String deptCode ;
 
     /**
      * 地区名称

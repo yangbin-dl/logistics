@@ -143,7 +143,7 @@ public class UserService {
 
     }
 
-    public User selectById(Integer id) {
+    public User selectById(Long id) {
         Example example = new Example(User.class);
         example.createCriteria().andEqualTo("id",id);
         User user = userMapper.selectOneByExample(example);

@@ -9,10 +9,7 @@ import com.mallfe.item.mapper.GjMapper;
 import com.mallfe.item.mapper.GjMxMapper;
 import com.mallfe.item.mapper.KucnInMapper;
 import com.mallfe.item.mapper.KucnMapper;
-import com.mallfe.item.pojo.Gj;
-import com.mallfe.item.pojo.GjDetail;
-import com.mallfe.item.pojo.Kucn;
-import com.mallfe.item.pojo.KucnIn;
+import com.mallfe.item.pojo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,6 +44,9 @@ public class GjService {
     @Autowired
     private KucnInMapper kucnInMapper;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 新增购进单
      * @param gj
@@ -57,7 +57,10 @@ public class GjService {
         String lsh = commonService.getLsh("GJ");
         gj.setLsh(lsh);
 
+        User user = userService.selectById(gj.getLrid());
 
+        gj.setDeptCode(user.getDeptCode());
+        gj.setStoreCode(user.getStoreCode());
         gj.setLrsj(CommonService.getStringDate());
         //插入单据
         try {

@@ -9,10 +9,7 @@ import com.mallfe.item.mapper.FcMapper;
 import com.mallfe.item.mapper.FcMxMapper;
 import com.mallfe.item.mapper.KucnMapper;
 import com.mallfe.item.mapper.KucnOutMapper;
-import com.mallfe.item.pojo.Fc;
-import com.mallfe.item.pojo.FcDetail;
-import com.mallfe.item.pojo.Kucn;
-import com.mallfe.item.pojo.KucnOut;
+import com.mallfe.item.pojo.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +42,9 @@ public class FcService {
     @Autowired
     private KucnOutMapper kucnOutMapper;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 新增购进单
      * @param fc
@@ -55,6 +55,10 @@ public class FcService {
         String lsh = commonService.getLsh("FC");
         fc.setLsh(lsh);
 
+        User user = userService.selectById(fc.getLrid());
+
+        fc.setDeptCode(user.getDeptCode());
+        fc.setStoreCode(user.getStoreCode());
 
         fc.setLrsj(CommonService.getStringDate());
         //插入单据

@@ -69,7 +69,7 @@ public class Order {
     /**
      * 店铺编码
      */
-    private String storeCode = "0025";
+    private String storeCode;
 
     /**
      * 店铺名称
@@ -80,7 +80,7 @@ public class Order {
     /**
      * 地区编码
      */
-    private String deptCode = "0001";
+    private String deptCode;
 
     /**
      * 地区名称
