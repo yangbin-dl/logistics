@@ -8,7 +8,25 @@ public class UserInfo {
     private String username;
     private String token;
 
+  /**
+     * 店铺编码
+     */
+    private String storeCode;
 
+    /**
+     * 店铺名称
+     */
+    private String storeName;
+
+    /**
+     * 部门编码
+     */
+    private String deptCode;
+
+    /**
+     * 部门名称
+     */
+    private String deptName;
     private String truename;
 
     /**
