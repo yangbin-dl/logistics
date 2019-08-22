@@ -1,14 +1,18 @@
 package com.mallfe.item.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.CkdbMapper;
 import com.mallfe.item.pojo.Ckdb;
-import com.mallfe.item.pojo.CkdbDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
+import java.util.List;
 
 /**
  * 描述
@@ -33,9 +37,7 @@ public class CkdbService {
         try{
             ckdbMapper.insertBill(ckdb);
 
-            for (CkdbDetail mx: ckdb.getList()) {
-                ckdbMapper.insertMx(ckdb.getLsh(),mx.getHh(),mx.getSl());
-            }
+            ckdbMapper.insertMx(ckdb);
         }
         catch (Exception e ){
             throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
@@ -57,9 +59,7 @@ public class CkdbService {
         }
         try{
             ckdbMapper.deleteMx(ckdb.getLsh());
-            for (CkdbDetail mx: ckdb.getList()) {
-                ckdbMapper.insertMx(ckdb.getLsh(),mx.getHh(),mx.getSl());
-            }
+            ckdbMapper.insertMx(ckdb);
         }
         catch (Exception e){
             throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
@@ -69,7 +69,18 @@ public class CkdbService {
     }
 
     public PageResult<Ckdb> page(Integer page, Integer rows, String lsh, Integer hh) {
-        return null;
+        //分页
+        PageHelper.startPage(page, rows);
+
+        List<Ckdb> list = ckdbMapper.selectBill(lsh,hh);
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Ckdb> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
 
     }
 

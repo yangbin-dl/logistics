@@ -266,9 +266,4 @@ public class XsThController {
         return xsThService.getCity(province);
     }
 
-    @GetMapping("district")
-    public JsonObject getDistrict(@RequestParam("city") String city){
-        return xsThService.getDistrict(city);
-    }
-
 }

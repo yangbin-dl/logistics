@@ -10,9 +10,7 @@ import java.util.List;
 public interface CkdbMapper {
     Integer insertBill(Ckdb ckdb);
 
-    void insertMx(@Param("lsh")String lsh,
-                  @Param("hh") Integer hh,
-                  @Param("sl") Integer sl);
+    void insertMx(Ckdb ckdb);
 
     List<Ckdb> selectBill(@Param("lsh") String lsh, @Param("hh") Integer hh);
 
