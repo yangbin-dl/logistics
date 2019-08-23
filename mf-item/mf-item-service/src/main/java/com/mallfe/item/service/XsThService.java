@@ -8,10 +8,7 @@ import com.mallfe.common.json.JsonData;
 import com.mallfe.common.json.JsonError;
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.item.mapper.AllBillMapper;
-import com.mallfe.item.mapper.ConsumerMapper;
-import com.mallfe.item.mapper.ThMapper;
-import com.mallfe.item.mapper.XsMapper;
+import com.mallfe.item.mapper.*;
 import com.mallfe.item.pojo.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +45,9 @@ public class XsThService {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    KucnMapper kucnMapper;
 
 
     public Xs insertXs(@NotNull Xs xs){
@@ -147,6 +147,10 @@ public class XsThService {
 
     public JsonObject commitXs(Xs xs){
         try {
+            if(kucnMapper.reduceRtKucn(xs.getHh(),xs.getSl(),xs.getStoreCode(),xs.getLx())!= 1){
+                return new JsonError("库存不足，提交失败！");
+            }
+
             if(xsMapper.updateStatusToCommited(xs)!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }

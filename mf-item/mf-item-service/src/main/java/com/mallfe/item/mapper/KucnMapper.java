@@ -19,4 +19,25 @@ public interface KucnMapper extends Mapper<Kucn> {
     int reduceKucn(@Param("sl") Integer sl, @Param("id") Integer id);
 
     List<Kucn> selectKucn(@Param("hh") Integer hh,@Param("storecode") String storeCode);
+
+    int reduceRtKucn(@Param("hh") Integer hh,
+                     @Param("sl") Integer sl,
+                     @Param("storecode") String storeCode,
+                     @Param("lx") Integer lx);
+
+    int fcReduceRtKucn(@Param("hh") Integer hh,
+                       @Param("sl") Integer sl,
+                       @Param("storecode") String storeCode,
+                       @Param("lx") Integer lx);
+
+    int addRtKucn(@Param("hh") Integer hh,
+                  @Param("sl") Integer sl,
+                  @Param("storecode") String storeCode,
+                  @Param("lx") Integer lx);
+
+    int insertRtKucn(Kucn kucn);
+
+    Kucn selectRtKucn(@Param("hh") Integer hh,
+                      @Param("storecode") String storeCode,
+                      @Param("lx") Integer lx);
 }

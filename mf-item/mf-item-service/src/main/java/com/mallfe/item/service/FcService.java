@@ -110,6 +110,10 @@ public class FcService {
                     }
                 }
 
+                if(kucnMapper.fcReduceRtKucn(mx.getHh(),mx.getSl(),fc.getStoreCode(),fc.getLx())!=1){
+                    throw new MallfeException(ExceptionEnum.UNDER_STOCK);
+                }
+
                 KucnOut kucnOut = new KucnOut();
                 BeanUtils.copyProperties(kc,kucnOut);
                 kucnOut.setYwbm("FC");

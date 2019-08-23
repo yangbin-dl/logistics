@@ -110,6 +110,16 @@ public class GjService {
                     kucnMapper.addKucn(mx.getSl(),result.getId());
                 }
 
+                if(kucnMapper.addRtKucn(mx.getHh(),mx.getSl(),gj.getStoreCode(),gj.getLx())==0){
+                    Kucn rt = new Kucn();
+                    rt.setHh(mx.getHh());
+                    rt.setLx(gj.getLx());
+                    rt.setDeptCode(gj.getDeptCode());
+                    rt.setStoreCode(gj.getStoreCode());
+                    rt.setKucn(mx.getSl());
+                    kucnMapper.insertRtKucn(rt);
+                }
+
                 KucnIn kucnIn = new KucnIn();
                 BeanUtils.copyProperties(kc,kucnIn);
                 kucnIn.setYwbm("GJ");

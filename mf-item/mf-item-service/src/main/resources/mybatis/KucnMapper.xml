@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mallfe.item.mapper.KucnMapper">
+    <insert id="insertRtKucn" parameterType="com.mallfe.item.pojo.Kucn">
+        insert into mf_kucn_rt(dept_code, store_code, hh, lx, kucn)
+        values (#{deptCode},#{storeCode},#{hh},#{lx},#{kucn})
+    </insert>
+    <update id="addRtKucn">
+        update mf_kucn_rt set kucn=kucn+#{sl}
+        where hh=#{hh} and store_code = #{storecode} and lx = #{lx} and kucn>=#{sl}
+    </update>
     <update id="addKucn">
         update mf_kucn set kucn=kucn+#{sl} where id=#{id}
     </update>
     <update id="reduceKucn">
         update mf_kucn set kucn=kucn-#{sl} where id=#{id} and kucn>=#{sl}
     </update>
+    <update id="reduceRtKucn">
+        update mf_kucn_rt set kucn=kucn-#{sl}
+        where hh=#{hh} and store_code = #{storecode} and lx = #{lx} and kucn>=#{sl}
+    </update>
+
+    <update id="fcReduceRtKucn">
+        update mf_kucn_rt set kucn=kucn-#{sl}
+        where hh=#{hh} and store_code = #{storecode} and lx = #{lx}
+    </update>
 
     <select id="selectKucn" resultType="com.mallfe.item.pojo.Kucn">
         select kucn,lx,store_code as storecode,dept_code as deptcode from mf_kucn
         where hh=#{hh} and store_code=#{storecode}
+    </select>
+    <select id="selectRtKucn" resultType="com.mallfe.item.pojo.Kucn">
+        select id,kucn,lx,store_code as storecode,dept_code as deptcode from mf_kucn_rt
+            where hh=#{hh} and store_code = #{storecode} and lx = #{lx}
     </select>
 </mapper>
