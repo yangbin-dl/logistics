@@ -12,7 +12,7 @@
 
     <update id="updateBill" parameterType="com.mallfe.item.pojo.Xs">
         update mf_th set hh=#{hh},sl=#{sl},lx=#{lx},province=#{province},city=#{city},
-            district=#{district},location=#{location},phone=#{phone},contact=#{contact},
+            district=#{district},location=#{location},phone=#{phone},contact=#{contact},remark=#{remark},
                          qwsj=#{qwsj} where lsh = #{lsh} and status = 0
     </update>
     <update id="updateStatusToTp">
@@ -34,7 +34,7 @@
                b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, a.status,
                b.driver_code, b.path_code,
                case b.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
-               b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,
+               b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,b.remark,
                c.pinm,c.xingh,c.tm,
                case a.status when 0 then '配送中' when 1 then '已送达' when 2 then '未送达' end as statusInfo
         From mf_tp_mx a left join mf_th b on a.ddh = b.lsh
@@ -47,7 +47,7 @@
         b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, b.status,
         b.driver_code, b.path_code,
         case b.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
-        b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,
+        b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,b.remark,
         c.pinm,c.xingh,c.tm,
         case b.status
         when 0 then '新增'

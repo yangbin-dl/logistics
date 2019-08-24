@@ -163,4 +163,6 @@ public class Bill {
      */
     @Transient
     private String deptName;
+
+    private String remark;
 }
