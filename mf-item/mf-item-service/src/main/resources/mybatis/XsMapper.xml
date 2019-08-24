@@ -93,7 +93,7 @@
     </select>
     <select id="selectAllBill" resultType="com.mallfe.item.pojo.AllBill">
         select billtype, lsh, lrid, truename, status, lrsj, hh, pinm, sl, lx,
-               location, phone, contact, qwsj, sdsj,xingh,tm,
+               location, phone, contact, qwsj, sdsj,xingh,tm,remark,
                case status
                    when 0 then '新增'
                    when 1 then '已提交'
@@ -127,7 +127,7 @@
     </select>
     <select id="selectOneBill" resultType="com.mallfe.item.pojo.AllBill">
         select lsh, lrid, truename, status, lrsj, hh, pinm, sl, lx,
-               location, phone, contact, qwsj, sdsj,xingh,tm,
+               location, phone, contact, qwsj, sdsj,xingh,tm,remark,
                case status
                    when 0 then '新增'
                    when 1 then '已提交'
@@ -141,7 +141,7 @@
     </select>
     <select id="selectAllBillByStore" resultType="com.mallfe.item.pojo.AllBill">
         select billtype, lsh, lrid, a.truename, status, lrsj, hh, pinm, sl, a.lx,
-        location, phone, contact, qwsj, sdsj,xingh,tm,
+        location, phone, contact, qwsj, sdsj,xingh,tm,remark,
         case status
         when 0 then '新增'
         when 1 then '已提交'
