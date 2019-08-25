@@ -55,10 +55,19 @@ public class FcService {
         String lsh = commonService.getLsh("FC");
         fc.setLsh(lsh);
 
+
+        if(fc.getLx() == null){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+
+        if(fc.getStoreCode() == null){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+
         User user = userService.selectById(fc.getLrid());
 
         fc.setDeptCode(user.getDeptCode());
-        fc.setStoreCode(user.getStoreCode());
+        //fc.setStoreCode(user.getStoreCode());
 
         fc.setLrsj(CommonService.getStringDate());
         //插入单据

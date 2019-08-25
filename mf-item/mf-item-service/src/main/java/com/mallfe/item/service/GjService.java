@@ -57,10 +57,18 @@ public class GjService {
         String lsh = commonService.getLsh("GJ");
         gj.setLsh(lsh);
 
+        if(gj.getLx() == null){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+
+        if(gj.getStoreCode() == null){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+
         User user = userService.selectById(gj.getLrid());
 
         gj.setDeptCode(user.getDeptCode());
-        gj.setStoreCode(user.getStoreCode());
+        //gj.setStoreCode(user.getStoreCode());
         gj.setLrsj(CommonService.getStringDate());
         //插入单据
         try {
