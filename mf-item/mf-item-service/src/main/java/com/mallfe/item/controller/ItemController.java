@@ -53,6 +53,12 @@ public class ItemController {
         return ResponseEntity.ok(itemService.query(hh,uid));
     }
 
+    /**
+     * App查询商品信息
+     * @param hh 货号
+     * @param userid 用户id
+     * @return 商品信息
+     */
     @GetMapping("findhh")
     public JsonObject findSp(@RequestParam("hh") Integer hh,
                              @RequestParam(value = "userid") Long userid){

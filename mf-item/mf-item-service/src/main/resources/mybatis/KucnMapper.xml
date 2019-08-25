@@ -26,7 +26,7 @@
     </update>
 
     <select id="selectKucn" resultType="com.mallfe.item.pojo.Kucn">
-        select kucn,lx,store_code as storecode,dept_code as deptcode from mf_kucn
+        select kucn,lx,store_code as storecode,dept_code as deptcode from mf_kucn_rt
         where hh=#{hh} and store_code=#{storecode}
     </select>
     <select id="selectRtKucn" resultType="com.mallfe.item.pojo.Kucn">

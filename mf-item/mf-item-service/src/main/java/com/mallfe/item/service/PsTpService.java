@@ -352,11 +352,12 @@ public class PsTpService {
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
                 if(result == null){
-                    kc.setKucn(-1 * mx.getSl());
-                    kucnMapper.insert(kc);
+                    throw new MallfeException(ExceptionEnum.UNDER_STOCK);
                 }
                 else{
-                    kucnMapper.reduceKucn(mx.getSl(),result.getId());
+                    if(kucnMapper.reduceKucn(mx.getSl(),result.getId())!=1){
+                        throw new MallfeException(ExceptionEnum.UNDER_STOCK);
+                    }
                 }
 
                 KucnOut kucnOut = new KucnOut();
@@ -365,6 +366,8 @@ public class PsTpService {
                 kucnOut.setSl(mx.getSl());
                 kucnOut.setLsh(ps.getLsh());
                 kucnOut.setLx(mx.getLx());
+                kucnOut.setDeptCode(ps.getDeptCode());
+                kucnOut.setStoreCode(ps.getStoreCode());
                 //插入出库记录
                 kucnOutMapper.insert(kucnOut);
             }
@@ -466,6 +469,8 @@ public class PsTpService {
                 kucnIn.setSl(mx.getSl());
                 kucnIn.setLsh(mx.getLsh());
                 kucnIn.setLx(mx.getLx());
+                kucnIn.setDeptCode(psrk.getDeptCode());
+                kucnIn.setStoreCode(psrk.getStoreCode());
                 //插入入库记录
                 kucnInMapper.insert(kucnIn);
             }
@@ -543,6 +548,8 @@ public class PsTpService {
                 kucnIn.setSl(mx.getSl());
                 kucnIn.setLsh(mx.getLsh());
                 kucnIn.setLx(mx.getLx());
+                kucnIn.setStoreCode(tprk.getStoreCode());
+                kucnIn.setDeptCode(tprk.getDeptCode());
                 //插入入库记录
                 kucnInMapper.insert(kucnIn);
             }

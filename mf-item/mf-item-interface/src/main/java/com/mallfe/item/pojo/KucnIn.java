@@ -42,5 +42,5 @@ public class KucnIn{
     private String ywbm;
 
     private String storeCode;
-    private String deptCode = "0001";
+    private String deptCode;
 }

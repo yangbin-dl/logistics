@@ -111,5 +111,11 @@ public class AllBill {
     @Transient
     private String deptName;
 
+    private String remark;
 
+    private String province;
+
+    private String city;
+
+    private String district;
 }
