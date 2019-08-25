@@ -61,7 +61,7 @@
         where a.lsh = #{lsh}
     </select>
     <select id="selectXsList" resultType="com.mallfe.item.pojo.Xs">
-        select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, concat(ifnull(b.province,''),ifnull(b.city,''),ifnull(b.district,''),ifnull(b.location,'')), b.phone,
+        select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, concat(ifnull(b.province,''),ifnull(b.city,''),ifnull(b.district,''),ifnull(b.location,'')) as location, b.phone,
                b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, b.status,
                b.driver_code, b.path_code,
                case b.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
@@ -93,7 +93,7 @@
     </select>
     <select id="selectAllBill" resultType="com.mallfe.item.pojo.AllBill">
         select billtype, lsh, lrid, truename, status, lrsj, hh, pinm, sl, lx,
-        concat(ifnull(province,''),ifnull(city,''),ifnull(district,''),ifnull(location,'')), phone, contact, qwsj, sdsj,xingh,tm,remark,province,city,district,
+        concat(ifnull(province,''),ifnull(city,''),ifnull(district,''),ifnull(location,'')) as location, phone, contact, qwsj, sdsj,xingh,tm,remark,province,city,district,
                case status
                    when 0 then '新增'
                    when 1 then '已提交'
@@ -127,7 +127,7 @@
     </select>
     <select id="selectOneBill" resultType="com.mallfe.item.pojo.AllBill">
         select lsh, lrid, truename, status, lrsj, hh, pinm, sl, lx,province,city,district,
-               concat(ifnull(province,''),ifnull(city,''),ifnull(district,''),ifnull(location,'')), phone, contact, qwsj, sdsj,xingh,tm,remark,
+               concat(ifnull(province,''),ifnull(city,''),ifnull(district,''),ifnull(location,'')) as location, phone, contact, qwsj, sdsj,xingh,tm,remark,
                case status
                    when 0 then '新增'
                    when 1 then '已提交'
@@ -141,7 +141,7 @@
     </select>
     <select id="selectAllBillByStore" resultType="com.mallfe.item.pojo.AllBill">
         select billtype, lsh, lrid, a.truename, status, lrsj, hh, pinm, sl, a.lx,province,city,district,
-        concat(ifnull(province,''),ifnull(city,''),ifnull(district,''),ifnull(location,'')), phone, contact, qwsj, sdsj,xingh,tm,remark,
+        concat(ifnull(province,''),ifnull(city,''),ifnull(district,''),ifnull(location,'')) as location, phone, contact, qwsj, sdsj,xingh,tm,remark,
         case status
         when 0 then '新增'
         when 1 then '已提交'
