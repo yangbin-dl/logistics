@@ -54,8 +54,7 @@ public class CkdbController {
 
     @GetMapping("bill")
     public ResponseEntity<Ckdb> bill(@Param("lsh")String lsh){
-        ckdbService.bill(lsh);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(ckdbService.bill(lsh));
     }
 
 }

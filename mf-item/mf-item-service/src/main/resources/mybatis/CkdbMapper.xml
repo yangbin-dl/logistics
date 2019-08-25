@@ -24,7 +24,8 @@
         lrsj,cksj,lx, case lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
         a.instore_code as inStoreCode,b.store_name as inStoreName,
         a.outstore_code as outStoreCode,d.store_name as outStoreName,
-        a.dept_code as deptCode,c.dept_name as deptName
+        a.dept_code as deptCode,c.dept_name as deptName,
+               case status when 0 then '新增' when 1 then '已提交' when 9 then '已作废' end as statusInfo
         from mf_ckdb a left join mf_store b on a.instore_code =b.store_code
             left join mf_store d on a.outstore_code = d.store_code
             left join mf_region c on a.dept_code=c.dept_code

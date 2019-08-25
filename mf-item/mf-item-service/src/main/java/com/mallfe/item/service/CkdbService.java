@@ -89,6 +89,11 @@ public class CkdbService {
     }
 
     public Ckdb bill(String lsh) {
-        return null;
+
+        Ckdb ckdb = ckdbMapper.selectBill(lsh,null).get(0);
+
+        ckdb.setList(ckdbMapper.selectMx(lsh));
+
+        return ckdb;
     }
 }
