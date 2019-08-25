@@ -16,7 +16,10 @@ public interface KucnMapper extends Mapper<Kucn> {
 
     void addKucn(@Param("sl") Integer sl, @Param("id") Integer id);
 
-    int reduceKucn(@Param("sl") Integer sl, @Param("id") Integer id);
+    int reduceKucn(@Param("hh") Integer hh,
+                   @Param("sl") Integer sl,
+                   @Param("storecode") String storeCode,
+                   @Param("lx") Integer lx);
 
     /**
      * App查询商品即时库存

@@ -42,13 +42,46 @@ public class CkdbController {
             @RequestParam(value = "lsh", required = false) String lsh,
             @RequestParam(value = "hh", required = false) Integer hh
     ) {
-        PageResult<Ckdb> result = ckdbService.page(page,rows,lsh,hh);
+        PageResult<Ckdb> result = ckdbService.page(page,rows,lsh,hh,null);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("page1")
+    public ResponseEntity<PageResult<Ckdb>> page1(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "lsh", required = false) String lsh,
+            @RequestParam(value = "hh", required = false) Integer hh
+    ) {
+        PageResult<Ckdb> result = ckdbService.page(page,rows,lsh,hh,1);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("page2")
+    public ResponseEntity<PageResult<Ckdb>> page2(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "lsh", required = false) String lsh,
+            @RequestParam(value = "hh", required = false) Integer hh
+    ) {
+        PageResult<Ckdb> result = ckdbService.page(page,rows,lsh,hh,2);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("page3")
+    public ResponseEntity<PageResult<Ckdb>> page3(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "lsh", required = false) String lsh,
+            @RequestParam(value = "hh", required = false) Integer hh
+    ) {
+        PageResult<Ckdb> result = ckdbService.page(page,rows,lsh,hh,3);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("commit")
     public ResponseEntity<Null> commit(@RequestBody Ckdb ckdb){
-        ckdbService.commitBill(ckdb);
+        ckdbService.commitBill(ckdb.getLsh());
         return ResponseEntity.ok().build();
     }
 

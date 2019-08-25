@@ -12,8 +12,14 @@ public interface CkdbMapper {
 
     void insertMx(Ckdb ckdb);
 
-    List<Ckdb> selectBill(@Param("lsh") String lsh, @Param("hh") Integer hh);
+    List<Ckdb> selectBill(@Param("lsh") String lsh,
+                          @Param("hh") Integer hh,
+                          @Param("status") Integer status);
 
     void deleteMx(@Param("lsh") String lsh);
     List<CkdbDetail> selectMx(@Param("lsh") String lsh);
+
+    int updateStatus(@Param("lsh") String lsh,
+                     @Param("status") Integer status,
+                     @Param("oldStatus") Integer oldStatus);
 }

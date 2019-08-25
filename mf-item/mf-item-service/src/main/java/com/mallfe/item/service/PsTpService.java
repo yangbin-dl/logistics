@@ -355,7 +355,7 @@ public class PsTpService {
                     throw new MallfeException(ExceptionEnum.UNDER_STOCK);
                 }
                 else{
-                    if(kucnMapper.reduceKucn(mx.getSl(),result.getId())!=1){
+                    if(kucnMapper.reduceKucn(mx.getHh(),mx.getSl(),storeCode,mx.getLx())!=1){
                         throw new MallfeException(ExceptionEnum.UNDER_STOCK);
                     }
                 }

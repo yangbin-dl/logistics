@@ -7,13 +7,13 @@
     </insert>
     <update id="addRtKucn">
         update mf_kucn_rt set kucn=kucn+#{sl}
-        where hh=#{hh} and store_code = #{storecode} and lx = #{lx} and kucn>=#{sl}
+        where hh=#{hh} and store_code = #{storecode} and lx = #{lx}
     </update>
     <update id="addKucn">
         update mf_kucn set kucn=kucn+#{sl} where id=#{id}
     </update>
     <update id="reduceKucn">
-        update mf_kucn set kucn=kucn-#{sl} where id=#{id} and kucn>=#{sl}
+        update mf_kucn set kucn=kucn-#{sl} where hh=#{hh} and store_code = #{storecode} and lx = #{lx} and kucn>=#{sl}
     </update>
     <update id="reduceRtKucn">
         update mf_kucn_rt set kucn=kucn-#{sl}

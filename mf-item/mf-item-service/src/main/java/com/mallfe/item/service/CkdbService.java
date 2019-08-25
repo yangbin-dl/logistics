@@ -6,7 +6,10 @@ import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.CkdbMapper;
+import com.mallfe.item.mapper.KucnMapper;
 import com.mallfe.item.pojo.Ckdb;
+import com.mallfe.item.pojo.CkdbDetail;
+import com.mallfe.item.pojo.Kucn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +32,9 @@ public class CkdbService {
     @Autowired
     CommonService commonService;
 
+    @Autowired
+    KucnMapper kucnMapper;
+
     public Ckdb insert(Ckdb ckdb) {
 
         //获取流水号
@@ -48,7 +54,7 @@ public class CkdbService {
 
     public Ckdb update(Ckdb ckdb) {
 
-        Ckdb c = ckdbMapper.selectBill(ckdb.getLsh(),null).get(0);
+        Ckdb c = ckdbMapper.selectBill(ckdb.getLsh(),null,null).get(0);
 
         if(c == null){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
@@ -68,11 +74,11 @@ public class CkdbService {
         return ckdb;
     }
 
-    public PageResult<Ckdb> page(Integer page, Integer rows, String lsh, Integer hh) {
+    public PageResult<Ckdb> page(Integer page, Integer rows, String lsh, Integer hh,Integer status) {
         //分页
         PageHelper.startPage(page, rows);
 
-        List<Ckdb> list = ckdbMapper.selectBill(lsh,hh);
+        List<Ckdb> list = ckdbMapper.selectBill(lsh,hh,status);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -84,13 +90,72 @@ public class CkdbService {
 
     }
 
-    public void commitBill(Ckdb ckdb) {
+    public void commitBill(String lsh) {
+        Ckdb ckdb = ckdbMapper.selectBill(lsh,null,0).get(0);
 
+        if(ckdb == null){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+
+        ckdbMapper.updateStatus(lsh,1,0);
+    }
+
+
+    public void finishBilll(Ckdb ckdb){
+        ckdb = ckdbMapper.selectBill(ckdb.getLsh(),null,3).get(0);
+
+        if(ckdb == null){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+
+
+        for(CkdbDetail mx : ckdbMapper.selectMx(ckdb.getLsh())){
+
+            //如果冲减库存失败，抛出失败
+            if(kucnMapper.reduceKucn(mx.getHh(),mx.getSl(),ckdb.getOutStoreCode(),ckdb.getLx())!=1){
+                throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+            }
+
+            //借用返厂冲减库存方法，允许即时库存小于0
+            if(kucnMapper.fcReduceRtKucn(mx.getHh(),mx.getSl(),ckdb.getOutStoreCode(),ckdb.getLx())!=1){
+                throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+            }
+
+            Kucn kc = new Kucn();
+            kc.setHh(mx.getHh());
+            kc.setLx(ckdb.getLx());
+            //增加区域和店铺信息
+            kc.setDeptCode(ckdb.getDeptCode());
+            kc.setStoreCode(ckdb.getInStoreCode());
+            Kucn result = kucnMapper.selectOne(kc);
+            //更新库存
+            if(result == null){
+                kc.setKucn(mx.getSl());
+                kucnMapper.insert(kc);
+            }
+            else{
+                kucnMapper.addKucn(mx.getSl(),result.getId());
+            }
+
+            if(kucnMapper.addRtKucn(mx.getHh(),mx.getSl(),ckdb.getInStoreCode(),ckdb.getLx())==0){
+                Kucn rt = new Kucn();
+                rt.setHh(mx.getHh());
+                rt.setLx(ckdb.getLx());
+                rt.setDeptCode(ckdb.getDeptCode());
+                rt.setStoreCode(ckdb.getInStoreCode());
+                rt.setKucn(mx.getSl());
+                kucnMapper.insertRtKucn(rt);
+            }
+        }
     }
 
     public Ckdb bill(String lsh) {
 
-        Ckdb ckdb = ckdbMapper.selectBill(lsh,null).get(0);
+        Ckdb ckdb = ckdbMapper.selectBill(lsh,null,null).get(0);
+
+        if(ckdb == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
 
         ckdb.setList(ckdbMapper.selectMx(lsh));
 

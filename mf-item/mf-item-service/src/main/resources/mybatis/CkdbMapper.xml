@@ -15,17 +15,26 @@
             (#{lsh},#{item.hh},#{item.sl})
         </foreach>
     </insert>
+    <update id="updateStatus">
+        update mf_ckdb set status=#{status} where status=#{oldStatus} and lsh=#{lsh}
+    </update>
     <delete id="deleteMx">
         delete from mf_ckdb_mx where lsh=#{lsh}
     </delete>
     <select id="selectBill" resultType="com.mallfe.item.pojo.Ckdb">
         select a.id,lsh,lrid,username,truename,status,
-        case status when 0 then '新增' when 1 then '已提交' when 9 then '已作废' end as statusInfo,
+        case status
+            when 0 then '新增'
+            when 1 then '待审核1'
+            when 2 then '待审核2'
+            when 3 then '待审核3'
+            when 4 then '已生效'
+            when 9 then '已作废'
+            end as statusInfo,
         lrsj,cksj,lx, case lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
         a.instore_code as inStoreCode,b.store_name as inStoreName,
         a.outstore_code as outStoreCode,d.store_name as outStoreName,
-        a.dept_code as deptCode,c.dept_name as deptName,
-               case status when 0 then '新增' when 1 then '已提交' when 9 then '已作废' end as statusInfo
+        a.dept_code as deptCode,c.dept_name as deptName
         from mf_ckdb a left join mf_store b on a.instore_code =b.store_code
             left join mf_store d on a.outstore_code = d.store_code
             left join mf_region c on a.dept_code=c.dept_code
@@ -36,6 +45,10 @@
             <if test="hh != null and hh!= ''">
                 and a.lsh in (select lsh from mf_ckdb_mx where hh =#{hh})
             </if>
+            <if test="status != null and status != ''">
+                and a.status=#{status}
+            </if>
+
         </where>
         order by a.lrsj desc
     </select>
