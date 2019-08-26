@@ -108,6 +108,8 @@ public class CkdbService {
             throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
         }
 
+        ckdbMapper.updateStatus(ckdb.getLsh(),4,3);
+
 
         for(CkdbDetail mx : ckdbMapper.selectMx(ckdb.getLsh())){
 
@@ -160,5 +162,25 @@ public class CkdbService {
         ckdb.setList(ckdbMapper.selectMx(lsh));
 
         return ckdb;
+    }
+
+    public void shenhe1(String lsh) {
+        Ckdb ckdb = ckdbMapper.selectBill(lsh,null,1).get(0);
+
+        if(ckdb == null){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+
+        ckdbMapper.updateStatus(lsh,2,1);
+    }
+
+    public void shenhe2(String lsh) {
+        Ckdb ckdb = ckdbMapper.selectBill(lsh,null,2).get(0);
+
+        if(ckdb == null){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+
+        ckdbMapper.updateStatus(lsh,3,2);
     }
 }

@@ -11,17 +11,17 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
 
     /**
      * 销售单提交
-     * @param xs 销售单
+     * @param lsh 单据号
      * @return 影响的行数
      */
-    int updateStatusToCommited(Xs xs);
+    int updateStatusToCommited(@Param("lsh") String lsh);
 
     /**
      * 取消销售单
-     * @param xs 销售单
+     * @param xs 单据号
      * @return 影响的行数
      */
-    int updateStatusToCancel(Xs xs);
+    int updateStatusToCancel(@Param("lsh") String lsh);
 
     /**
      * 销售单更新

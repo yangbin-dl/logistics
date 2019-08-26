@@ -85,6 +85,19 @@ public class CkdbController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("shenhe1")
+    public ResponseEntity<Null> shenhe1(@RequestBody Ckdb ckdb){
+        ckdbService.shenhe1(ckdb.getLsh());
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("shenhe2")
+    public ResponseEntity<Null> shenhe2(@RequestBody Ckdb ckdb){
+        ckdbService.shenhe2(ckdb.getLsh());
+        return ResponseEntity.ok().build();
+    }
+
+
     @GetMapping("bill")
     public ResponseEntity<Ckdb> bill(@Param("lsh")String lsh){
         return ResponseEntity.ok(ckdbService.bill(lsh));

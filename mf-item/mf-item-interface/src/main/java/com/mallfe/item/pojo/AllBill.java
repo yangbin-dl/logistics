@@ -57,7 +57,7 @@ public class AllBill {
     /**
      * 数量
      */
-    private Long sl;
+    private Integer sl;
 
     private String pinm;
 

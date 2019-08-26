@@ -151,7 +151,7 @@ public class XsThService {
                 return new JsonError("库存不足，提交失败！");
             }
 
-            if(xsMapper.updateStatusToCommited(xs)!=1){
+            if(xsMapper.updateStatusToCommited(xs.getLsh())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
@@ -162,7 +162,7 @@ public class XsThService {
 
     public JsonObject deleteXs(Xs xs){
         try {
-            if(xsMapper.updateStatusToCancel(xs)!=1){
+            if(xsMapper.updateStatusToCancel(xs.getLsh())!=1){
                 return new JsonError("单据状态异常，作废失败！");
             }
         } catch (Exception e){
@@ -289,13 +289,21 @@ public class XsThService {
     }
 
     public JsonObject appCommitXs(Xs xs) {
-        try {
-            xsMapper.updateStatusToCommited(xs);
-        } catch (Exception e){
-            return new JsonError("单据保存失败");
-        }
+        AllBill t = xsMapper.selectOneBill(xs.getLsh());
 
-        return new JsonData("提交成功");
+        try {
+            if(kucnMapper.reduceRtKucn(t.getHh(),t.getSl(),t.getStoreCode(),t.getLx())!= 1){
+                return new JsonError("库存不足，提交失败！");
+            }
+
+            if(xsMapper.updateStatusToCommited(xs.getLsh())!=1){
+                return new JsonError("单据状态异常，提交失败！");
+            }
+        } catch (Exception e){
+            return new JsonError("系统异常，提交失败！");
+        }
+        return new JsonData("提交成功！");
+
     }
 
     public JsonObject appCommitTh(Th th){
