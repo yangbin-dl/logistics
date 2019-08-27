@@ -18,7 +18,7 @@
     <select id="selectTp" resultType="com.mallfe.item.pojo.Tp">
         select a.id,a.lsh,a.driver_code as driverCode,b.driver_name as driverName,
         a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.status,
-        a.lrid,a.lrusername,a.truename,
+        a.lrid,a.lrusername,a.truename,a.dept_code as deptCode,a.store_code as storeCode,
         case a.status
         when 0 then '新增'
         when 1 then '已发出'
