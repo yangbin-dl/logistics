@@ -33,7 +33,7 @@
         update mf_xs set status= '1',psdh = null,
             driver_code = null,
             path_code = null
-        where psdh=#{lsh} and lsh not in(select ddh from mf_ps_mx where lsh=#{lsh})
+        where lsh=#{lsh}
     </update>
 
     <select id="selectXsWithLsh" resultType="com.mallfe.item.pojo.Xs">

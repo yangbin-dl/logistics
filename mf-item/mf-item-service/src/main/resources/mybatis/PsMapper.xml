@@ -20,7 +20,7 @@
 
     <select id="selectPs" resultType="com.mallfe.item.pojo.Ps">
         select a.id,a.lsh,a.driver_code as driverCode,b.driver_name as driverName,
-               a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.status,
+               a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.status,a.sdsj,
                a.lrid,a.lrusername,a.truename,a.store_code as storeCode,a.dept_code as deptCode,
                case a.status
                    when 0 then '新增'

@@ -97,6 +97,12 @@ public class CkdbController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("shenhe3")
+    public ResponseEntity<Null> shenhe3(@RequestBody Ckdb ckdb){
+        ckdbService.finishBilll(ckdb);
+        return ResponseEntity.ok().build();
+    }
+
 
     @GetMapping("bill")
     public ResponseEntity<Ckdb> bill(@Param("lsh")String lsh){

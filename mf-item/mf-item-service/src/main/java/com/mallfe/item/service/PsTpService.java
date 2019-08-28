@@ -453,6 +453,7 @@ public class PsTpService {
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
                 kc.setLx(mx.getLx());
+                kc.setStoreCode(psrk.getStoreCode());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
                 if(result == null){
@@ -473,7 +474,12 @@ public class PsTpService {
                 kucnIn.setStoreCode(psrk.getStoreCode());
                 //插入入库记录
                 kucnInMapper.insert(kucnIn);
+
+                //更新销售单状态
+                xsMapper.updateStatusToUnPsByArrival(mx.getDdh());
             }
+
+
         } catch (Exception e) {
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
