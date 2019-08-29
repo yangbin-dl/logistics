@@ -158,7 +158,7 @@ public class UserService {
             return new JsonError("用户名或密码错误");
         }
 
-        if(user.getLx() != 2  && user.getLx() != 6 && user.getLx() != 7){
+        if(user.getLx() != 1  && user.getLx() != 6 && user.getLx() != 7){
             return new JsonError("用户无App使用权限");
         }
 
