@@ -29,8 +29,15 @@
                          path_code = null
         where psdh = #{lsh} and status = '2'
     </update>
+
+
+
     <update id="updateStatusToArrival">
-        update mf_th set status  = '3' where psdh = #{lsh} and status = '2'
+        update mf_th set status  = '3',
+                         psdh=#{psdh},
+                         driver_code = #{driver},
+                         path_code = #{path}
+        where lsh = #{lsh} and status = '1'
     </update>
     <select id="selectThWithLsh" resultType="com.mallfe.item.pojo.Th">
         select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, b.location, b.phone,

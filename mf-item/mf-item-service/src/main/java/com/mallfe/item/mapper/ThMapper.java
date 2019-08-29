@@ -50,11 +50,16 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
      */
     int updateStatusToUnTp(@Param("lsh") String lsh);
 
+
+
     List<Th> selectThWithLsh(@Param("lsh") String lsh);
 
     List<Th> selectThList(@Param("key") String key,@Param("status") Integer status);
 
-    int updateStatusToArrival(@Param("lsh") String lsh);
+    int updateStatusToArrival(@Param("lsh") String lsh,
+                              @Param("psdh") String psdh,
+                              @Param("driver") String driver,
+                              @Param("path") String path);
 
     List<Th> selectThWithLshForRk(@Param("lsh") String lsh);
 }

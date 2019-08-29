@@ -430,7 +430,7 @@ public class PsTpService {
             //根据传进来的数据，修改退配单明细中状态
             for(TpDetail mx : tp.getList()){
                 tpMxMapper.updateStatus(tp.getLsh(),mx.getDdh(),mx.getStatus());
-                thMapper.updateStatusToArrival(mx.getDdh());
+                thMapper.updateStatusToArrival(mx.getDdh(),tp.getLsh(),tp.getDriverCode(),tp.getPathCode());
             }
 
             //插入配送入库信息
@@ -460,6 +460,7 @@ public class PsTpService {
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
                 kc.setLx(mx.getLx());
+                kc.setDeptCode(psrk.getDeptCode());
                 kc.setStoreCode(psrk.getStoreCode());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
@@ -545,6 +546,7 @@ public class PsTpService {
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
                 kc.setLx(mx.getLx());
+                kc.setDeptCode(tprk.getDeptCode());
                 kc.setStoreCode(tprk.getStoreCode());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
@@ -554,6 +556,16 @@ public class PsTpService {
                 }
                 else{
                     kucnMapper.addKucn(mx.getSl(),result.getId());
+                }
+
+                if(kucnMapper.addRtKucn(mx.getHh(),mx.getSl(),tprk.getStoreCode(),mx.getLx())==0){
+                    Kucn rt = new Kucn();
+                    rt.setHh(mx.getHh());
+                    rt.setLx(mx.getLx());
+                    rt.setDeptCode(tprk.getDeptCode());
+                    rt.setStoreCode(tprk.getStoreCode());
+                    rt.setKucn(mx.getSl());
+                    kucnMapper.insertRtKucn(rt);
                 }
 
                 KucnIn kucnIn = new KucnIn();
