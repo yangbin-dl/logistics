@@ -20,7 +20,7 @@ public class Tprk extends WlBill {
     private List<TpDetail> list;
 
     @Transient
-    private List<Th> xsList;
+    private List<Th> thList;
 
     /**
      * 入库时间

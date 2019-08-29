@@ -8,7 +8,6 @@ import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.*;
 import com.mallfe.item.pojo.*;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -421,10 +420,17 @@ public class PsTpService {
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
 
+            //修改所有退货单状态为待配车
+            thMapper.updateStatusToUnTp(tp.getLsh());
+
+            //修改退配单明细状态为未送达
             tpMapper.updateTpmxToUnFinish(tp.getLsh());
 
+
+            //根据传进来的数据，修改退配单明细中状态
             for(TpDetail mx : tp.getList()){
                 tpMxMapper.updateStatus(tp.getLsh(),mx.getDdh(),mx.getStatus());
+                thMapper.updateStatusToArrival(mx.getDdh());
             }
 
             //插入配送入库信息
@@ -466,8 +472,8 @@ public class PsTpService {
                 }
 
                 KucnIn kucnIn = new KucnIn();
-                BeanUtils.copyProperties(kc,kucnIn);
                 kucnIn.setYwbm("PSRK");
+                kucnIn.setHh(mx.getHh());
                 kucnIn.setSl(mx.getSl());
                 kucnIn.setLsh(mx.getLsh());
                 kucnIn.setLx(mx.getLx());
@@ -539,6 +545,7 @@ public class PsTpService {
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
                 kc.setLx(mx.getLx());
+                kc.setStoreCode(tprk.getStoreCode());
                 Kucn result = kucnMapper.selectOne(kc);
                 //更新库存
                 if(result == null){
@@ -550,8 +557,8 @@ public class PsTpService {
                 }
 
                 KucnIn kucnIn = new KucnIn();
-                BeanUtils.copyProperties(kc,kucnIn);
                 kucnIn.setYwbm("TPRK");
+                kucnIn.setHh(mx.getHh());
                 kucnIn.setSl(mx.getSl());
                 kucnIn.setLsh(mx.getLsh());
                 kucnIn.setLx(mx.getLx());
@@ -563,5 +570,42 @@ public class PsTpService {
         } catch (Exception e) {
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
+    }
+
+    public PageResult<Tprk> queryTprkByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+        //分页
+        PageHelper.startPage(page, rows);
+        //条件过滤
+        Example example = new Example(Psrk.class);
+        if(StringUtils.isNotBlank(key)){
+            example.createCriteria().orLike("lsh",key+"%");
+        }
+        //排序
+        if(StringUtils.isNotBlank(sortBy)){
+            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
+            example.setOrderByClause(orderByClause);
+        }
+
+        //查询
+        List<Tprk> list = tprkMapper.selectTprk();
+
+
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Tprk> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+    }
+
+    public Tprk queryTprkByLsh(String lsh) {
+        Tprk tprk = new Tprk();
+        tprk.setLsh(lsh);
+        tprk = tprkMapper.selectOne(tprk);
+
+        tprk.setThList(thMapper.selectThWithLshForRk(lsh));
+        return tprk;
     }
 }

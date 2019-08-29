@@ -9,7 +9,7 @@
     </insert>
     <insert id="insertTprkMx">
         insert into mf_tprk_mx(lsh,ddh,status)
-        select  lsh,ddh,status from mf_tp_mx where lsh=#{lsh} and status=2
+        select  lsh,ddh,status from mf_tp_mx where lsh=#{lsh} and status=1
     </insert>
     <update id="updateTprkStatus">
         update mf_tprk set status = 3 where lsh=#{lsh} and status=2
@@ -27,7 +27,7 @@
     </select>
     <select id="selectTprkMx" resultType="com.mallfe.item.pojo.TprkDetail">
         select a.lsh,a.ddh,b.sl,b.lx,b.hh from mf_tprk_mx a left join
-            mf_xs b on a.ddh=b.lsh
+            mf_th b on a.ddh=b.lsh
             where a.lsh=#{lsh}
     </select>
 </mapper>

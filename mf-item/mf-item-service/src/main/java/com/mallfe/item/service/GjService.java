@@ -10,7 +10,6 @@ import com.mallfe.item.mapper.GjMxMapper;
 import com.mallfe.item.mapper.KucnInMapper;
 import com.mallfe.item.mapper.KucnMapper;
 import com.mallfe.item.pojo.*;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -129,11 +128,13 @@ public class GjService {
                 }
 
                 KucnIn kucnIn = new KucnIn();
-                BeanUtils.copyProperties(kc,kucnIn);
                 kucnIn.setYwbm("GJ");
+                kucnIn.setHh(mx.getHh());
                 kucnIn.setSl(mx.getSl());
                 kucnIn.setLsh(gj.getLsh());
                 kucnIn.setLx(gj.getLx());
+                kucnIn.setStoreCode(gj.getStoreCode());
+                kucnIn.setDeptCode(gj.getDeptCode());
                 //插入入库记录
                 kucnInMapper.insert(kucnIn);
             }

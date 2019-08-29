@@ -29,6 +29,9 @@
                          path_code = null
         where psdh = #{lsh} and status = '2'
     </update>
+    <update id="updateStatusToArrival">
+        update mf_th set status  = '3' where psdh = #{lsh} and status = '2'
+    </update>
     <select id="selectThWithLsh" resultType="com.mallfe.item.pojo.Th">
         select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, b.location, b.phone,
                b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, a.status,
@@ -36,7 +39,13 @@
                case b.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
                b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,b.remark,
                c.pinm,c.xingh,c.tm,
-               case a.status when 0 then '配送中' when 1 then '已送达' when 2 then '未送达' end as statusInfo
+               case a.status
+                   when 0 then '配送中'
+                   when 1 then '已送达'
+                   when 2 then '未送达'
+                   when 3 then '已送达'
+                   when 9 then '已作废'
+                   end as statusInfo
         From mf_tp_mx a left join mf_th b on a.ddh = b.lsh
                         left join mf_sp c on b.hh=c.hh
         where a.lsh = #{lsh}
@@ -70,5 +79,17 @@
             </if>
         </where>
         order by b.lsh desc
+    </select>
+    <select id="selectThWithLshForRk" resultType="com.mallfe.item.pojo.Th">
+        select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, concat(ifnull(b.province,''),ifnull(b.city,''),ifnull(b.district,''),ifnull(b.location,'')) as location, b.phone,
+               b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, a.status,
+               case b.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
+               b.driver_code, b.path_code,
+               b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,
+               c.pinm,c.xingh,c.tm,b.remark,
+               case a.status when 0 then '配送中' when 1 then '已送达' when 2 then '未送达' end as statusInfo
+        From mf_tprk_mx a left join mf_th b on a.ddh = b.lsh
+                          left join mf_sp c on b.hh=c.hh
+        where a.lsh = #{lsh}
     </select>
 </mapper>

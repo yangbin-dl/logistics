@@ -126,9 +126,12 @@ public class FcService {
                 KucnOut kucnOut = new KucnOut();
                 BeanUtils.copyProperties(kc,kucnOut);
                 kucnOut.setYwbm("FC");
+                kucnOut.setHh(mx.getHh());
                 kucnOut.setSl(mx.getSl());
                 kucnOut.setLsh(fc.getLsh());
                 kucnOut.setLx(fc.getLx());
+                kucnOut.setDeptCode(fc.getDeptCode());
+                kucnOut.setStoreCode(fc.getStoreCode());
                 //插入出库记录
                 kucnOutMapper.insert(kucnOut);
             }

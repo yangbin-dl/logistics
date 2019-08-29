@@ -11,17 +11,17 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
 
     /**
      * 退货单提交
-     * @param th 退货单
+     * @param lsh 退货单
      * @return
      */
-    int updateStatusToCommited(Th th);
+    int updateStatusToCommited(@Param("lsh") String lsh);
 
     /**
      * 取消退货单
-     * @param th 退货单
+     * @param lsh 退货单
      * @return
      */
-    int updateStatusToCancel(Th th);
+    int updateStatusToCancel(@Param("lsh") String lsh);
 
     /**
      * 退货单更新
@@ -43,9 +43,18 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
                          @Param("driver") String driver,
                          @Param("path") String path);
 
+    /**
+     * 将退货单状态改为待配车，退配单用
+     * @param lsh
+     * @return
+     */
     int updateStatusToUnTp(@Param("lsh") String lsh);
 
     List<Th> selectThWithLsh(@Param("lsh") String lsh);
 
     List<Th> selectThList(@Param("key") String key,@Param("status") Integer status);
+
+    int updateStatusToArrival(@Param("lsh") String lsh);
+
+    List<Th> selectThWithLshForRk(@Param("lsh") String lsh);
 }

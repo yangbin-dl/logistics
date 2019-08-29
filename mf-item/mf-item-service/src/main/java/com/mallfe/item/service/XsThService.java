@@ -173,7 +173,7 @@ public class XsThService {
 
     public JsonObject commitTh(Th th){
         try {
-            if(thMapper.updateStatusToCommited(th)!=1){
+            if(thMapper.updateStatusToCommited(th.getLsh())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
@@ -184,7 +184,7 @@ public class XsThService {
 
     public JsonObject deleteTh(Th th){
         try {
-            if(thMapper.updateStatusToCancel(th)!=1) {
+            if(thMapper.updateStatusToCancel(th.getLsh())!=1) {
                 return new JsonError("单据状态异常，作废失败！");
             }
         } catch (Exception e){
@@ -253,7 +253,7 @@ public class XsThService {
         } else{
             Th th = new Th();
             th.setStatus(1);
-            list = thMapper.select(th);
+            list = thMapper.selectThList(null,1);
         }
         return list;
     }
@@ -308,7 +308,7 @@ public class XsThService {
 
     public JsonObject appCommitTh(Th th){
         try {
-            thMapper.updateStatusToCommited(th);
+            thMapper.updateStatusToCommited(th.getLsh());
         } catch (Exception e){
             return new JsonError("单据保存失败");
         }

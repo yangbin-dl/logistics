@@ -18,7 +18,7 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
 
     /**
      * 取消销售单
-     * @param xs 单据号
+     * @param lsh 单据号
      * @return 影响的行数
      */
     int updateStatusToCancel(@Param("lsh") String lsh);
@@ -44,7 +44,7 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
                          @Param("path") String path);
 
     /**
-     * 将已配车更新为待配车
+     * 将已配车更新为待配车,配送单用
      * @param lsh
      * @return
      */
