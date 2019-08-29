@@ -57,6 +57,8 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
      */
     int updateStatusToUnPsByArrival(@Param("lsh") String lsh);
 
+    int updateStatusToArrival(@Param("lsh") String lsh);
+
     List<Xs> selectXsWithLsh(@Param("lsh") String lsh);
 
     List<Xs> selectXsWithLshForRk(@Param("lsh") String lsh);

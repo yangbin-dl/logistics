@@ -35,6 +35,9 @@
             path_code = null
         where lsh=#{lsh}
     </update>
+    <update id="updateStatusToArrival">
+        update mf_xs set status = '3' where lsh=#{lsh} and status = '2'
+    </update>
 
     <select id="selectXsWithLsh" resultType="com.mallfe.item.pojo.Xs">
         select b.id, b.lsh , b.hh, b.sl, b.lx, b.province, b.city, b.district, concat(ifnull(b.province,''),ifnull(b.city,''),ifnull(b.district,''),ifnull(b.location,'')) as location, b.phone,
@@ -102,7 +105,7 @@
                    when 9 then '已作废'
                    end as statusInfo,
                store_code as storeCode,store_name as storeName,
-               dept_code as deptCode,dept_name as deptName
+               dept_code as deptCode,dept_name as deptName,driver_name as driverName,driver_phone as driverPhone
         from vw_xs
         <where>
             <if test="lrid != null">
@@ -136,7 +139,7 @@
                    when 9 then '已作废'
                    end as statusInfo,
                store_code as storeCode,store_name as storename,
-               dept_code as deptName,dept_name as deptName
+               dept_code as deptName,dept_name as deptName,driver_name as driverName,driver_phone as driverPhone
         from vw_xs where lsh = #{lsh}
     </select>
     <select id="selectAllBillByStore" resultType="com.mallfe.item.pojo.AllBill">
@@ -150,7 +153,7 @@
         when 9 then '已作废'
         end as statusInfo,
         a.store_code as storeCode,a.store_name as storeName,
-        a.dept_code as deptCode,a.dept_name as deptName
+        a.dept_code as deptCode,a.dept_name as deptName,driver_name as driverName,driver_phone as driverPhone
         from vw_xs a
         <where>
             <if test="storecode != null">

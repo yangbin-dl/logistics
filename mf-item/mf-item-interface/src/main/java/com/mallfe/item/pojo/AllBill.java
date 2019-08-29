@@ -118,4 +118,8 @@ public class AllBill {
     private String city;
 
     private String district;
+
+    private String driverName;
+
+    private String driverPhone;
 }

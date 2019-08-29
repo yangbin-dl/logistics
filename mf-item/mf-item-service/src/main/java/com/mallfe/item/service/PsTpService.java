@@ -399,6 +399,7 @@ public class PsTpService {
 
             for(PsDetail mx : ps.getList()){
                 psMxMapper.updateStatus(ps.getLsh(),mx.getDdh(),mx.getStatus());
+                xsMapper.updateStatusToArrival(mx.getDdh());
             }
 
 
