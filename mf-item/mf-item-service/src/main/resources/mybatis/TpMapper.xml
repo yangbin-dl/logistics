@@ -7,17 +7,17 @@
         update mf_tp set status = 9 where lsh = #{lsh} and status = 0
     </update>
     <update id="updateStatusToCommit">
-        update mf_tp set status = 1 where lsh = #{lsh} and status = 0
+        update mf_tp set status = 1,fcsj= now() where lsh = #{lsh} and status = 0
     </update>
     <update id="updateTpmxToUnFinish">
         update mf_tp_mx set status = 2 where lsh = #{lsh} and status = 0
     </update>
     <update id="updateStatusToFinish">
-        update mf_tp set status = 2 where lsh = #{lsh} and status = 1
+        update mf_tp set status = 2,sdsj= now() where lsh = #{lsh} and status = 1
     </update>
     <select id="selectTp" resultType="com.mallfe.item.pojo.Tp">
         select a.id,a.lsh,a.driver_code as driverCode,b.driver_name as driverName,
-        a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.status,
+        a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.status,a.sdsj,
         a.lrid,a.lrusername,a.truename,a.dept_code as deptCode,a.store_code as storeCode,
         case a.status
         when 0 then '新增'
