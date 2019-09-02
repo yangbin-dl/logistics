@@ -14,9 +14,7 @@
             <if test="lsh != null and lsh!= ''">
                 a.lsh=#{lsh}
             </if>
-            <if test="status != null and status!= ''">
                 and a.status = #{status}
-            </if>
         </where>
             order by a.lrsj desc
     </select>
