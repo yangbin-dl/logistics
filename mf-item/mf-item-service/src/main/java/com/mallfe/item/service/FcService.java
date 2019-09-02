@@ -94,10 +94,133 @@ public class FcService {
      * @return
      */
     public void commitBill(Fc fc){
+        Fc g = new Fc();
+        g.setLsh(fc.getLsh());
+        g.setStatus(0);
+
+        g=fcMapper.selectBill(fc.getLsh(),null).get(0);
+
+        if(g == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
 
         try {
             //更新单据状态
-            if(fcMapper.updateBillStatus(1,fc.getLsh()) !=1){
+            if(fcMapper.updateBillStatus(1,fc.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
+            }
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+
+    }
+
+    public PageResult<Fc> queryFcByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key, Integer status) {
+        //分页
+        PageHelper.startPage(page, rows);
+
+
+        //查询
+        List<Fc> list = fcMapper.selectBill(key,status);
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Fc> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+
+    }
+
+    public Fc queryBill(String lsh) {
+        Fc fc = new Fc();
+        fc.setLsh(lsh);
+
+        fc=fcMapper.selectBill(lsh,null).get(0);
+
+        if(fc == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        List<FcDetail> list = fcMxMapper.getMx(lsh);
+
+        if(list.size() == 0){
+            throw new MallfeException(ExceptionEnum.BILL_DETAIL_NOT_EXISTS);
+        }
+
+        fc.setList(list);
+
+        return fc;
+    }
+
+    public void deleteBill(Fc fc) {
+        try {
+            if(fcMapper.updateBillStatus(9,fc.getLsh()) != 1){
+                throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+            }
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+    }
+
+    public void modifyBill(Fc fc) {
+
+        Fc g = new Fc();
+        g.setLsh(fc.getLsh());
+        g.setStatus(0);
+
+        g=fcMapper.selectBill(fc.getLsh(),null).get(0);
+
+        if(g == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        if(g.getStatus()!=0 ){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        try{
+            //删除明细
+            fcMxMapper.deleteMx(fc.getLsh());
+            //插入明细
+            for (FcDetail mx: fc.getList()) {
+                fcMxMapper.insertMx(fc.getLsh(),mx.getHh(),mx.getSl());
+            }
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+    }
+
+    public void shenhe1(Fc fc) {
+        Fc g = new Fc();
+        g.setLsh(fc.getLsh());
+        g.setStatus(1);
+
+        g=fcMapper.selectBill(fc.getLsh(),null).get(0);
+
+        if(g == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        try {
+            //更新单据状态
+            if(fcMapper.updateBillStatus(2,fc.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
+            }
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+    }
+
+    public void shenhe2(Fc fc) {
+        try {
+            //更新单据状态
+            if(fcMapper.updateBillStatus(3,fc.getLsh()) !=1){
                 throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
             }
 
@@ -137,85 +260,6 @@ public class FcService {
             }
         } catch (Exception e) {
             throw new MallfeException(ExceptionEnum.UNDER_STOCK);
-        }
-    }
-
-    public PageResult<Fc> queryFcByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
-        //分页
-        PageHelper.startPage(page, rows);
-
-
-        //查询
-        List<Fc> list = fcMapper.selectBill(key);
-        if(CollectionUtils.isEmpty(list)){
-            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
-        }
-
-        //解析分页结果
-        PageInfo<Fc> info = new PageInfo<>(list);
-
-        return new PageResult<>(info.getTotal(), list);
-
-    }
-
-    public Fc queryBill(String lsh) {
-        Fc fc = new Fc();
-        fc.setLsh(lsh);
-
-        fc=fcMapper.selectBill(lsh).get(0);
-
-        if(fc == null){
-            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
-        }
-
-        List<FcDetail> list = fcMxMapper.getMx(lsh);
-
-        if(list.size() == 0){
-            throw new MallfeException(ExceptionEnum.BILL_DETAIL_NOT_EXISTS);
-        }
-
-        fc.setList(list);
-
-        return fc;
-    }
-
-    public void deleteBill(Fc fc) {
-        try {
-            if(fcMapper.updateBillStatus(9,fc.getLsh()) != 1){
-                throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
-            }
-        }
-        catch (Exception e){
-            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
-        }
-    }
-
-    public void modifyBill(Fc fc) {
-
-        Fc g = new Fc();
-        g.setLsh(fc.getLsh());
-        g.setStatus(0);
-
-        g=fcMapper.selectBill(fc.getLsh()).get(0);
-
-        if(g == null){
-            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
-        }
-
-        if(g.getStatus()!=0 ){
-            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
-        }
-
-        try{
-            //删除明细
-            fcMxMapper.deleteMx(fc.getLsh());
-            //插入明细
-            for (FcDetail mx: fc.getList()) {
-                fcMxMapper.insertMx(fc.getLsh(),mx.getHh(),mx.getSl());
-            }
-        }
-        catch (Exception e){
-            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
         }
     }
 }

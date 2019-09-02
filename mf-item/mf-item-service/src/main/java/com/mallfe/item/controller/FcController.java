@@ -48,7 +48,31 @@ public class FcController {
             @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
             @RequestParam(value = "key", required = false) String key
     ) {
-        PageResult<Fc> result = fcService.queryFcByPage(page, rows, sortBy, desc, key);
+        PageResult<Fc> result = fcService.queryFcByPage(page, rows, sortBy, desc, key,0);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("page1")
+    public ResponseEntity<PageResult<Fc>> queryByPage1(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key
+    ) {
+        PageResult<Fc> result = fcService.queryFcByPage(page, rows, sortBy, desc, key,1);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("page2")
+    public ResponseEntity<PageResult<Fc>> queryByPage2(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key
+    ) {
+        PageResult<Fc> result = fcService.queryFcByPage(page, rows, sortBy, desc, key,2);
         return ResponseEntity.ok(result);
     }
 
@@ -66,6 +90,18 @@ public class FcController {
     @PostMapping("modify")
     public ResponseEntity<Null> modify(@RequestBody Fc fc){
         fcService.modifyBill(fc);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("shenhe1")
+    public ResponseEntity<Null> shenhe1(@RequestBody Fc fc){
+        fcService.shenhe1(fc);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("shenhe2")
+    public ResponseEntity<Null> shenhe2(@RequestBody Fc fc){
+        fcService.shenhe2(fc);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
