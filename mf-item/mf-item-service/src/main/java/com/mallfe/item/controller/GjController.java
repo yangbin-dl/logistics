@@ -61,7 +61,31 @@ public class GjController {
             @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
             @RequestParam(value = "key", required = false) String key
     ) {
-        PageResult<Gj> result = gjService.queryGjByPage(page, rows, sortBy, desc, key);
+        PageResult<Gj> result = gjService.queryGjByPage(page, rows, sortBy, desc, key,0);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("page1")
+    public ResponseEntity<PageResult<Gj>> queryByPage1(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key
+    ) {
+        PageResult<Gj> result = gjService.queryGjByPage(page, rows, sortBy, desc, key,1);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("page2")
+    public ResponseEntity<PageResult<Gj>> queryByPage2(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key
+    ) {
+        PageResult<Gj> result = gjService.queryGjByPage(page, rows, sortBy, desc, key,2);
         return ResponseEntity.ok(result);
     }
 
@@ -96,5 +120,17 @@ public class GjController {
     public ResponseEntity<Null> modify(@RequestBody Gj gj){
         gjService.modifyBill(gj);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("shenhe1")
+    public ResponseEntity<Null> shenhe1(@RequestBody Gj gj){
+        gjService.shenhe1(gj);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("shenhe2")
+    public ResponseEntity<Null> shenhe2(@RequestBody Gj gj){
+        gjService.shenhe2(gj);
+        return ResponseEntity.ok().build();
     }
 }

@@ -93,10 +93,134 @@ public class GjService {
      * @return
      */
     public void commitBill(Gj gj){
+        Gj g = new Gj();
+        g.setLsh(gj.getLsh());
+        g.setStatus(0);
+
+        g=gjMapper.selectBill(gj.getLsh(),null).get(0);
+
+        if(g == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
 
         try {
             //更新单据状态
             if(gjMapper.updateBillStatus(1,gj.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
+            }
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+    }
+
+
+
+    public PageResult<Gj> queryGjByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key, Integer status) {
+        //分页
+        PageHelper.startPage(page, rows);
+
+        List<Gj> list = gjMapper.selectBill(key,status);
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Gj> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+
+    }
+
+
+
+    public Gj queryBill(String lsh) {
+        Gj gj = new Gj();
+        gj.setLsh(lsh);
+
+        gj = gjMapper.selectBill(lsh,null).get(0);
+
+        if(gj == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        List<GjDetail> list = gjMxMapper.getMx(lsh);
+
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_DETAIL_NOT_EXISTS);
+        }
+
+        gj.setList(list);
+
+        return gj;
+    }
+
+    public void deleteBill(Gj gj) {
+        try {
+            if(gjMapper.updateBillStatus(9,gj.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+            }
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+    }
+
+    public void modifyBill(Gj gj) {
+
+        Gj g = new Gj();
+        g.setLsh(gj.getLsh());
+        g.setStatus(0);
+
+        g=gjMapper.selectBill(gj.getLsh(),null).get(0);
+
+        if(g == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        if(g.getStatus()!=0){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        try{
+            //删除明细
+            gjMxMapper.deleteMx(gj.getLsh());
+            //插入明细
+            for (GjDetail mx: gj.getList()) {
+                gjMxMapper.insertMx(gj.getLsh(),mx.getHh(),mx.getSl());
+            }
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+    }
+
+    public void shenhe1(Gj gj) {
+        Gj g = new Gj();
+        g.setLsh(gj.getLsh());
+        g.setStatus(1);
+
+        g=gjMapper.selectBill(gj.getLsh(),null).get(0);
+
+        if(g == null){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        try {
+            //更新单据状态
+            if(gjMapper.updateBillStatus(2,gj.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
+            }
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+    }
+
+    public void shenhe2(Gj gj) {
+        try {
+            //更新单据状态
+            if(gjMapper.updateBillStatus(3,gj.getLsh())!=1){
                 throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
             }
 
@@ -142,82 +266,4 @@ public class GjService {
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
     }
-
-    public PageResult<Gj> queryGjByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
-        //分页
-        PageHelper.startPage(page, rows);
-
-        List<Gj> list = gjMapper.selectBill(key);
-        if(CollectionUtils.isEmpty(list)){
-            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
-        }
-
-        //解析分页结果
-        PageInfo<Gj> info = new PageInfo<>(list);
-
-        return new PageResult<>(info.getTotal(), list);
-
-    }
-
-    public Gj queryBill(String lsh) {
-        Gj gj = new Gj();
-        gj.setLsh(lsh);
-
-        gj = gjMapper.selectBill(lsh).get(0);
-
-        if(gj == null){
-            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
-        }
-
-        List<GjDetail> list = gjMxMapper.getMx(lsh);
-
-        if(CollectionUtils.isEmpty(list)){
-            throw new MallfeException(ExceptionEnum.BILL_DETAIL_NOT_EXISTS);
-        }
-
-        gj.setList(list);
-
-        return gj;
-    }
-
-    public void deleteBill(Gj gj) {
-        try {
-            if(gjMapper.updateBillStatus(9,gj.getLsh())!=1){
-                throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
-            }
-        }
-        catch (Exception e){
-            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
-        }
-    }
-
-    public void modifyBill(Gj gj) {
-
-        Gj g = new Gj();
-        g.setLsh(gj.getLsh());
-        g.setStatus(0);
-
-        g=gjMapper.selectBill(gj.getLsh()).get(0);
-
-        if(g == null){
-            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
-        }
-
-        if(g.getStatus()!=0){
-            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
-        }
-
-        try{
-            //删除明细
-            gjMxMapper.deleteMx(gj.getLsh());
-            //插入明细
-            for (GjDetail mx: gj.getList()) {
-                gjMxMapper.insertMx(gj.getLsh(),mx.getHh(),mx.getSl());
-            }
-        }
-        catch (Exception e){
-            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
-        }
-    }
-
 }
