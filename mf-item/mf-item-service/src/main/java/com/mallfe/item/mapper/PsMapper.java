@@ -1,5 +1,6 @@
 package com.mallfe.item.mapper;
 
+import com.mallfe.item.pojo.AllBill;
 import com.mallfe.item.pojo.Ps;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
@@ -40,4 +41,10 @@ public interface PsMapper extends Mapper<Ps> {
 
 
     List<Ps> selectPs(@Param("status")Integer status, @Param("lsh") String lsh);
+
+    List<AllBill> selectList(@Param("driverCode") String driveCode,
+                             @Param("phone") String phone,
+                             @Param("hh") Integer hh,
+                             @Param("lsh") String lsh,
+                             @Param("psdh") String psdh);
 }

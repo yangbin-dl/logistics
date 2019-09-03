@@ -1,5 +1,6 @@
 package com.mallfe.item.controller;
 
+import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.Ps;
 import com.mallfe.item.pojo.Psrk;
@@ -229,5 +230,17 @@ public class PsTpController {
     public ResponseEntity<Tprk> queryTprk(@RequestParam("lsh") String lsh){
         Tprk reulut = psTpService.queryTprkByLsh(lsh);
         return ResponseEntity.ok(reulut);
+    }
+
+    @GetMapping("applist")
+    public JsonObject applist(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                              @RequestParam(value = "userid") String userid,
+                              @RequestParam(value = "phone", required = false) String phone,
+                              @RequestParam(value = "hh", required = false) Integer hh,
+                              @RequestParam(value = "lsh", required = false) String lsh,
+                              @RequestParam(value = "psdh", required = false) String psdh
+    ) {
+        JsonObject result = psTpService.applist(page, userid,phone,hh,lsh,psdh);
+        return result;
     }
 }

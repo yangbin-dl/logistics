@@ -41,5 +41,46 @@
         order by a.lsh desc
 
     </select>
+    <select id="selectList" resultType="com.mallfe.item.pojo.AllBill">
+        select billtype, lsh, hh, pinm, sl, lx, psdh,
+               concat(ifnull(province,''),ifnull(city,''),ifnull(district,''),ifnull(location,'')) as location,
+               phone, contact, qwsj, sdsj,xingh,tm,remark,province,city,district,
+               store_code as storeCode,store_name as storeName,
+               dept_code as deptCode,dept_name as deptName,driver_name as driverName,driver_phone as driverPhone,
+               ps_status as psStatus,
+               case ps_status
+                   when 0 then '新增'
+                   when 1 then '已发出'
+                   when 2 then '已送达'
+                   when 3 then '已作废'
+                   end as psStatusInfo,
+               wl_status as wlStatus,
+               case wl_status
+                   when 0 then '运输中'
+                   when 1 then '已送达'
+                   when 2 then '未送达'
+                   end as wlStatusInfo
+        from vw_ps
+        <where>
+            <if test="driverCode != null and driverCode != ''">
+                driver_code = #{driverCode}
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="lsh != null and lsh != ''">
+                and lsh = #{lsh}
+            </if>
+            <if test="hh != null">
+                and hh = #{hh}
+            </if>
+            <if test="psdh != null and psdh != ''">
+                and psdh = #{psdh}
+            </if>
+            and wl_status = 0 and ps_status = 1
+        </where>
+        order by lrsj desc
+    </select>
 
 </mapper>

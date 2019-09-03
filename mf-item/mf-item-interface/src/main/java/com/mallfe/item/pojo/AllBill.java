@@ -122,4 +122,14 @@ public class AllBill {
     private String driverName;
 
     private String driverPhone;
+
+    private String psdh;
+
+    private Integer psStatus;
+
+    private String psStatusInfo;
+
+    private Integer wlStatus;
+
+    private String wlStatusInfo;
 }

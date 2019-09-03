@@ -4,6 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
+import com.mallfe.common.json.JsonData;
+import com.mallfe.common.json.JsonError;
+import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.*;
 import com.mallfe.item.pojo.*;
@@ -61,6 +64,9 @@ public class PsTpService {
 
     @Autowired
     private TprkMapper tprkMapper;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 新增配送单
@@ -605,5 +611,30 @@ public class PsTpService {
 
         tprk.setThList(thMapper.selectThWithLshForRk(lsh));
         return tprk;
+    }
+
+    public JsonObject applist(Integer page, String userid, String phone, Integer hh, String lsh, String psdh) {
+
+        //分页
+        PageHelper.startPage(page, 10);
+        //条件过滤
+
+        //查询用户角色
+        List<AllBill> list;
+        User u = userService.selectById(Long.parseLong(userid));
+        String driveCode = u.getUsername();
+
+        list = psMapper.selectList(driveCode,phone,hh,lsh,psdh);
+
+        //查询
+
+        if(CollectionUtils.isEmpty(list)){
+            return new JsonError("未查询到单据！");
+        }
+
+        //解析分页结果
+        PageInfo<AllBill> info = new PageInfo<>(list);
+
+        return new JsonData(new PageResult<>(info.getTotal(), list));
     }
 }

@@ -209,7 +209,7 @@ public class XsThService {
         List<AllBill> list;
         User u = userService.selectById(Long.parseLong(lruserid));
 
-        if(u.getLx()==2){
+        if(u.getLx()==1){
             list = xsMapper.selectAllBill(lruserid,phone,lsh,hh,contact);
         } else {
             list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact);
