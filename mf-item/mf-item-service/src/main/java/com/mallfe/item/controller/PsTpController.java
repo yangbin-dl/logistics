@@ -31,9 +31,9 @@ public class PsTpController {
      * @return
      */
     @PostMapping("insertps")
-    public ResponseEntity<Ps> insertPs(@RequestBody Ps ps){
+    public ResponseEntity<Null> insertPs(@RequestBody Ps ps){
         psTpService.insertPs(ps);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ps);
+        return ResponseEntity.ok().build();
     }
 
     /**
@@ -42,9 +42,9 @@ public class PsTpController {
      * @return
      */
     @PostMapping("inserttp")
-    public ResponseEntity<Tp> insertPs(@RequestBody Tp tp){
+    public ResponseEntity<Null> insertPs(@RequestBody Tp tp){
         psTpService.insertTp(tp);
-        return ResponseEntity.status(HttpStatus.CREATED).body(tp);
+        return ResponseEntity.ok().build();
     }
 
     /**

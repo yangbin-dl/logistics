@@ -25,9 +25,9 @@
         select a.id,lsh,lrid,username,truename,status,
         case status
             when 0 then '新增'
-            when 1 then '待审核1'
-            when 2 then '待审核2'
-            when 3 then '待审核3'
+            when 1 then '库管审核'
+            when 2 then '物流审核'
+            when 3 then '经理审核'
             when 4 then '已生效'
             when 9 then '已作废'
             end as statusInfo,
@@ -45,7 +45,7 @@
             <if test="hh != null and hh!= ''">
                 and a.lsh in (select lsh from mf_ckdb_mx where hh =#{hh})
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 and a.status=#{status}
             </if>
 

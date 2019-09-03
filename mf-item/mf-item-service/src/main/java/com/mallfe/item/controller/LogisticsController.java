@@ -72,6 +72,12 @@ public class LogisticsController {
         return ResponseEntity.status(HttpStatus.CREATED).body(path);
     }
 
+    @PostMapping("updatedriver")
+    public ResponseEntity<Driver> updateDriver(@RequestBody Driver driver){
+        logisticsService.updateDriver(driver);
+        return ResponseEntity.status(HttpStatus.CREATED).body(driver);
+    }
+
     @GetMapping("driver/{id}")
     public ResponseEntity<Driver> queryDriverById(@PathVariable("id") Integer id){
         Driver driver = logisticsService.selectDriverById(id);

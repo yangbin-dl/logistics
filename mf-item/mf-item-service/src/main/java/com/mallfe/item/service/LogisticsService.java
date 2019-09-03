@@ -147,5 +147,9 @@ public class LogisticsService {
     public List<Path> queryPathList(String deptCode) {
         return pathMapper.list(deptCode);
     }
+
+    public void updateDriver(Driver driver) {
+        driverMapper.update(driver);
+    }
 }
 

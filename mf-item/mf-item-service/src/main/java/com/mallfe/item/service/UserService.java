@@ -8,9 +8,11 @@ import com.mallfe.common.json.JsonData;
 import com.mallfe.common.json.JsonError;
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
+import com.mallfe.item.mapper.DriverMapper;
 import com.mallfe.item.mapper.RegionMapper;
 import com.mallfe.item.mapper.StoreMapper;
 import com.mallfe.item.mapper.UserMapper;
+import com.mallfe.item.pojo.Driver;
 import com.mallfe.item.pojo.Region;
 import com.mallfe.item.pojo.Store;
 import com.mallfe.item.pojo.User;
@@ -40,6 +42,9 @@ public class UserService {
 
     @Autowired
     private RegionMapper departmentMapper;
+
+    @Autowired
+    private DriverMapper driverMapper;
     /**
      * 用户验证
      * @param username 用户名
@@ -86,12 +91,27 @@ public class UserService {
             throw new MallfeException(ExceptionEnum.USERNAME_DUPLICATE);
         }
 
-        //默认所属地区为0001，为将来扩展作准备
-        user.setDeptCode("0001");
-        //2.插入用户，插入后会自动获取id
-        userMapper.insertUser(user);
-        if(!CollectionUtils.isEmpty(user.getPl())){
-            userMapper.insertUserPl(user);
+        try {
+            //默认所属地区为0001，为将来扩展作准备
+            user.setDeptCode("0001");
+            //2.插入用户，插入后会自动获取id
+            userMapper.insertUser(user);
+            if(!CollectionUtils.isEmpty(user.getPl())){
+                userMapper.insertUserPl(user);
+            }
+
+            if(user.getLx().equals(4)){
+                Driver driver = new Driver();
+                driver.setDriverCode(user.getUsername());
+                driver.setDriverName(user.getTruename());
+                driver.setDeptCode(user.getDeptCode());
+                driver.setPhone("");
+                driver.setStatus(1);
+                driverMapper.insert(driver);
+            }
+        }
+        catch (Exception e){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
         }
 
         return user;
@@ -158,7 +178,7 @@ public class UserService {
             return new JsonError("用户名或密码错误");
         }
 
-        if(user.getLx() != 1  && user.getLx() != 6 && user.getLx() != 7){
+        if(user.getLx() != 1  && user.getLx() != 4 && user.getLx() != 6 && user.getLx() != 7){
             return new JsonError("用户无App使用权限");
         }
 

@@ -67,42 +67,28 @@ public class PsTpService {
      * @param ps
      * @return
      */
-    public Ps insertPs(Ps ps){
-        //获取流水号
-        String lsh = commonService.getLsh("PS");
-        ps.setLsh(lsh);
+    public void insertPs(Ps ps){
+
+
         ps.setStatus(0);
         ps.setLrsj(CommonService.getStringDate());
 
-        //插入单据
-        try {
-            psMapper.insert(ps);
-        } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
-        }
-
-        //更新销售单状态
         try {
             for (PsDetail mx: ps.getList()) {
+                //获取流水号
+                String lsh = commonService.getLsh("PS");
+                ps.setLsh(lsh);
+                ps.setId(null);
+                psMapper.insert(ps);
                 //如果更新的行数不为1，则代表单据状态异常，回滚事务
                 if(xsMapper.updateStatusToPs(mx.getDdh(),lsh,ps.getDriverCode(),ps.getPathCode())!=1){
                     throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
                 }
-            }
-        } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
-        }
-
-        ps.setLrsj(CommonService.getStringDate());
-        //插入明细
-        try {
-            for (PsDetail mx: ps.getList()) {
                 psMxMapper.insertPsMx(lsh,mx.getDdh(),0);
             }
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
-        return ps;
     }
 
     /**

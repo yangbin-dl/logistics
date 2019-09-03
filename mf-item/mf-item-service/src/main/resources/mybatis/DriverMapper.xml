@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mallfe.item.mapper.DriverMapper">
+    <update id="update" parameterType="com.mallfe.item.pojo.Driver">
+        update mf_driver set phone=#{phone},driver_name=#{driverName} where driver_code=#{driverCode}
+    </update>
 
     <select id="list" resultType="com.mallfe.item.pojo.Driver">
         select a.id,driver_code as driverCode,driver_name as driverName,status,phone,

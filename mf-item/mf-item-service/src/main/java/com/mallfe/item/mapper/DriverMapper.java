@@ -16,4 +16,5 @@ public interface DriverMapper extends Mapper<Driver> {
 
     List<Driver> list(@Param("deptcode")String deptcode);
 
+    void update(Driver driver);
 }

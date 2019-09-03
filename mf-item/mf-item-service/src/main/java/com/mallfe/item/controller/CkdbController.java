@@ -42,7 +42,7 @@ public class CkdbController {
             @RequestParam(value = "lsh", required = false) String lsh,
             @RequestParam(value = "hh", required = false) Integer hh
     ) {
-        PageResult<Ckdb> result = ckdbService.page(page,rows,lsh,hh,null);
+        PageResult<Ckdb> result = ckdbService.page(page,rows,lsh,hh,0);
         return ResponseEntity.ok(result);
     }
 

@@ -77,6 +77,18 @@ public class GjController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("pageall")
+    public ResponseEntity<PageResult<Gj>> queryByPageall(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key
+    ) {
+        PageResult<Gj> result = gjService.queryGjByPage(page, rows, sortBy, desc, key,null);
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("page2")
     public ResponseEntity<PageResult<Gj>> queryByPage2(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
