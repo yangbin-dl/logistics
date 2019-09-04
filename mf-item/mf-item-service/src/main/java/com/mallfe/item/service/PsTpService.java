@@ -701,4 +701,14 @@ public class PsTpService {
         return new JsonData("提交成功！");
 
     }
+
+    public JsonObject appmx(String psdh) {
+        List<AllBill> list = psMapper.selectList(null,null,null,null,psdh,0,1);
+        if(CollectionUtils.isEmpty(list)){
+            return new JsonError("未查询到单据！");
+        }
+
+        return new JsonData(list.get(0));
+
+    }
 }

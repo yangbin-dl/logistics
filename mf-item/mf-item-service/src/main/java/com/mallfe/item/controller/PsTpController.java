@@ -241,6 +241,12 @@ public class PsTpController {
         return result;
     }
 
+    @GetMapping("appmx")
+    public JsonObject appmx(@RequestParam(value = "lsh", required = false) String lsh) {
+        JsonObject result = psTpService.appmx(lsh);
+        return result;
+    }
+
     @PostMapping("apppsarrive")
     public JsonObject appPsArrive(@RequestBody Ps ps){
 
