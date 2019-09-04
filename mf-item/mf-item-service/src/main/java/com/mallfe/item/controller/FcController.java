@@ -76,6 +76,18 @@ public class FcController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("pageall")
+    public ResponseEntity<PageResult<Fc>> queryByPageall(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key
+    ) {
+        PageResult<Fc> result = fcService.queryFcByPage(page, rows, sortBy, desc, key,null);
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("bill")
     public ResponseEntity<Fc> queryBill(@RequestParam(value = "lsh",required = true) String lsh){
         Fc result = fcService.queryBill(lsh);

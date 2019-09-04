@@ -79,6 +79,17 @@ public class CkdbController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("pageall")
+    public ResponseEntity<PageResult<Ckdb>> pageall(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "lsh", required = false) String lsh,
+            @RequestParam(value = "hh", required = false) Integer hh
+    ) {
+        PageResult<Ckdb> result = ckdbService.page(page,rows,lsh,hh,null);
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping("commit")
     public ResponseEntity<Null> commit(@RequestBody Ckdb ckdb){
         ckdbService.commitBill(ckdb.getLsh());
