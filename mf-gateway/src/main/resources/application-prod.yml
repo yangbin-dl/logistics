@@ -68,6 +68,7 @@ filter:
     - /api/item/xsth/district
     - /api/item/xsth/queryCity
     - /api/item/pstp/applist
+    - /api/item/pstp/appmx
 
 
 logging:
