@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallfe.item.mapper.LxtzMapper">
+
+    <insert id="insertBill" parameterType="com.mallfe.item.pojo.Lxtz" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into mf_lxtz(lsh, lrid, lrusername, truename, status, lrsj, hh, sl, old_lx, new_lx, remark)
+        VALUES(#{lsh},#{lrid},#{lrusername},#{truename},0,#{lrsj},#{hh},#{sl},#{oldLx},#{newLx},#{remark})
+    </insert>
+    <update id="updateStatus">
+        update mf_lxtz set status=#{status} where lsh=#{lsh}
+    </update>
+</mapper>
