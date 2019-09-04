@@ -78,7 +78,12 @@
             <if test="psdh != null and psdh != ''">
                 and psdh = #{psdh}
             </if>
-            and wl_status = 0 and ps_status = 1
+            <if test="wlstatus != null">
+                and wl_status = #{wlstatus}
+            </if>
+            <if test="psstatus != null">
+                and ps_status = #{psstatus}
+            </if>
         </where>
         order by lrsj desc
     </select>

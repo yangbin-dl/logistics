@@ -2,10 +2,7 @@ package com.mallfe.item.controller;
 
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.item.pojo.Ps;
-import com.mallfe.item.pojo.Psrk;
-import com.mallfe.item.pojo.Tp;
-import com.mallfe.item.pojo.Tprk;
+import com.mallfe.item.pojo.*;
 import com.mallfe.item.service.PsTpService;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -242,5 +239,16 @@ public class PsTpController {
     ) {
         JsonObject result = psTpService.applist(page, userid,phone,hh,lsh,psdh);
         return result;
+    }
+
+    @PostMapping("apppsarrive")
+    public JsonObject appPsArrive(@RequestBody Ps ps){
+
+        return psTpService.appPsArrive(ps.getLsh());
+    }
+
+    @PostMapping("apppsnotarrive")
+    public JsonObject appPsNotArrive(@RequestBody Ps ps){
+        return psTpService.appPsNotArrive(ps.getLsh());
     }
 }

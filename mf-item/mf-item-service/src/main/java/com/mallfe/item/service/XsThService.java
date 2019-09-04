@@ -263,6 +263,12 @@ public class XsThService {
         String lsh = commonService.getLsh("XS");
         xs.setLsh(lsh);
         xs.setStatus(0);
+
+        User user = userService.selectById(xs.getLrid());
+
+        xs.setDeptCode(user.getDeptCode());
+        xs.setStoreCode(user.getStoreCode());
+
         xs.setLrsj(CommonService.getStringDate());
         try {
             xsMapper.insert(xs);
@@ -278,6 +284,12 @@ public class XsThService {
         String lsh = commonService.getLsh("TH");
         th.setLsh(lsh);
         th.setStatus(0);
+
+        User user = userService.selectById(th.getLrid());
+
+        th.setDeptCode(user.getDeptCode());
+        th.setStoreCode(user.getStoreCode());
+
         th.setLrsj(CommonService.getStringDate());
         try {
             thMapper.insert(th);

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -150,41 +151,28 @@ public class PsTpService {
      * @param tp
      * @return
      */
-    public Tp insertTp(Tp tp){
-        //获取流水号
-        String lsh = commonService.getLsh("TP");
-        tp.setLsh(lsh);
+    public void insertTp(Tp tp){
+
         tp.setStatus(0);
         tp.setLrsj(CommonService.getStringDate());
-
-        //插入单据
-        try {
-            tpMapper.insert(tp);
-        } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
-        }
 
         //更新销售单状态
         try {
             for (TpDetail mx: tp.getList()) {
+                //获取流水号
+                String lsh = commonService.getLsh("TP");
+                tp.setLsh(lsh);
+                tp.setId(null);
+                tpMapper.insert(tp);
                 //如果更新的行数不为1，则代表单据状态异常，回滚事务
                 if(thMapper.updateStatusToTp(mx.getDdh(),lsh,tp.getDriverCode(),tp.getPathCode())!=1){
                     throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
                 }
-            }
-        } catch (Exception e){
-            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
-        }
-
-        //插入明细
-        try {
-            for (TpDetail mx: tp.getList()) {
                 tpMxMapper.insertTpMx(lsh,mx.getDdh(),0);
             }
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
-        return tp;
     }
 
     public Tp modifyTp(Tp tp){
@@ -624,7 +612,7 @@ public class PsTpService {
         User u = userService.selectById(Long.parseLong(userid));
         String driveCode = u.getUsername();
 
-        list = psMapper.selectList(driveCode,phone,hh,lsh,psdh);
+        list = psMapper.selectList(driveCode,phone,hh,lsh,psdh,0,1);
 
         //查询
 
@@ -636,5 +624,81 @@ public class PsTpService {
         PageInfo<AllBill> info = new PageInfo<>(list);
 
         return new JsonData(new PageResult<>(info.getTotal(), list));
+    }
+
+    public JsonObject appPsArrive(String psdh) {
+        List<AllBill> billList = psMapper.selectList(null,null,null,null,psdh,0,1);
+
+        if(billList == null){
+            return new JsonError("操作失败！");
+        }
+
+        AllBill bill = billList.get(0);
+
+        if(bill.getBilltype().equals("PS")){
+            Ps ps = queryPsByLsh(psdh);
+            //准备数据
+            List<PsDetail> list = new ArrayList<>();
+            PsDetail psDetail = new PsDetail();
+            psDetail.setLsh(psdh);
+            psDetail.setDdh(ps.getXsList().get(0).getLsh());
+            psDetail.setStatus(1);
+            list.add(psDetail);
+            ps.setList(list);
+            //准备数据完毕
+            arrivedPs(ps);
+        }
+        else {
+            Tp tp = queryTpByLsh(psdh);
+            //准备数据
+            List<TpDetail> list = new ArrayList<>();
+            TpDetail tpDetail = new TpDetail();
+            tpDetail.setLsh(psdh);
+            tpDetail.setDdh(tp.getThList().get(0).getLsh());
+            tpDetail.setStatus(1);
+            list.add(tpDetail);
+            tp.setList(list);
+            //准备数据完毕
+            arrivedTp(tp);
+        }
+
+        return new JsonData("提交成功！");
+    }
+
+    public JsonObject appPsNotArrive(String psdh) {
+        List<AllBill> billList = psMapper.selectList(null,null,null,null,psdh,0,1);
+
+        if(billList == null){
+            return new JsonError("操作失败！");
+        }
+
+        AllBill bill = billList.get(0);
+
+        if(bill.getBilltype().equals("PS")){
+            if(psMapper.updateStatusToFinish(psdh)!=1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
+            psMapper.updatePsmxStatusToUnFinish(psdh);
+            if(psrkMapper.insertPsrkMx(psdh)!=0){
+                if(psrkMapper.insertFromPs(psdh)!=1){
+                    throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+                }
+            }
+        }
+        else {
+            if(tpMapper.updateStatusToFinish(psdh) != 1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
+
+            //修改所有退货单状态为待配车
+            thMapper.updateStatusToUnTp(psdh);
+
+            //修改退配单明细状态为未送达
+            tpMapper.updateTpmxToUnFinish(psdh);
+
+        }
+
+        return new JsonData("提交成功！");
+
     }
 }

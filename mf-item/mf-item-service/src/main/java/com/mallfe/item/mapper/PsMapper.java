@@ -46,5 +46,7 @@ public interface PsMapper extends Mapper<Ps> {
                              @Param("phone") String phone,
                              @Param("hh") Integer hh,
                              @Param("lsh") String lsh,
-                             @Param("psdh") String psdh);
+                             @Param("psdh") String psdh,
+                             @Param("wlstatus") Integer wlstatus,
+                             @Param("psstatus") Integer psstatus);
 }
