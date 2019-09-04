@@ -88,7 +88,7 @@
         order by b.lsh desc
     </select>
     <select id="selectThWithLshForRk" resultType="com.mallfe.item.pojo.Th">
-        select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, concat(ifnull(b.province,''),ifnull(b.city,''),ifnull(b.district,''),ifnull(b.location,'')) as location, b.phone,
+        select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, concat(ifnull(b.province,''),' ',ifnull(b.city,''),' ',ifnull(b.district,''),' ',ifnull(b.location,'')) as location, b.phone,
                b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, a.status,
                case b.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
                b.driver_code, b.path_code,
