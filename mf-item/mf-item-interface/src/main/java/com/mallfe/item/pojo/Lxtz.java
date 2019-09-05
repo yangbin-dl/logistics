@@ -60,6 +60,11 @@ public class Lxtz {
     private Integer hh;
 
     /**
+     * 数量
+     */
+    private Integer sl;
+
+    /**
      * 原类型
      */
     private Integer oldLx;
