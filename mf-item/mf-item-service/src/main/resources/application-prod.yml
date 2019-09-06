@@ -2,8 +2,8 @@ server:
   port: 8081
 spring:
   datasource:
-    url: jdbc:mysql://rm-m5es50j9lfj56x323jo.mysql.rds.aliyuncs.com:3306/logistics?allowMulitQueries=true&useUnicode=true&characterEncoding=utf8
-    username: logiuser
+    url: jdbc:mysql://47.94.95.93:3306/logistics?allowMulitQueries=true&useUnicode=true&characterEncoding=utf8
+    username: jinzhou
     password: Tonsan123
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
