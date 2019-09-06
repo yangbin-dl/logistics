@@ -241,6 +241,18 @@ public class PsTpController {
         return result;
     }
 
+    @GetMapping("applisthis")
+    public JsonObject applisthis(@RequestParam(value = "page", defaultValue = "1") Integer page,
+                              @RequestParam(value = "userid") String userid,
+                              @RequestParam(value = "phone", required = false) String phone,
+                              @RequestParam(value = "hh", required = false) Integer hh,
+                              @RequestParam(value = "lsh", required = false) String lsh,
+                              @RequestParam(value = "psdh", required = false) String psdh
+    ) {
+        JsonObject result = psTpService.applisthis(page, userid,phone,hh,lsh,psdh);
+        return result;
+    }
+
     @GetMapping("appmx")
     public JsonObject appmx(@RequestParam(value = "lsh", required = false) String lsh) {
         JsonObject result = psTpService.appmx(lsh);

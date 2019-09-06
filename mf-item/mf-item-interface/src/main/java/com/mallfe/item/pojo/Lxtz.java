@@ -13,7 +13,7 @@ import javax.persistence.Transient;
  * @since 2019-09-04
  */
 @Data
-public class Lxtz {
+public class Lxtz extends Sp{
     @Id
     @KeySql(useGeneratedKeys=true)
     private Integer id;

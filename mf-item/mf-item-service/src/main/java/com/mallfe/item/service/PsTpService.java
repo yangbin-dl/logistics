@@ -711,4 +711,28 @@ public class PsTpService {
         return new JsonData(list.get(0));
 
     }
+
+    public JsonObject applisthis(Integer page, String userid, String phone, Integer hh, String lsh, String psdh) {
+        //分页
+        PageHelper.startPage(page, 10);
+        //条件过滤
+
+        //查询用户角色
+        List<AllBill> list;
+        User u = userService.selectById(Long.parseLong(userid));
+        String driveCode = u.getUsername();
+
+        list = psMapper.selectList(driveCode,phone,hh,lsh,psdh,null,2);
+
+        //查询
+
+        if(CollectionUtils.isEmpty(list)){
+            return new JsonError("未查询到单据！");
+        }
+
+        //解析分页结果
+        PageInfo<AllBill> info = new PageInfo<>(list);
+
+        return new JsonData(new PageResult<>(info.getTotal(), list));
+    }
 }
