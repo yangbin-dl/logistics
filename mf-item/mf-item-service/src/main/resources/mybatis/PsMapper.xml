@@ -45,7 +45,7 @@
         select billtype, lsh, hh, pinm, sl, lx, psdh,
                concat(ifnull(province,''),' ',ifnull(city,''),' ',ifnull(district,''),' ',ifnull(location,'')) as location,
                phone, contact, qwsj, sdsj,xingh,tm,remark,province,city,district,
-               store_code as storeCode,store_name as storeName,lrsj,sdsj,lrid,truename,
+               store_code as storeCode,store_name as storeName,lrsj,lrid,truename,
                dept_code as deptCode,dept_name as deptName,driver_name as driverName,driver_phone as driverPhone,
                ps_status as psStatus,
                case ps_status
