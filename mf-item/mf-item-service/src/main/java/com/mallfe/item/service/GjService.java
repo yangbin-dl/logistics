@@ -220,7 +220,7 @@ public class GjService {
     public void shenhe2(Gj gj) {
         try {
             //更新单据状态
-            if(gjMapper.updateBillStatus(3,gj.getLsh())!=1){
+            if(gjMapper.updateStatusToFinish(gj.getLsh())!=1){
                 throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
             }
 

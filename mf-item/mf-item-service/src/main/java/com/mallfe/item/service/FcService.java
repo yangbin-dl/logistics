@@ -220,7 +220,7 @@ public class FcService {
     public void shenhe2(Fc fc) {
         try {
             //更新单据状态
-            if(fcMapper.updateBillStatus(3,fc.getLsh()) !=1){
+            if(fcMapper.updateStatusToFinish(fc.getLsh()) !=1){
                 throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
             }
 
