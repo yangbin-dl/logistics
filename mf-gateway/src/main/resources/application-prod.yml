@@ -72,6 +72,8 @@ filter:
     - /api/item/pstp/appmx
     - /api/item/pstp/apppsarrive
     - /api/item/pstp/apppsnotarrive
+    - /api/item/item/pl
+    - /api/item/item/pltree
 
 
 logging:
