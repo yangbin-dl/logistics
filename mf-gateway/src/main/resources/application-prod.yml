@@ -4,10 +4,10 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://172.17.196.112:10086/eureka
+      defaultZone: http://127.0.0.1:10086/eureka
     registry-fetch-interval-seconds: 5
   instance:
-    ip-address: 172.17.196.112
+    ip-address: 127.0.0.1
     instance-id: ${spring.cloud.client.ip-address}:${server.port}
 zuul:
   prefix: /api # 添加路由前缀
