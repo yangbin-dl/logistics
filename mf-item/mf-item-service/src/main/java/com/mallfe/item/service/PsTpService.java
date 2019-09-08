@@ -703,7 +703,7 @@ public class PsTpService {
     }
 
     public JsonObject appmx(String psdh) {
-        List<AllBill> list = psMapper.selectList(null,null,null,null,psdh,0,1);
+        List<AllBill> list = psMapper.selectList(null,null,null,null,psdh,null,null);
         if(CollectionUtils.isEmpty(list)){
             return new JsonError("未查询到单据！");
         }
