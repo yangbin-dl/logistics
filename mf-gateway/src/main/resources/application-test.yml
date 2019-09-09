@@ -1,0 +1,74 @@
+server:
+  port: 10010
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.31.53.68:10086/eureka
+    registry-fetch-interval-seconds: 5
+  instance:
+    ip-address: 172.31.53.68
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    prefer-ip-address: true
+
+zuul:
+  prefix: /api # 添加路由前缀
+  host:
+    connect-timeout-millis: 15000 #HTTP连接超时要比Hystrix的大
+    socket-timeout-millis: 60000   #socket超时
+  routes:
+    item-service: /item/**
+    user-service: /user/**
+ribbon:
+  ConnectTimeout: 10000 # 连接超时时间(ms)
+  ReadTimeout: 10000 # 通信超时时间(ms)
+  MaxAutoRetriesNextServer: 0 # 同一服务不同实例的重试次数
+  MaxAutoRetries: 0 # 同一实例的重试次数
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMillisecond: 5000 # 熔断超时时长：5000ms
+# 开启和暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+# JWT
+jwt:
+  header: Authorization
+  secret: luck
+  #token有效期一天
+  expiration: 86400
+  pubKeyPath: "../logistics/mf-gateway/src/main/resources/pub.key"
+  cookieName: "lucky"
+filter:
+  allowPaths:
+    - /api/item/user/
+    - /api/item/accredit
+    - /api/item/user/find
+    - /api/item/item/findhh
+    - /api/item/xsth/appinsertxs
+    - /api/item/xsth/appinsertth
+    - /api/item/xsth/appcommitxs
+    - /api/item/xsth/appcommitth
+    - /api/item/xsth/deletexs
+    - /api/item/xsth/deleteth
+    - /api/item/xsth/appqueryxs
+    - /api/item/xsth/appqueryth
+    - /api/item/xsth/pageall
+    - /api/item/xsth/province
+    - /api/item/xsth/city
+    - /api/item/xsth/district
+    - /api/item/xsth/queryCity
+    - /api/item/pstp/applist
+    - /api/item/pstp/applisthis
+    - /api/item/pstp/appmx
+    - /api/item/pstp/apppsarrive
+    - /api/item/pstp/apppsnotarrive
