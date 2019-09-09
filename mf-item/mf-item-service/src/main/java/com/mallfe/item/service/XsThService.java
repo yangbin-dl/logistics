@@ -212,7 +212,7 @@ public class XsThService {
         if(u.getLx()==1){
             list = xsMapper.selectAllBill(lruserid,phone,lsh,hh,contact);
         } else {
-            list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact);
+            list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
         }
 
         //查询

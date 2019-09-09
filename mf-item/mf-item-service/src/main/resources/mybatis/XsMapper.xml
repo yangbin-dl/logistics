@@ -156,7 +156,7 @@
         end as statusInfo,
         a.store_code as storeCode,a.store_name as storeName,
         a.dept_code as deptCode,a.dept_name as deptName,driver_name as driverName,driver_phone as driverPhone
-        from vw_xs a
+        from vw_xs a inner join mf_user_pl b on a.plbm = b.plbm
         <where>
             <if test="storecode != null">
                 a.store_code = #{storecode}
@@ -173,6 +173,10 @@
             </if>
             <if test="contact != null">
                 and a.contact = #{contact}
+            </if>
+
+            <if test="uid != null">
+                and b.uid = #{uid}
             </if>
         </where>
         order by a.lrsj desc
