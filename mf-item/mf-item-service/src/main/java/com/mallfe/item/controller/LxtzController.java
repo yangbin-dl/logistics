@@ -3,6 +3,7 @@ package com.mallfe.item.controller;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.Lxtz;
 import com.mallfe.item.service.LxtzService;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,31 +35,31 @@ public class LxtzController {
     }
 
     @PostMapping("commit")
-    public ResponseEntity<Lxtz> commit(@RequestBody Lxtz lxtz) {
+    public ResponseEntity<Null> commit(@RequestBody Lxtz lxtz) {
         lxtzService.commit(lxtz.getLsh());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("delete")
-    public ResponseEntity<Lxtz> delete(@RequestBody Lxtz lxtz) {
+    public ResponseEntity<Null> delete(@RequestBody Lxtz lxtz) {
         lxtzService.delete(lxtz.getLsh());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("shenhe1")
-    public ResponseEntity<Lxtz> shenhe1(@RequestBody Lxtz lxtz) {
+    public ResponseEntity<Null> shenhe1(@RequestBody Lxtz lxtz) {
         lxtzService.shenhe1(lxtz.getLsh());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("shenhe2")
-    public ResponseEntity<Lxtz> shenhe2(@RequestBody Lxtz lxtz) {
+    public ResponseEntity<Null> shenhe2(@RequestBody Lxtz lxtz) {
         lxtzService.shenhe2(lxtz.getLsh());
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("page")
-    public ResponseEntity<PageResult<Lxtz>> queryByPage(
+    public ResponseEntity<PageResult<Lxtz>> queryPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
             @RequestParam(value = "sortBy", required = false) String sortBy,
@@ -70,7 +71,7 @@ public class LxtzController {
     }
 
     @GetMapping("page1")
-    public ResponseEntity<PageResult<Lxtz>> queryByPage1(
+    public ResponseEntity<PageResult<Lxtz>> queryPage1(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
             @RequestParam(value = "sortBy", required = false) String sortBy,
@@ -82,7 +83,7 @@ public class LxtzController {
     }
 
     @GetMapping("page2")
-    public ResponseEntity<PageResult<Lxtz>> queryByPage2(
+    public ResponseEntity<PageResult<Lxtz>> queryPage2(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
             @RequestParam(value = "sortBy", required = false) String sortBy,
@@ -94,7 +95,7 @@ public class LxtzController {
     }
 
     @GetMapping("pageall")
-    public ResponseEntity<PageResult<Lxtz>> queryByPageall(
+    public ResponseEntity<PageResult<Lxtz>> queryPageall(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
             @RequestParam(value = "sortBy", required = false) String sortBy,
@@ -102,6 +103,12 @@ public class LxtzController {
             @RequestParam(value = "lsh", required = false) String lsh
     ) {
         PageResult<Lxtz> result = lxtzService.queryByPage(page, rows, sortBy, desc, lsh,null);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("bill")
+    public ResponseEntity<Lxtz> queryMx(@RequestParam("lsh") String lsh) {
+        Lxtz result = lxtzService.queryBill(lsh);
         return ResponseEntity.ok(result);
     }
 }

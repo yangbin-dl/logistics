@@ -120,4 +120,11 @@ public class CkdbController {
         return ResponseEntity.ok(ckdbService.bill(lsh));
     }
 
+    @PostMapping("delete")
+    public ResponseEntity<Null> delete(@RequestBody Ckdb ckdb){
+        ckdbService.delete(ckdb.getLsh());
+        return ResponseEntity.ok().build();
+    }
+
+
 }
