@@ -7,6 +7,52 @@
         VALUES(#{lsh},#{lrid},#{lrusername},#{truename},0,#{lrsj},#{hh},#{sl},#{oldLx},#{newLx},#{remark})
     </insert>
     <update id="updateStatus">
-        update mf_lxtz set status=#{status} where lsh=#{lsh}
+        update mf_lxtz set status=#{newstatus} where lsh=#{lsh} and status =#{oldstatus}
     </update>
+    <update id="updateBill">
+        update mf_lxtz set sl=#{sl},old_lx = #{oldLx},new_lx = #{newLx},remark = #{remark} where lsh=#{lsh}
+    </update>
+    <update id="updateStatsuToFinish">
+        update mf_lxtz set status=4 where lsh=#{lsh}
+    </update>
+    <select id="selectBills" resultType="com.mallfe.item.pojo.Lxtz">
+        select lsh,a.dept_code,a.store_code,b.store_name,a.hh,c.pinm,c.xingh,a.sl,a.old_lx as oldLx,a.new_lx as
+        newLx,remark,a.truename,
+               a.status,
+               case a.status
+                   when 0 then '新增'
+                   when 1 then '配送经理审核'
+                   when 2 then '家电经理审核'
+                   when 3 then '已生效'
+                   when 9 then '已作废'
+                   end as statusInfo
+        from mf_lxtz a
+                 left join mf_store b on a.store_code=b.store_code
+                 left join mf_sp c on a.hh=c.hh
+        <where>
+            <if test="lsh != null and lsh!= ''">
+                a.lsh=#{lsh}
+            </if>
+            <if test="status != null ">
+                and a.status = #{status}
+            </if>
+        </where>
+        order by lsh desc;
+    </select>
+    <select id="selectOneBill" resultType="com.mallfe.item.pojo.Lxtz">
+        select lsh,a.dept_code,a.store_code,b.store_name,a.hh,c.pinm,c.xingh,a.sl,a.old_lx as oldLx,a.new_lx as
+            newLx,remark,a.truename,
+               a.status,
+               case a.status
+                   when 0 then '新增'
+                   when 1 then '配送经理审核'
+                   when 2 then '家电经理审核'
+                   when 3 then '已生效'
+                   when 9 then '已作废'
+                   end as statusInfo
+        from mf_lxtz a
+                 left join mf_store b on a.store_code=b.store_code
+                 left join mf_sp c on a.hh=c.hh
+        where a.lsh=#{lsh}
+    </select>
 </mapper>
