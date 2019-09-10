@@ -20,6 +20,9 @@
                            lx=#{lx}
         where id=#{id}
     </update>
+    <update id="updatePwd">
+        update mf_user set password=#{password} where id=#{id}
+    </update>
     <delete id="deleteUserPl" parameterType="com.mallfe.item.pojo.User">
         delete from mf_user_pl where uid = #{id}
     </delete>

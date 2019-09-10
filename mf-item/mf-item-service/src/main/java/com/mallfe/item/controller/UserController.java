@@ -6,6 +6,7 @@ import com.mallfe.item.pojo.Region;
 import com.mallfe.item.pojo.Store;
 import com.mallfe.item.pojo.User;
 import com.mallfe.item.service.UserService;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,5 +81,9 @@ public class UserController {
         return ResponseEntity.ok(userService.selectRegionList());
     }
 
-
+    @PostMapping("updatepwd")
+    public ResponseEntity<Null> updatepwd(@RequestBody User user) {
+        userService.updatePwd(user);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
 }

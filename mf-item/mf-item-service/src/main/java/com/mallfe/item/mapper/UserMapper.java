@@ -30,6 +30,8 @@ public interface UserMapper extends Mapper<User> {
     void updateUserInfo(User user);
 
     void deleteUserPl(User user);
+
+    void updatePwd(@Param("id")Long id, @Param("password")String password);
 }
 
 

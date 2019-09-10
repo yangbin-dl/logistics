@@ -192,4 +192,8 @@ public class UserService {
     public List<Region> selectRegionList() {
         return departmentMapper.selectRegionList();
     }
+
+    public void updatePwd(User user) {
+        userMapper.updatePwd(user.getId(), user.getPassword());
+    }
 }

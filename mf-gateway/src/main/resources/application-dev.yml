@@ -54,6 +54,7 @@ filter:
     - /api/item/user/
     - /api/item/accredit
     - /api/item/user/find
+    - /api/item/user/updatepwd
     - /api/item/item/findhh
     - /api/item/xsth/appinsertxs
     - /api/item/xsth/appinsertth
