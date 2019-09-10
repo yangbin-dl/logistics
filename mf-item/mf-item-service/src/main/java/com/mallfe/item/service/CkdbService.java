@@ -183,4 +183,10 @@ public class CkdbService {
 
         ckdbMapper.updateStatus(lsh,3,2);
     }
+
+    public void delete(String lsh) {
+        if(ckdbMapper.updateStatus(lsh,9,0)!=1){
+            throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+    }
 }

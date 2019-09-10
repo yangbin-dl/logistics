@@ -171,7 +171,7 @@ public class LxtzService {
             }
 
             KucnIn kucnIn = new KucnIn();
-            kucnIn.setYwbm("GJ");
+            kucnIn.setYwbm("TZ");
             kucnIn.setHh(lxtz.getHh());
             kucnIn.setSl(lxtz.getSl());
             kucnIn.setLsh(lxtz.getLsh());
@@ -184,5 +184,10 @@ public class LxtzService {
         catch (Exception e){
             throw new MallfeException(ExceptionEnum.UNDER_STOCK);
         }
+    }
+
+    public Lxtz queryBill(String lsh) {
+        Lxtz lxtz = lxtzMapper.selectOneBill(lsh);
+        return lxtz;
     }
 }
