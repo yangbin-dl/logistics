@@ -15,7 +15,6 @@ HOST=47.94.95.93
 #user name
 DB_USER=jinzhou
 #password
-DB_PWD=Tonsan123
 #database name
 DATABASE=logistics
 #create the back up directory
