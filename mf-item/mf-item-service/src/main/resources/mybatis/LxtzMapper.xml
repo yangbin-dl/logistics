@@ -37,7 +37,7 @@
                 and a.status = #{status}
             </if>
         </where>
-        order by lsh desc;
+        order by lsh desc
     </select>
     <select id="selectOneBill" resultType="com.mallfe.item.pojo.Lxtz">
         select lsh,a.dept_code,a.store_code,b.store_name,a.hh,c.pinm,c.xingh,a.sl,a.old_lx as oldLx,a.new_lx as
