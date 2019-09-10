@@ -196,4 +196,8 @@ public class UserService {
     public void updatePwd(User user) {
         userMapper.updatePwd(user.getId(), user.getPassword());
     }
+
+    public void deleteUser(User user) {
+        userMapper.deleteUser(user.getId());
+    }
 }

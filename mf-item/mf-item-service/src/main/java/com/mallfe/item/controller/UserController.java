@@ -86,4 +86,10 @@ public class UserController {
         userService.updatePwd(user);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
+
+    @PostMapping("del")
+    public ResponseEntity<Null> delete(@RequestBody User user) {
+        userService.deleteUser(user);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
 }

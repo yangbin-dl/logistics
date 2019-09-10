@@ -26,6 +26,9 @@
     <delete id="deleteUserPl" parameterType="com.mallfe.item.pojo.User">
         delete from mf_user_pl where uid = #{id}
     </delete>
+    <delete id="deleteUser">
+        delete from mf_user where id = #{id}
+    </delete>
 
     <select id="selectUserByPage" resultType="com.mallfe.item.pojo.User">
         select a.id,a.username,a.password,a.truename,a.lx,
