@@ -82,9 +82,8 @@ public class UserController {
     }
 
     @PostMapping("updatepwd")
-    public ResponseEntity<Null> updatepwd(@RequestBody User user) {
-        userService.updatePwd(user);
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+    public JsonObject updatepwd(@RequestBody User user) {
+        return userService.updatePwd(user);
     }
 
     @PostMapping("del")

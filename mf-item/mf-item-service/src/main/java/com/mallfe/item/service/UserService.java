@@ -193,8 +193,9 @@ public class UserService {
         return departmentMapper.selectRegionList();
     }
 
-    public void updatePwd(User user) {
+    public JsonObject updatePwd(User user) {
         userMapper.updatePwd(user.getId(), user.getPassword());
+        return new JsonData();
     }
 
     public void deleteUser(User user) {
