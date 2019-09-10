@@ -53,7 +53,7 @@ public class LxtzService {
 
         lxtz.setDeptCode(user.getDeptCode());
         lxtz.setLrsj(CommonService.getStringDate());
-
+        lxtz.setLrusername(user.getUsername());
         lxtzMapper.insertBill(lxtz);
         return lxtz;
 

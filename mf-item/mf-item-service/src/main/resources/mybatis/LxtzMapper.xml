@@ -3,21 +3,22 @@
 <mapper namespace="com.mallfe.item.mapper.LxtzMapper">
 
     <insert id="insertBill" parameterType="com.mallfe.item.pojo.Lxtz" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into mf_lxtz(lsh, lrid, lrusername, truename, status, lrsj, hh, sl, old_lx, new_lx, remark)
-        VALUES(#{lsh},#{lrid},#{lrusername},#{truename},0,#{lrsj},#{hh},#{sl},#{oldLx},#{newLx},#{remark})
+        insert into mf_lxtz(lsh, dept_code, store_code,lrid, lrusername, truename, status, lrsj, hh, sl, old_lx, new_lx, remark)
+        VALUES(#{lsh},#{deptCode},#{storeCode},#{lrid},#{lrusername},#{truename},0,#{lrsj},#{hh},#{sl},#{oldLx},#{newLx},#{remark})
     </insert>
     <update id="updateStatus">
         update mf_lxtz set status=#{newstatus} where lsh=#{lsh} and status =#{oldstatus}
     </update>
     <update id="updateBill">
-        update mf_lxtz set sl=#{sl},old_lx = #{oldLx},new_lx = #{newLx},remark = #{remark} where lsh=#{lsh}
+        update mf_lxtz set sl=#{sl},old_lx = #{oldLx},new_lx = #{newLx},remark = #{remark} where lsh=#{lsh} and status=0
     </update>
     <update id="updateStatsuToFinish">
         update mf_lxtz set status=4 where lsh=#{lsh}
     </update>
     <select id="selectBills" resultType="com.mallfe.item.pojo.Lxtz">
-        select lsh,a.dept_code,a.store_code,b.store_name,a.hh,c.pinm,c.xingh,a.sl,a.old_lx as oldLx,a.new_lx as
-        newLx,remark,a.truename,
+        select lsh,a.dept_code as deptCode,a.store_code as storeCode,b.store_name as storeName,
+               a.hh,c.pinm,c.xingh,a.sl,a.old_lx as oldLx,a.new_lx as
+        newLx,remark,a.truename,a.lrsj,a.cksj,
                a.status,
                case a.status
                    when 0 then '新增'
@@ -40,8 +41,9 @@
         order by lsh desc
     </select>
     <select id="selectOneBill" resultType="com.mallfe.item.pojo.Lxtz">
-        select lsh,a.dept_code,a.store_code,b.store_name,a.hh,c.pinm,c.xingh,a.sl,a.old_lx as oldLx,a.new_lx as
-            newLx,remark,a.truename,
+        select lsh,a.dept_code as deptCode,a.store_code as storeCode,b.store_name as storeName,
+               a.hh,c.pinm,c.xingh,a.sl,a.old_lx as oldLx,a.new_lx as
+                   newLx,remark,a.truename,a.lrsj,a.cksj,
                a.status,
                case a.status
                    when 0 then '新增'
