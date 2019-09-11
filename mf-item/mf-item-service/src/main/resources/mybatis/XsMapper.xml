@@ -90,7 +90,7 @@
                    when 9 then '已作废'
                    end as statusInfo
         From mf_xs b left join mf_sp c on b.hh=c.hh
-        left join mf_kucn d on b.hh=d.hh and b.lx = d.lx and b.store_code = d.store_code
+        left join mf_kucn d on b.hh=d.hh and b.lx = d.lx and b.storage_code = d.store_code
         left join mf_store e on b.store_code = e.store_code
         left join mf_store f on b.storage_code = f.store_code
         inner join mf_user g on b.dept_code = g.dept_code

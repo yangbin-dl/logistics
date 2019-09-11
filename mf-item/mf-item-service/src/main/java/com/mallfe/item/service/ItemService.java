@@ -72,7 +72,7 @@ public class ItemService {
             throw new MallfeException(ExceptionEnum.SP_NOT_EXISTS);
         }
 
-        sp.setKucnList(kucnMapper.selectKucn(hh,user.getStoreCode()));
+        sp.setKucnList(kucnMapper.selectKucn(hh,user.getStorageCode()));
 
         return sp;
     }

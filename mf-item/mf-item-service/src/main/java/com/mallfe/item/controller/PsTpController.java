@@ -91,9 +91,24 @@ public class PsTpController {
             @RequestParam(value = "sortBy", required = false) String sortBy,
             @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
             @RequestParam(value = "key", required = false) String key,
-            @RequestParam(value = "status", required = false) Integer status
+            @RequestParam(value = "status", required = false) Integer status,
+            @RequestParam(value = "uid", required = false) Long uid
     ) {
         PageResult<Ps> result = psTpService.queryPsByPage(page,rows, status);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("pagepsck")
+    public ResponseEntity<PageResult<Ps>> queryPsckByPage(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "status", required = false) Integer status,
+            @RequestParam(value = "uid", required = false) Long uid
+    ) {
+        PageResult<Ps> result = psTpService.queryPsckByPage(page,rows, status,uid);
         return ResponseEntity.ok(result);
     }
 
@@ -199,9 +214,10 @@ public class PsTpController {
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
             @RequestParam(value = "sortBy", required = false) String sortBy,
             @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
-            @RequestParam(value = "key", required = false) String key
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "uid") Long uid
     ){
-        PageResult<Psrk> result = psTpService.queryPsrkByPage(page, rows, sortBy, desc, key);
+        PageResult<Psrk> result = psTpService.queryPsrkByPage(page, rows, sortBy, desc, key, uid);
         return ResponseEntity.ok(result);
     }
 

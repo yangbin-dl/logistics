@@ -86,6 +86,8 @@ public class PsTpService {
                 String lsh = commonService.getLsh("PS");
                 ps.setLsh(lsh);
                 ps.setId(null);
+                AllBill bill = xsMapper.selectOneBill(mx.getDdh());
+                ps.setStoreCode(bill.getStorageCode());
                 psMapper.insert(ps);
                 //如果更新的行数不为1，则代表单据状态异常，回滚事务
                 if(xsMapper.updateStatusToPs(mx.getDdh(),lsh,ps.getDriverCode(),ps.getPathCode())!=1){
@@ -163,6 +165,9 @@ public class PsTpService {
                 String lsh = commonService.getLsh("TP");
                 tp.setLsh(lsh);
                 tp.setId(null);
+                //根据单据的销售仓库，生成配送单所属店铺
+                AllBill bill = xsMapper.selectOneBill(mx.getDdh());
+                tp.setStoreCode(bill.getStorageCode());
                 tpMapper.insert(tp);
                 //如果更新的行数不为1，则代表单据状态异常，回滚事务
                 if(thMapper.updateStatusToTp(mx.getDdh(),lsh,tp.getDriverCode(),tp.getPathCode())!=1){
@@ -474,7 +479,8 @@ public class PsTpService {
 
     }
 
-    public PageResult<Psrk> queryPsrkByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+    public PageResult<Psrk> queryPsrkByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key,
+                                            Long uid) {
         //分页
         PageHelper.startPage(page, rows);
         //条件过滤
@@ -489,7 +495,7 @@ public class PsTpService {
         }
 
         //查询
-        List<Psrk> list = psrkMapper.selectPsrk();
+        List<Psrk> list = psrkMapper.selectPsrk(uid);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -734,5 +740,23 @@ public class PsTpService {
         PageInfo<AllBill> info = new PageInfo<>(list);
 
         return new JsonData(new PageResult<>(info.getTotal(), list));
+    }
+
+    public PageResult<Ps> queryPsckByPage(Integer page, Integer rows, Integer status, Long uid) {
+        //分页
+        PageHelper.startPage(page, rows);
+
+        //查询
+        List<Ps> list = psMapper.selectPsWithUid(status,null,uid);
+
+
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Ps> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
     }
 }

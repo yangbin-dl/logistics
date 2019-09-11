@@ -99,7 +99,12 @@ public class WlBill {
 
 
     /**
-     * 店铺编码
+     * 仓库编码
      */
     private String storeCode ;
+
+    /**
+     * 仓库名称
+     */
+    private String storeName ;
 }
