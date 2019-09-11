@@ -272,6 +272,7 @@ public class XsThService {
 
         xs.setDeptCode(user.getDeptCode());
         xs.setStoreCode(user.getStoreCode());
+        xs.setStorageCode(user.getStorageCode());
 
         xs.setLrsj(CommonService.getStringDate());
         try {
@@ -293,7 +294,7 @@ public class XsThService {
 
         th.setDeptCode(user.getDeptCode());
         th.setStoreCode(user.getStoreCode());
-
+        th.setStorageCode(user.getStorageCode());
         th.setLrsj(CommonService.getStringDate());
         try {
             thMapper.insert(th);
