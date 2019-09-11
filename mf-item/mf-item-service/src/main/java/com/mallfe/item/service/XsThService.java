@@ -113,12 +113,12 @@ public class XsThService {
         return th;
     }
 
-    public PageResult<Xs> queryXsByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+    public PageResult<Xs> queryXsByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key,Long uid) {
         //分页
         PageHelper.startPage(page, rows);
 
         //查询
-        List<Xs> list = xsMapper.selectXsList(key,null);
+        List<Xs> list = xsMapper.selectXsList(key,null,uid);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -131,11 +131,11 @@ public class XsThService {
         return new PageResult<>(info.getTotal(), list);
     }
 
-    public PageResult<Th> queryThByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+    public PageResult<Th> queryThByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key,Long uid) {
         //分页
         PageHelper.startPage(page, rows);
 
-        List<Th> list = thMapper.selectThList(key,null);
+        List<Th> list = thMapper.selectThList(key,null,uid);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -236,20 +236,20 @@ public class XsThService {
         return new JsonData(consumer);
     }
 
-    public List<Xs> queryXsForPs(String lsh) {
+    public List<Xs> queryXsForPs(Long uid,String lsh) {
         List<Xs> list;
 
         if(StringUtils.isNotBlank(lsh)){
             list = xsMapper.selectXsWithLsh(lsh);
         } else{
-            list = xsMapper.selectXsList(null,1);
+            list = xsMapper.selectXsList(null,1,uid);
         }
 
         return list;
     }
 
 
-    public List<Th> queryThForTp(String lsh) {
+    public List<Th> queryThForTp(Long uid,String lsh) {
         List<Th> list;
 
         if(StringUtils.isNotBlank(lsh)){
@@ -257,7 +257,7 @@ public class XsThService {
         } else{
             Th th = new Th();
             th.setStatus(1);
-            list = thMapper.selectThList(null,1);
+            list = thMapper.selectThList(null,1,uid);
         }
         return list;
     }

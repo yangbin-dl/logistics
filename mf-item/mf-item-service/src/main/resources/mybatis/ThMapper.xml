@@ -61,7 +61,9 @@
     <select id="selectThList" resultType="com.mallfe.item.pojo.Th">
         select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, b.location, b.phone,
         b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, b.status,
-        b.driver_code, b.path_code,
+        b.driver_code as driverCode, b.path_code as pathCode,
+        b.store_code as storeCode,e.store_name as storeName,
+        b.storage_code as storageCode,f.store_name as storageName,
         case b.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
         b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,b.remark,
         c.pinm,c.xingh,c.tm,
@@ -73,16 +75,23 @@
         when 9 then '已作废'
         end as statusInfo
         From mf_th b left join mf_sp c on b.hh=c.hh
+        left join mf_store e on b.store_code = e.store_code
+        left join mf_store f on b.storage_code = f.store_code
+        inner join mf_user g on b.dept_code = g.dept_code
         <where>
             <if test="key != null">
-                b.lsh = #{key}
+                (b.lsh = #{key}
                 or c.pinm like concat('%',#{key},'%')
                 or cast(b.hh as char) = #{key}
-                or b.contact like concat('%',#{key},'%')
+                or b.contact like concat('%',#{key},'%'))
 
             </if>
             <if test="status != null">
                 and b.status=#{status}
+            </if>
+            <if test="uid != null">
+                and g.id =#{uid}
+
             </if>
         </where>
         order by b.lsh desc

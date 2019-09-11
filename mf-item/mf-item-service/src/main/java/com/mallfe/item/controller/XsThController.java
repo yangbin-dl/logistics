@@ -85,9 +85,10 @@ public class XsThController {
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
             @RequestParam(value = "sortBy", required = false) String sortBy,
             @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
-            @RequestParam(value = "key", required = false) String key
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "uid") Long uid
     ) {
-        PageResult<Xs> result = xsThService.queryXsByPage(page, rows, sortBy, desc, key);
+        PageResult<Xs> result = xsThService.queryXsByPage(page, rows, sortBy, desc, key,uid);
         return ResponseEntity.ok(result);
     }
 
@@ -106,9 +107,10 @@ public class XsThController {
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
             @RequestParam(value = "sortBy", required = false) String sortBy,
             @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
-            @RequestParam(value = "key", required = false) String key
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "uid") Long uid
     ) {
-        PageResult<Th> result = xsThService.queryThByPage(page, rows, sortBy, desc, key);
+        PageResult<Th> result = xsThService.queryThByPage(page, rows, sortBy, desc, key, uid);
         return ResponseEntity.ok(result);
     }
 
@@ -186,13 +188,15 @@ public class XsThController {
     }
 
     @GetMapping("psmx")
-    public ResponseEntity<List<Xs>> queryXsForPs(@RequestParam(value = "lsh", required = false) String lsh){
-        return ResponseEntity.ok(xsThService.queryXsForPs(lsh));
+    public ResponseEntity<List<Xs>> queryXsForPs(@RequestParam(value = "lsh", required = false) String lsh,
+                                                 @RequestParam(value = "uid") Long uid){
+        return ResponseEntity.ok(xsThService.queryXsForPs(uid,lsh));
     }
 
     @GetMapping("tpmx")
-    public ResponseEntity<List<Th>> queryThForTp(@RequestParam(value = "lsh", required = false) String lsh){
-        return ResponseEntity.ok(xsThService.queryThForTp(lsh));
+    public ResponseEntity<List<Th>> queryThForTp(@RequestParam(value = "lsh", required = false) String lsh,
+                                                 @RequestParam(value = "uid") Long uid){
+        return ResponseEntity.ok(xsThService.queryThForTp(uid,lsh));
     }
 
     /**
