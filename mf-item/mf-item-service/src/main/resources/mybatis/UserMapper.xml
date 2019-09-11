@@ -17,7 +17,7 @@
         update mf_user set password = #{password},
                            truename = #{truename},
                            store_code = #{storeCode},
-                           storage_code = #{storageCode}
+                           storage_code = #{storageCode},
                            lx=#{lx}
         where id=#{id}
     </update>
