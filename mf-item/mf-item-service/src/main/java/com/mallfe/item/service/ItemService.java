@@ -175,7 +175,7 @@ public class ItemService {
 
         User user = userMapper.selectUserInfoById(userid);
 
-        sp.setKucnList(kucnMapper.selectKucn(hh,user.getStoreCode()));
+        sp.setKucnList(kucnMapper.selectKucn(hh,user.getStorageCode()));
 
         return new JsonData(sp);
 

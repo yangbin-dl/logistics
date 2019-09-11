@@ -132,4 +132,15 @@ public class AllBill {
     private Integer wlStatus;
 
     private String wlStatusInfo;
+    /**
+     * 仓库编码
+     */
+    private String storageCode;
+
+    /**
+     * 仓库名称
+     */
+    @Transient
+    private String storageName;
+
 }

@@ -60,6 +60,7 @@ public class XsThService {
 
         xs.setDeptCode(user.getDeptCode());
         xs.setStoreCode(user.getStoreCode());
+        xs.setStorageCode(user.getStorageCode());
 
         try {
             xsMapper.insert(xs);
@@ -79,7 +80,7 @@ public class XsThService {
 
         th.setDeptCode(user.getDeptCode());
         th.setStoreCode(user.getStoreCode());
-
+        th.setStorageCode(user.getStorageCode());
         th.setLrsj(CommonService.getStringDate());
         try {
             thMapper.insert(th);
@@ -146,8 +147,11 @@ public class XsThService {
     }
 
     public JsonObject commitXs(Xs xs){
+
+        AllBill t = xsMapper.selectOneBill(xs.getLsh());
+
         try {
-            if(kucnMapper.reduceRtKucn(xs.getHh(),xs.getSl(),xs.getStoreCode(),xs.getLx())!= 1){
+            if(kucnMapper.reduceRtKucn(t.getHh(),t.getSl(),t.getStorageCode(),t.getLx())!= 1){
                 return new JsonError("库存不足，提交失败！");
             }
 
@@ -304,7 +308,7 @@ public class XsThService {
         AllBill t = xsMapper.selectOneBill(xs.getLsh());
 
         try {
-            if(kucnMapper.reduceRtKucn(t.getHh(),t.getSl(),t.getStoreCode(),t.getLx())!= 1){
+            if(kucnMapper.reduceRtKucn(t.getHh(),t.getSl(),t.getStorageCode(),t.getLx())!= 1){
                 return new JsonError("库存不足，提交失败！");
             }
 

@@ -50,6 +50,17 @@ public class User {
     private String storeName;
 
     /**
+     * 仓库编码
+     */
+    private String storageCode;
+
+    /**
+     * 仓库名称
+     */
+    @Transient
+    private String storageName;
+
+    /**
      * 部门编码
      */
     private String deptCode;
