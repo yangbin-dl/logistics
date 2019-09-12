@@ -36,7 +36,7 @@
         where lsh=#{lsh}
     </update>
     <update id="updateStatusToArrival">
-        update mf_xs set status = '3' where lsh=#{lsh} and status = '2'
+        update mf_xs set status = '3',sdsj=now() where lsh=#{lsh} and status = '2'
     </update>
 
     <select id="selectXsWithLsh" resultType="com.mallfe.item.pojo.Xs">

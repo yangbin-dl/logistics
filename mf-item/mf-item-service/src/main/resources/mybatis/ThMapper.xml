@@ -36,7 +36,8 @@
         update mf_th set status  = '3',
                          psdh=#{psdh},
                          driver_code = #{driver},
-                         path_code = #{path}
+                         path_code = #{path},
+                         sdsj = now()
         where lsh = #{lsh} and status = '1'
     </update>
     <select id="selectThWithLsh" resultType="com.mallfe.item.pojo.Th">
