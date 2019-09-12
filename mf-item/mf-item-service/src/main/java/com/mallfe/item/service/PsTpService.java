@@ -570,7 +570,8 @@ public class PsTpService {
         }
     }
 
-    public PageResult<Tprk> queryTprkByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key) {
+    public PageResult<Tprk> queryTprkByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key,
+                                            Long uid) {
         //分页
         PageHelper.startPage(page, rows);
         //条件过滤
@@ -585,7 +586,7 @@ public class PsTpService {
         }
 
         //查询
-        List<Tprk> list = tprkMapper.selectTprk();
+        List<Tprk> list = tprkMapper.selectTprk(uid);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -756,6 +757,23 @@ public class PsTpService {
 
         //解析分页结果
         PageInfo<Ps> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+    }
+
+    public PageResult<Tp> queryTpfcByPage(Integer page, Integer rows, Integer status, Long uid) {
+        //分页
+        PageHelper.startPage(page, rows);
+
+        //查询
+        List<Tp> list = tpMapper.selectTpWithUid(status,null,uid);
+
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Tp> info = new PageInfo<>(list);
 
         return new PageResult<>(info.getTotal(), list);
     }

@@ -106,5 +106,6 @@ public class WlBill {
     /**
      * 仓库名称
      */
+    @Transient
     private String storeName ;
 }

@@ -24,15 +24,43 @@
         when 1 then '已发出'
         when 2 then '已送达'
         when 9 then '已作废'
-        end as statusInfo
+        end as statusInfo,d.store_name as storeName
         from mf_tp a left join mf_driver b on a.driver_code = b.driver_code
         left join mf_path c on a.path_code = c.path_code
+        left join mf_store d on a.store_code = d.store_code
         <where>
-            <if test="lsh != null">
+            <if test="lsh != null and lsh != ''">
                 a.lsh = #{lsh}
             </if>
             <if test="status != null">
                 and a.status = #{status}
+            </if>
+        </where>
+        order by a.lsh desc
+    </select>
+    <select id="selectTpWithUid" resultType="com.mallfe.item.pojo.Tp">
+        select a.id,a.lsh,a.driver_code as driverCode,b.driver_name as driverName,
+        a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.status,a.sdsj,
+        a.lrid,a.lrusername,a.truename,a.dept_code as deptCode,a.store_code as storeCode,
+        case a.status
+        when 0 then '新增'
+        when 1 then '已发出'
+        when 2 then '已送达'
+        when 9 then '已作废'
+        end as statusInfo,e.store_name as storeName
+        from mf_tp a left join mf_driver b on a.driver_code = b.driver_code
+        left join mf_path c on a.path_code = c.path_code
+        inner join mf_user d on a.store_code = d.store_code
+        left join mf_store e on a.store_code = e.store_code
+        <where>
+            <if test="lsh != null and lsh != ''">
+                a.lsh = #{lsh}
+            </if>
+            <if test="status != null">
+                and a.status = #{status}
+            </if>
+            <if test="uid != null and uid != ''">
+                and d.id = #{uid}
             </if>
         </where>
         order by a.lsh desc

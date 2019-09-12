@@ -28,4 +28,6 @@ public interface TpMapper extends Mapper<Tp> {
     List<Tp> selectTp(@Param("status")Integer status, @Param("lsh") String lsh);
 
     void updateTpmxToUnFinish(@Param("lsh") String lsh);
+
+    List<Tp> selectTpWithUid(@Param("status")Integer status, @Param("lsh") String lsh, @Param("uid")Long uid);
 }
