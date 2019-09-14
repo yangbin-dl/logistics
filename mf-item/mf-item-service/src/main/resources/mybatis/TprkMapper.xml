@@ -24,7 +24,7 @@
         from mf_tprk a left join mf_driver b on a.driver_code = b.driver_code
                        left join mf_path c on a.path_code = c.path_code
                        left join mf_store d on a.store_code = d.store_code
-                       inner join mf_user e on a.store_code = e.store_code
+                       inner join mf_user e on a.store_code = e.storage_code
                 where e.id=#{uid}
         order by a.lsh desc
     </select>

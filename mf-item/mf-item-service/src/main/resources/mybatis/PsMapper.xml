@@ -100,7 +100,7 @@
         end as statusInfo,e.store_name as storeName
         from mf_ps a left join mf_driver b on a.driver_code = b.driver_code
         left join mf_path c on a.path_code = c.path_code
-        inner join mf_user d on a.store_code = d.store_code
+        inner join mf_user d on a.store_code = d.storage_code
         left join mf_store e on a.store_code = e.store_code
         <where>
             <if test="lsh != null and lsh != ''">
