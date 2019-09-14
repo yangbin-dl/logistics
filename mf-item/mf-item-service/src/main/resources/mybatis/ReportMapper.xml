@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mallfe.item.mapper.ReportMapper">
+
+    <select id="selectPlKucnStructure" resultType="com.mallfe.item.pojo.KucnStructure">
+        select concat(substr(b.plbm,1,4),'00') as plbm,c.plmc,sum(a.kucn) as kucn
+        from mf_his_kucn a
+                 left join mf_sp b on a.hh = b.hh
+                 left join mf_pl c on concat(substr(b.plbm,1,4),'00')= c.plbm
+        where a.rq = #{rq} and a.dept_code = #{deptCode}
+            <if test="storeCode!= null and storeCode != '' ">
+                and a.store_code = #{storeCode}
+            </if>
+        group by concat(substr(b.plbm,1,4),'00'),c.plmc having sum(kucn)!= 0 order by 1
+    </select>
+    <select id="selectPpKucnStructure" resultType="com.mallfe.item.pojo.KucnStructure">
+        select b.plbm,c.plmc,sum(a.kucn) as kucn
+        from mf_his_kucn a
+                 left join mf_sp b on a.hh = b.hh
+                 left join mf_pl c on b.plbm = c.plbm
+        where a.rq = '2019-09-13'
+          and a.dept_code = #{deptCode}
+        <if test="plbm!= null and plbm != '' ">
+            and substr(b.plbm,1,4) = substr(#{plbm},1,4)
+        </if>
+
+        <if test="storeCode!= null and storeCode != '' ">
+            and a.store_code = #{storeCode}
+        </if>
+        group by b.plbm,c.plmc having sum(kucn)!= 0 order by 1
+    </select>
+</mapper>

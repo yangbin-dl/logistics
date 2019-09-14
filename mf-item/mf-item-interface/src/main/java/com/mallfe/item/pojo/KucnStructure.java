@@ -9,12 +9,10 @@ import lombok.Data;
  * @since 2019/09/04
  */
 @Data
-public class KucnStructure extends Sp{
+public class KucnStructure{
 
-    private Integer total;
-    private Integer lx1;
-    private Integer lx2;
-    private Integer lx3;
-    private Integer lx4;
+    private String plbm;
+    private String plmc;
+    private Integer kucn;
 
 }

@@ -3,8 +3,8 @@
 <mapper namespace="com.mallfe.item.mapper.PsrkMapper">
 
     <insert id="insertFromPs">
-        insert into mf_psrk(lsh, lrid, lrusername, truename, status, lrsj, cksj, fcsj, sdsj, driver_code, path_code)
-        select lsh, lrid, lrusername, truename, 2, lrsj, cksj, fcsj, sdsj, driver_code, path_code from mf_ps
+        insert into mf_psrk(lsh, lrid, lrusername, truename, status, lrsj, cksj, fcsj, sdsj, driver_code, path_code,dept_code,store_code)
+        select lsh, lrid, lrusername, truename, 2, lrsj, cksj, fcsj, sdsj, driver_code, path_code,dept_code,store_code from mf_ps
         where lsh=#{lsh}
     </insert>
     <insert id="insertPsrkMx">
