@@ -74,3 +74,6 @@ filter:
     - /api/item/pstp/appmx
     - /api/item/pstp/apppsarrive
     - /api/item/pstp/apppsnotarrive
+    - /api/item/upload/image
+    - /api/item/upload/image
+    - /zuul/api/item/upload/image

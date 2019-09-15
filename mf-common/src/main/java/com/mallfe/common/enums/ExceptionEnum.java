@@ -30,6 +30,7 @@ public enum ExceptionEnum {
     BILL_STATUS_ERROR(404,"单据状态异常!"),
     PL_NOT_EXISTS(404,"品类不存在！"),
     UNDER_STOCK(404,"库存不足！"),
+    INVALID_FILE_TYPE(400,"无效的文件类型！"),
     ;
     private int code;
     private String msg;

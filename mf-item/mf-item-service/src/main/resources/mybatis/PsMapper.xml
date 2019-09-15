@@ -106,7 +106,7 @@
             <if test="lsh != null and lsh != ''">
                 a.lsh = #{lsh}
             </if>
-            <if test="status != null and status != ''">
+            <if test="status != null">
                 and a.status = #{status}
             </if>
             <if test="uid != null and uid != ''">
