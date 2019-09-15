@@ -25,7 +25,7 @@
                        left join mf_path c on a.path_code = c.path_code
                        left join mf_store d on a.store_code = d.store_code
                        inner join mf_user e on a.store_code = e.storage_code
-                where e.id=#{uid} and a.status = 2
+                where e.id=#{uid} and a.status = #{status}
         order by a.lsh desc
     </select>
     <select id="selectTprkMx" resultType="com.mallfe.item.pojo.TprkDetail">

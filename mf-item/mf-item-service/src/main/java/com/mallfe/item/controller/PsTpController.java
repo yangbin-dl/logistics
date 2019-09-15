@@ -236,6 +236,20 @@ public class PsTpController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("pagepsrkhis")
+    public ResponseEntity<PageResult<Psrk>> pagePsrkhis(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "uid") Long uid
+    ){
+        PageResult<Psrk> result = psTpService.queryPsrkhisByPage(page, rows, sortBy, desc, key, uid);
+        return ResponseEntity.ok(result);
+    }
+
+
     @GetMapping("querypsrk")
     public ResponseEntity<Psrk> queryPsrk(@RequestParam("lsh") String lsh){
         Psrk reulut = psTpService.queryPsrkByLsh(lsh);
@@ -252,6 +266,19 @@ public class PsTpController {
             @RequestParam(value = "uid") Long uid
     ){
         PageResult<Tprk> result = psTpService.queryTprkByPage(page, rows, sortBy, desc, key, uid);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("pagetprkhis")
+    public ResponseEntity<PageResult<Tprk>> pageTprkhis(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "uid") Long uid
+    ){
+        PageResult<Tprk> result = psTpService.queryTprkhisByPage(page, rows, sortBy, desc, key, uid);
         return ResponseEntity.ok(result);
     }
 

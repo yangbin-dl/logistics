@@ -20,7 +20,7 @@ public interface TprkMapper extends Mapper<Tprk> {
 
     int insertFromTp(@Param("lsh") String lsh);
 
-    List<Tprk> selectTprk(@Param("uid")Long uid);
+    List<Tprk> selectTprk(@Param("uid")Long uid,@Param("status")Integer status);
 
     int updateTprkStatus(@Param("lsh") String lsh);
 
