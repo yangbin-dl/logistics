@@ -45,7 +45,7 @@ public class UploadService {
             String extension = StringUtils.substringAfterLast(file.getOriginalFilename(),".");
             StorePath storePath = fastFileStorageClient.uploadFile(file.getInputStream(),file.getSize(),extension,null);
 
-            return storePath.getFullPath();
+            return "http://47.105.221.242:8888"+storePath.getFullPath();
         }
         catch (IOException e){
             throw new MallfeException(ExceptionEnum.INVALID_FILE_TYPE);
