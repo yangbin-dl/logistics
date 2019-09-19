@@ -14,5 +14,7 @@ public class KucnStructure{
     private String plbm;
     private String plmc;
     private Integer kucn;
+    private String name;
+    private Integer value;
 
 }

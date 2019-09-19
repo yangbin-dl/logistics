@@ -264,6 +264,10 @@ public class XsThService {
 
     public JsonObject appInsertXs(Xs xs) {
 
+        if(xs.getProvince() == null || xs.getCity() == null || xs.getDistrict() == null){
+            return new JsonError("单据保存失败");
+        }
+
         String lsh = commonService.getLsh("XS");
         xs.setLsh(lsh);
         xs.setStatus(0);
@@ -286,6 +290,11 @@ public class XsThService {
     }
 
     public JsonObject appInsertTh(Th th) {
+
+        if(th.getProvince() == null || th.getCity() == null || th.getDistrict() == null){
+            return new JsonError("单据保存失败");
+        }
+
         String lsh = commonService.getLsh("TH");
         th.setLsh(lsh);
         th.setStatus(0);

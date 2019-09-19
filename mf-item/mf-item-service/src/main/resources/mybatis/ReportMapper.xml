@@ -3,7 +3,7 @@
 <mapper namespace="com.mallfe.item.mapper.ReportMapper">
 
     <select id="selectPlKucnStructure" resultType="com.mallfe.item.pojo.KucnStructure">
-        select concat(substr(b.plbm,1,4),'00') as plbm,c.plmc,sum(a.kucn) as kucn
+        select concat(substr(b.plbm,1,4),'00') as plbm,c.plmc as name,sum(a.kucn) as value
         from mf_his_kucn a
                  left join mf_sp b on a.hh = b.hh
                  left join mf_pl c on concat(substr(b.plbm,1,4),'00')= c.plbm
@@ -14,7 +14,7 @@
         group by concat(substr(b.plbm,1,4),'00'),c.plmc having sum(kucn)!= 0 order by 1
     </select>
     <select id="selectPpKucnStructure" resultType="com.mallfe.item.pojo.KucnStructure">
-        select b.plbm,c.plmc,sum(a.kucn) as kucn
+        select b.plbm,c.plmc as name,sum(a.kucn) as value
         from mf_his_kucn a
                  left join mf_sp b on a.hh = b.hh
                  left join mf_pl c on b.plbm = c.plbm
