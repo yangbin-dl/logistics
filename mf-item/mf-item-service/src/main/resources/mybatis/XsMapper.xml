@@ -175,7 +175,7 @@
         a.store_code as storeCode,a.store_name as storeName,storage_code as storageCode,storage_name as storageName,
         a.dept_code as deptCode,a.dept_name as deptName,driver_name as driverName,driver_phone as driverPhone
         from vw_xs a inner join mf_user_pl b on a.plbm = b.plbm
-        where a.status != 0
+        where a.status != 9
 
             <if test="storecode != null">
                 and a.store_code = #{storecode}
