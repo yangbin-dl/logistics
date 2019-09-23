@@ -51,13 +51,15 @@ public class ReportService {
     public PageResult<AllBill> getXsthList(String type, Long uid, String strq, String torq, String lsh, Integer hh, String plbm,
                                                            String storeCode, String storageCode, Integer page, Integer rows) {
 
-        if(page != null && rows !=null){
-            PageHelper.startPage(page, rows);
-        }
+
 
         User user = userService.selectById(uid);
 
         String deptCode = user.getLx() == 0 ? null:user.getDeptCode();
+
+        if(page != null && rows !=null){
+            PageHelper.startPage(page, rows);
+        }
 
         List<AllBill> list  = reportMapper.selectXsthList(type,deptCode,strq,torq,lsh,hh,plbm,storeCode,
                 storageCode);
