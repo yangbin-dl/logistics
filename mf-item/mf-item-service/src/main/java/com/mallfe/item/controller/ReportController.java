@@ -1,6 +1,7 @@
 package com.mallfe.item.controller;
 
-import com.mallfe.common.json.JsonObject;
+import com.mallfe.common.vo.PageResult;
+import com.mallfe.item.pojo.AllBill;
 import com.mallfe.item.pojo.KucnStructure;
 import com.mallfe.item.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,21 +41,26 @@ public class ReportController {
     }
 
     @GetMapping("xsthlist")
-    public JsonObject getXsthList(@RequestParam("type") String type,
-                                  @RequestParam("uid") Long uid,
-                                  @RequestParam("strq") String strq,
-                                  @RequestParam("torq") String torq,
-                                  @RequestParam(value = "lsh",required = false) String lsh,
-                                  @RequestParam(value = "hh",required = false) Integer hh,
-                                  @RequestParam(value = "plbm",required = false) String plbm,
-                                  @RequestParam(value = "storecode",required = false) String storeCode,
-                                  @RequestParam(value = "storagecode",required = false) String storageCode
+    public ResponseEntity<PageResult<AllBill>> getXsthList(@RequestParam("type") String type,
+                                                           @RequestParam("uid") Long uid,
+                                                           @RequestParam("strq") String strq,
+                                                           @RequestParam("torq") String torq,
+                                                           @RequestParam(value = "lsh",required = false) String lsh,
+                                                           @RequestParam(value = "hh",required = false) Integer hh,
+                                                           @RequestParam(value = "plbm",required = false) String plbm,
+                                                           @RequestParam(value = "storecode",required = false) String storeCode,
+                                                           @RequestParam(value = "storagecode",required = false) String storageCode,
+                                                           @RequestParam(value = "page", required = false) Integer page,
+                                                           @RequestParam(value = "rows", required = false) Integer rows
                                   ){
-        return reportService.getXsthList(type,uid,strq,torq,lsh,hh,plbm,storeCode,storageCode);
+        PageResult<AllBill> result = reportService.getXsthList(type,uid,strq,torq,lsh,hh,plbm,storeCode,storageCode,
+                page,
+                rows);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("xsthdetail")
-    public JsonObject getXsthDetail(@RequestParam("lsh") String lsh){
+    public AllBill getXsthDetail(@RequestParam("lsh") String lsh){
         return reportService.getXsthDetail(lsh);
     }
 }

@@ -1,7 +1,10 @@
 package com.mallfe.item.service;
 
-import com.mallfe.common.json.JsonData;
-import com.mallfe.common.json.JsonObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.mallfe.common.enums.ExceptionEnum;
+import com.mallfe.common.exception.MallfeException;
+import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.ReportMapper;
 import com.mallfe.item.pojo.AllBill;
 import com.mallfe.item.pojo.KucnStructure;
@@ -9,6 +12,7 @@ import com.mallfe.item.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -44,24 +48,32 @@ public class ReportService {
         return reportMapper.selectPpKucnStructure(rq, plbm, deptCode, storeCode);
     }
 
-    public JsonObject getXsthList(String type, Long uid, String strq, String torq, String lsh, Integer hh, String plbm,
-                                   String storeCode, String storageCode) {
+    public PageResult<AllBill> getXsthList(String type, Long uid, String strq, String torq, String lsh, Integer hh, String plbm,
+                                                           String storeCode, String storageCode, Integer page, Integer rows) {
+
+        if(page != null && rows !=null){
+            PageHelper.startPage(page, rows);
+        }
 
         User user = userService.selectById(uid);
 
         String deptCode = user.getLx() == 0 ? null:user.getDeptCode();
 
-        List<AllBill> xsthList  = reportMapper.selectXsthList(type,deptCode,strq,torq,lsh,hh,plbm,storeCode,
+        List<AllBill> list  = reportMapper.selectXsthList(type,deptCode,strq,torq,lsh,hh,plbm,storeCode,
                 storageCode);
 
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
 
-        return new JsonData(xsthList);
+        PageInfo<AllBill> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(),(rows == null || rows==0 )  ? 1: info.getTotal()/rows+1,
+                list);
     }
 
-    public JsonObject getXsthDetail(String lsh) {
+    public AllBill getXsthDetail(String lsh) {
 
-        AllBill xsthDetail = reportMapper.selectXsthDetail(lsh);
-
-        return new JsonData(xsthDetail);
+        return reportMapper.selectXsthDetail(lsh);
     }
 }

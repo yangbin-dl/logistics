@@ -75,8 +75,8 @@
                hh,pinm,sl,case a.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
                a.xingh,a.store_code as storeCode,a.store_name as storeName,
                a.storage_code as storageCode,a.storage_name as storageName,a.contact,a.phone,
-               concat(ifnull(a.province,''),' ',ifnull(a.city,''),' ',ifnull(a.district,''),'
-               ',ifnull(a.location,'')) as location,a.plbm,b.plmc,a.truename,a.driver_name as driverName,
+               concat(ifnull(a.province,''),' ',ifnull(a.city,''),' ',ifnull(a.district,''),
+                   ' ',ifnull(a.location,'')) as location,a.plbm,b.plmc,a.truename,a.driver_name as driverName,
                a.driver_phone as driverPhone,sdsj
         from vw_xs a left join mf_pl b on a.plbm=b.plbm where a.lsh=#{lsh}
     </select>
