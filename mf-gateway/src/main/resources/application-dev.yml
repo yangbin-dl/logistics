@@ -77,3 +77,4 @@ filter:
     - /api/item/upload/image
     - /api/item/upload/image
     - /zuul/api/item/upload/image
+    - /api/item/xsth/pagesh

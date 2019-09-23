@@ -75,6 +75,8 @@ filter:
     - /api/item/pstp/apppsnotarrive
     - /api/item/item/pl
     - /api/item/item/pltree
+    - /api/item/xsth/pagesh
+    - /zuul/api/item/upload/image
 
 
 logging:

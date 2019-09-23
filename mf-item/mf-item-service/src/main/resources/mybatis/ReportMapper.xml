@@ -77,7 +77,7 @@
                a.storage_code as storageCode,a.storage_name as storageName,a.contact,a.phone,
                concat(ifnull(a.province,''),' ',ifnull(a.city,''),' ',ifnull(a.district,''),
                    ' ',ifnull(a.location,'')) as location,a.plbm,b.plmc,a.truename,a.driver_name as driverName,
-               a.driver_phone as driverPhone,sdsj
+               a.driver_phone as driverPhone,sdsj,lrsj
         from vw_xs a left join mf_pl b on a.plbm=b.plbm where a.lsh=#{lsh}
     </select>
 </mapper>

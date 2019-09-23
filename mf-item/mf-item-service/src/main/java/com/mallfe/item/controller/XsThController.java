@@ -182,6 +182,20 @@ public class XsThController {
         return result;
     }
 
+    @GetMapping("pagesh")
+    public JsonObject querySh(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "userid") String userid,
+            @RequestParam(value = "phone", required = false) String phone,
+            @RequestParam(value = "hh", required = false) Integer hh,
+            @RequestParam(value = "lsh", required = false) String lsh,
+            @RequestParam(value = "contact", required = false) String contact
+
+    ) {
+        JsonObject result = xsThService.querySh(page, userid, phone, hh, lsh, contact);
+        return result;
+    }
+
     @GetMapping("phone")
     public JsonObject queryByPhone(@RequestParam("phone") String phone) {
         return xsThService.queryByPhone(phone);

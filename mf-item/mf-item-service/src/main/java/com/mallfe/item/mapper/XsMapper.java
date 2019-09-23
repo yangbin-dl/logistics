@@ -86,4 +86,12 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
     List<City> selectCity(@Param("province") String province);
 
     List<District> selectDistrict(@Param("city") String city);
+
+    List<AllBill> selectAllBillForSh(@Param("storecode") String storecode,
+                                     @Param("phone")String phone,
+                                     @Param("lsh") String lsh,
+                                     @Param("hh") Integer hh,
+                                     @Param("contact") String contact,
+                                     @Param("uid") String uid
+    );
 }

@@ -205,19 +205,48 @@ public class XsThService {
     }
 
     public JsonObject queryAll(Integer page, String lruserid, String phone, Integer hh, String lsh, String contact) {
-        //分页
-        PageHelper.startPage(page, 10);
-        //条件过滤
 
         //查询用户角色
         List<AllBill> list;
         User u = userService.selectById(Long.parseLong(lruserid));
+
+        //分页
+        PageHelper.startPage(page, 10);
+        //条件过滤
 
         if(u.getLx()==1){
             list = xsMapper.selectAllBill(lruserid,phone,lsh,hh,contact);
         } else {
             list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
         }
+
+        //查询
+
+        if(CollectionUtils.isEmpty(list)){
+            return new JsonError("未查询到单据！");
+        }
+
+        //解析分页结果
+        PageInfo<AllBill> info = new PageInfo<>(list);
+
+        return new JsonData(new PageResult<>(info.getTotal(), list));
+    }
+
+    public JsonObject querySh(Integer page, String lruserid, String phone, Integer hh, String lsh, String contact) {
+
+        //查询用户角色
+
+        User u = userService.selectById(Long.parseLong(lruserid));
+
+        if(u.getLx()!=6 && u.getLx()!=7){
+            return new JsonError("未查询到单据！");
+        }
+
+        //分页
+        PageHelper.startPage(page, 10);
+        //条件过滤
+
+        List<AllBill> list = xsMapper.selectAllBillForSh(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
 
         //查询
 
