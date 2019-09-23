@@ -63,6 +63,11 @@
         <if test="hh!= null">
             and a.hh = #{hh}
         </if>
+
+        <if test="plbm!= null and plbm != '' ">
+            and (a.plbm = #{plbm} or concat(substr(plbm,1,4),'00')=#{plbm} or concat(substr(plbm,1,2),'0000')=#{plbm})
+        </if>
+
         order by a.lrsj desc
     </select>
     <select id="selectXsthDetail" resultType="com.mallfe.item.pojo.AllBill">
