@@ -1,5 +1,6 @@
 package com.mallfe.item.controller;
 
+import com.mallfe.common.json.JsonObject;
 import com.mallfe.item.pojo.KucnStructure;
 import com.mallfe.item.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,24 @@ public class ReportController {
                                                          @RequestParam(value = "deptcode",required = false)String deptCode,
                                                          @RequestParam(value = "storecode",required = false)String storeCode){
         return ResponseEntity.ok(reportService.selectPpKucnStructure(rq, plbm, deptCode, storeCode));
+    }
+
+    @GetMapping("xsthlist")
+    public JsonObject getXsthList(@RequestParam("type") String type,
+                                  @RequestParam("uid") Long uid,
+                                  @RequestParam("strq") String strq,
+                                  @RequestParam("torq") String torq,
+                                  @RequestParam(value = "lsh",required = false) String lsh,
+                                  @RequestParam(value = "hh",required = false) Integer hh,
+                                  @RequestParam(value = "plbm",required = false) String plbm,
+                                  @RequestParam(value = "storecode",required = false) String storeCode,
+                                  @RequestParam(value = "storagecode",required = false) String storageCode
+                                  ){
+        return reportService.getXsthList(type,uid,strq,torq,lsh,hh,plbm,storeCode,storageCode);
+    }
+
+    @GetMapping("xsthdetail")
+    public JsonObject getXsthDetail(@RequestParam("lsh") String lsh){
+        return reportService.getXsthDetail(lsh);
     }
 }

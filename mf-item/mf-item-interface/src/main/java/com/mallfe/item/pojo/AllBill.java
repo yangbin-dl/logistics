@@ -143,4 +143,8 @@ public class AllBill {
     @Transient
     private String storageName;
 
+    private String plbm;
+
+    private String plmc;
+
 }
