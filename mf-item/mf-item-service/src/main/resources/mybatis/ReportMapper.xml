@@ -103,7 +103,7 @@
             </if>
 
             <if test="storagecode != null and storagecode != ''">
-                a.storage_ode = #{storagecode}
+                a.store_code = #{storagecode}
             </if>
 
             <if test="plbm!= null and plbm != '' ">
