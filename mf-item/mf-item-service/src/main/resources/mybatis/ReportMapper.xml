@@ -31,12 +31,12 @@
     </select>
     <select id="selectXsthList" resultType="com.mallfe.item.pojo.AllBill">
         select a.lsh,case a.status
-                   when 0 then '配送中'
-                   when 1 then '已送达'
-                   when 2 then '未送达'
-                   when 3 then '已送达'
-                   when 9 then '已作废'
-                   end as statusInfo,
+                    when 0 then '新增'
+                    when 1 then '未派车'
+                    when 2 then '已派车'
+                    when 3 then '已送达'
+                    when 9 then '已作废'
+                    end as statusInfo,
                hh,pinm,sl,case a.lx
                    when 0 then '正常'
                    when 1 then '样机'
@@ -71,7 +71,13 @@
         order by a.lrsj desc
     </select>
     <select id="selectXsthDetail" resultType="com.mallfe.item.pojo.AllBill">
-        select a.lsh,case a.status when 0 then '配送中' when 1 then '已送达' when 2 then '未送达' end as statusInfo,
+        select a.lsh,case a.status
+                         when 0 then '新增'
+                         when 1 then '未派车'
+                         when 2 then '已派车'
+                         when 3 then '已送达'
+                         when 9 then '已作废'
+                        end as statusInfo,
                hh,pinm,sl,case a.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
                a.xingh,a.store_code as storeCode,a.store_name as storeName,
                a.storage_code as storageCode,a.storage_name as storageName,a.contact,a.phone,
