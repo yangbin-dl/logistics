@@ -76,4 +76,14 @@ public class ReportController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("rtkucnlist")
+    public ResponseEntity<PageResult<KucnReport>> getRtKucnList(@RequestParam(value = "deptcode",required = false) String deptCode,
+                                                              @RequestParam(value = "storagecode",required = false) String storageCode,
+                                                              @RequestParam(value = "plbm",required = false) String plbm,
+                                                              @RequestParam(value = "hh",required = false) Integer hh,
+                                                              @RequestParam(value = "page", required = false) Integer page,
+                                                              @RequestParam(value = "rows", required = false) Integer rows){
+        PageResult<KucnReport> result = reportService.getRtKucnList(deptCode,storageCode,plbm,hh,page,rows);
+        return ResponseEntity.ok(result);
+    }
 }

@@ -101,4 +101,25 @@ public class ReportService {
         return new PageResult<>(info.getTotal(),(rows == null || rows==0 )  ? 1: info.getTotal()/rows+1,
                 list);
     }
+
+    public PageResult<KucnReport> getRtKucnList(String deptCode, String storageCode, String plbm, Integer hh, Integer page, Integer rows) {
+        if(page != null && rows !=null){
+            PageHelper.startPage(page, rows);
+        }
+
+        if(deptCode == null){
+            deptCode = "0001";
+        }
+
+        List<KucnReport> list = reportMapper.selectRtKucnList(deptCode, storageCode, plbm, hh);
+
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        PageInfo<KucnReport> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(),(rows == null || rows==0 )  ? 1: info.getTotal()/rows+1,
+                list);
+    }
 }

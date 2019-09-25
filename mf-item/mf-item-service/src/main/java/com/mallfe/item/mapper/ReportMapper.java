@@ -46,4 +46,9 @@ public interface ReportMapper
                                     @Param("storagecode") String storageCode,
                                     @Param("plbm") String plbm,
                                     @Param("hh") Integer hh);
+
+    List<KucnReport> selectRtKucnList(@Param("deptcode") String deptCode,
+                                      @Param("storagecode") String storageCode,
+                                      @Param("plbm") String plbm,
+                                      @Param("hh") Integer hh);
 }
