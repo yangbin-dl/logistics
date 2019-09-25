@@ -117,6 +117,6 @@
 
         </where>
         group by a.dept_code , a.store_code  , d.store_name  , a.hh, b.pinm, b.xingh, c.plmc, b.plbm
-        order by b.plbm,a.hh
+        order by a.dept_code , a.store_code,b.plbm,a.hh
     </select>
 </mapper>
