@@ -35,6 +35,9 @@ public class XsThService {
     ThMapper thMapper;
 
     @Autowired
+    GhMapper ghMapper;
+
+    @Autowired
     CommonService commonService;
 
     @Autowired
@@ -395,4 +398,50 @@ public class XsThService {
         return new JsonData(districtList);
     }
 
+    public JsonObject appInsertGh(Gh gh) {
+        if(gh.getProvince() == null || gh.getCity() == null || gh.getDistrict() == null){
+            return new JsonError("单据保存失败");
+        }
+
+        String lsh = commonService.getLsh("GH");
+        gh.setLsh(lsh);
+        gh.setStatus(0);
+
+        User user = userService.selectById(gh.getLrid());
+
+        gh.setDeptCode(user.getDeptCode());
+        gh.setStoreCode(user.getStoreCode());
+        gh.setStorageCode(user.getStorageCode());
+
+        gh.setLrsj(CommonService.getStringDate());
+        try {
+            ghMapper.insert(gh);
+        } catch (Exception e){
+            return new JsonError("单据保存失败");
+        }
+
+        return new JsonData(gh);
+    }
+
+    public JsonObject appCommitGh(Gh gh) {
+        AllBill t = ghMapper.selectOneBill(gh.getLsh());
+
+        try {
+            if(kucnMapper.reduceRtKucn(t.getHh(),t.getSl(),t.getStorageCode(),t.getLx())!= 1){
+                return new JsonError("库存不足，提交失败！");
+            }
+
+            if(ghMapper.updateStatusToCommited(gh.getLsh())!=1){
+                return new JsonError("单据状态异常，提交失败！");
+            }
+        } catch (Exception e){
+            return new JsonError("系统异常，提交失败！");
+        }
+        return new JsonData("提交成功！");
+    }
+
+    public JsonObject appQueryGh(String lsh) {
+        AllBill bill = ghMapper.selectOneBill(lsh);
+        return new JsonData(bill);
+    }
 }

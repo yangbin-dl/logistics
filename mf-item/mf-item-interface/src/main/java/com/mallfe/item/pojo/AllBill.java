@@ -53,6 +53,11 @@ public class AllBill {
      * 类型
      */
     private Integer lx;
+    /**
+     * 类型描述
+     */
+    @Transient
+    private String lxInfo;
 
     /**
      * 数量

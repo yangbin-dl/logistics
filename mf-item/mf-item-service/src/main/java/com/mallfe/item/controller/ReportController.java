@@ -2,6 +2,7 @@ package com.mallfe.item.controller;
 
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.AllBill;
+import com.mallfe.item.pojo.KucnReport;
 import com.mallfe.item.pojo.KucnStructure;
 import com.mallfe.item.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,4 +64,16 @@ public class ReportController {
     public AllBill getXsthDetail(@RequestParam("lsh") String lsh){
         return reportService.getXsthDetail(lsh);
     }
+
+    @GetMapping("kucnlist")
+    public ResponseEntity<PageResult<KucnReport>> getKucnList(@RequestParam(value = "deptcode",required = false) String deptCode,
+                                                              @RequestParam(value = "storagecode",required = false) String storageCode,
+                                                              @RequestParam(value = "plbm",required = false) String plbm,
+                                                              @RequestParam(value = "hh",required = false) Integer hh,
+                                                              @RequestParam(value = "page", required = false) Integer page,
+                                                              @RequestParam(value = "rows", required = false) Integer rows){
+        PageResult<KucnReport> result = reportService.getKucnList(deptCode,storageCode,plbm,hh,page,rows);
+        return ResponseEntity.ok(result);
+    }
+
 }

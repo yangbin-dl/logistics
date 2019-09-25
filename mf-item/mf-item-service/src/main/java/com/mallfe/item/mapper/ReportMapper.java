@@ -1,6 +1,7 @@
 package com.mallfe.item.mapper;
 
 import com.mallfe.item.pojo.AllBill;
+import com.mallfe.item.pojo.KucnReport;
 import com.mallfe.item.pojo.KucnStructure;
 import org.apache.ibatis.annotations.Param;
 
@@ -40,4 +41,9 @@ public interface ReportMapper
                                  @Param("storagecode") String storageCode);
 
     AllBill selectXsthDetail(@Param("lsh") String lsh);
+
+    List<KucnReport> selectKucnList(@Param("deptcode") String deptCode,
+                                    @Param("storagecode") String storageCode,
+                                    @Param("plbm") String plbm,
+                                    @Param("hh") Integer hh);
 }

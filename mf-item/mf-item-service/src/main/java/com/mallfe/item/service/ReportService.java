@@ -7,6 +7,7 @@ import com.mallfe.common.exception.MallfeException;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.ReportMapper;
 import com.mallfe.item.pojo.AllBill;
+import com.mallfe.item.pojo.KucnReport;
 import com.mallfe.item.pojo.KucnStructure;
 import com.mallfe.item.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +78,27 @@ public class ReportService {
     public AllBill getXsthDetail(String lsh) {
 
         return reportMapper.selectXsthDetail(lsh);
+    }
+
+    public PageResult<KucnReport> getKucnList(String deptCode, String storageCode, String plbm, Integer hh,
+                                              Integer page, Integer rows) {
+        if(page != null && rows !=null){
+            PageHelper.startPage(page, rows);
+        }
+
+        if(deptCode == null){
+            deptCode = "0001";
+        }
+
+        List<KucnReport> list = reportMapper.selectKucnList(deptCode,storageCode,plbm,hh);
+
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        PageInfo<KucnReport> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(),(rows == null || rows==0 )  ? 1: info.getTotal()/rows+1,
+                list);
     }
 }

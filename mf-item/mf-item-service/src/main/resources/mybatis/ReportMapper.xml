@@ -80,4 +80,42 @@
                a.driver_phone as driverPhone,sdsj,lrsj
         from vw_xs a left join mf_pl b on a.plbm=b.plbm where a.lsh=#{lsh}
     </select>
+    <select id="selectKucnList" resultType="com.mallfe.item.pojo.KucnReport">
+        select a.dept_code                         as deptCode,
+               a.store_code                        as storageCode,
+               d.store_name                        as storageName,
+               a.hh,
+               b.pinm,
+               b.xingh,
+               c.plmc,
+               b.plbm,
+               IF(lx = 0, kucn, 0) as  lx0,
+               IF(lx = 1, kucn, 0) as  lx1,
+               IF(lx = 2, kucn, 0) as  lx2,
+               IF(lx = 3, kucn, 0) as  lx3
+        from mf_kucn a
+                 left join mf_sp b on a.hh = b.hh
+                 left join mf_pl c on b.plbm = c.plbm
+                 left join mf_store d on a.store_code = d.store_code
+        <where>
+            <if test="deptcode != null and deptcode != ''">
+                a.dept_code = #{deptcode}
+            </if>
+
+            <if test="storagecode != null and storagecode != ''">
+                a.storage_ode = #{storagecode}
+            </if>
+
+            <if test="plbm!= null and plbm != '' ">
+                and (b.plbm = #{plbm} or concat(substr(b.plbm,1,4),'00')=#{plbm} or
+                concat(substr(b.plbm,1,2),'0000')=#{plbm})
+            </if>
+
+            <if test="hh!= null">
+                and a.hh = #{hh}
+            </if>
+
+        </where>
+        order by b.plbm,a.hh
+    </select>
 </mapper>

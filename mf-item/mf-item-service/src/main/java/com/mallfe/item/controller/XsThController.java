@@ -3,6 +3,7 @@ package com.mallfe.item.controller;
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.AllBill;
+import com.mallfe.item.pojo.Gh;
 import com.mallfe.item.pojo.Th;
 import com.mallfe.item.pojo.Xs;
 import com.mallfe.item.service.XsThService;
@@ -31,6 +32,7 @@ public class XsThController {
      * @param xs
      * @return
      */
+    @Deprecated
     @PostMapping("insertxs")
     public ResponseEntity<Xs> insertXs(@RequestBody Xs xs){
         xsThService.insertXs(xs);
@@ -42,6 +44,7 @@ public class XsThController {
      * @param th
      * @return
      */
+    @Deprecated
     @PostMapping("insertth")
     public ResponseEntity<Th> insertTh(@RequestBody Th th){
         xsThService.insertTh(th);
@@ -53,6 +56,7 @@ public class XsThController {
      * @param xs
      * @return
      */
+    @Deprecated
     @PostMapping("modifyxs")
     public ResponseEntity<Null> modifyXs(@RequestBody Xs xs){
         xsThService.modifyXs(xs);
@@ -64,6 +68,7 @@ public class XsThController {
      * @param th
      * @return
      */
+    @Deprecated
     @PostMapping("modifyth")
     public ResponseEntity<Null> modifyTh(@RequestBody Th th){
         xsThService.modifyTh(th);
@@ -119,6 +124,7 @@ public class XsThController {
      * @param xs
      * @return
      */
+    @Deprecated
     @PostMapping("commitxs")
     public JsonObject commitXs(@RequestBody Xs xs){
 
@@ -130,6 +136,7 @@ public class XsThController {
      * @param xs
      * @return
      */
+    @Deprecated
     @PostMapping("deletexs")
     public JsonObject deleteXs(@RequestBody Xs xs){
 
@@ -141,6 +148,7 @@ public class XsThController {
      * @param th
      * @return
      */
+    @Deprecated
     @PostMapping("committh")
     public JsonObject commitTh(@RequestBody Th th){
 
@@ -152,17 +160,20 @@ public class XsThController {
      * @param th
      * @return
      */
+    @Deprecated
     @PostMapping("deleteth")
     public JsonObject deleteTh(@RequestBody Th th){
 
         return xsThService.deleteTh(th);
     }
 
+    @Deprecated
     @GetMapping("queryxs")
     public ResponseEntity<AllBill> queryXs(@RequestParam("lsh") String lsh) {
         return ResponseEntity.ok(xsThService.queryBill(lsh));
     }
 
+    @Deprecated
     @GetMapping("queryth")
     public ResponseEntity<AllBill> queryTh(@RequestParam("lsh") String lsh) {
         return ResponseEntity.ok(xsThService.queryBill(lsh));
@@ -282,6 +293,36 @@ public class XsThController {
     @GetMapping("city")
     public JsonObject getProvince(@RequestParam("province") String province){
         return xsThService.getCity(province);
+    }
+
+    /**
+     * App换货单新增
+     * @param gh 更换单
+     * @return
+     */
+    @PostMapping("appinsertgh")
+    public JsonObject appInsertGh(@RequestBody Gh gh){
+        return xsThService.appInsertGh(gh);
+    }
+
+    /**
+     * App换货单提交
+     * @param gh
+     * @return
+     */
+    @PostMapping("appcommitgh")
+    public JsonObject appCommitGh(@RequestBody Gh gh){
+        return xsThService.appCommitGh(gh);
+    }
+
+    /**
+     * App查询换货明细
+     * @param lsh
+     * @return
+     */
+    @GetMapping("appquerygh")
+    public JsonObject appQueryGh(@RequestParam("lsh") String lsh) {
+        return xsThService.appQueryGh(lsh);
     }
 
 }
