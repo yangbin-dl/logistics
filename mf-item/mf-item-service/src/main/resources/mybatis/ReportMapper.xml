@@ -18,7 +18,7 @@
         from mf_his_kucn a
                  left join mf_sp b on a.hh = b.hh
                  left join mf_pl c on b.plbm = c.plbm
-        where a.rq = '2019-09-13'
+        where a.rq = #{rq}
           and a.dept_code = #{deptCode}
         <if test="plbm!= null and plbm != '' ">
             and substr(b.plbm,1,4) = substr(#{plbm},1,4)
