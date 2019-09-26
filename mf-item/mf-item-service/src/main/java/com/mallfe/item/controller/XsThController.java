@@ -167,6 +167,18 @@ public class XsThController {
         return xsThService.deleteTh(th);
     }
 
+    /**
+     * 换货单作废
+     * @param gh
+     * @return
+     */
+    @Deprecated
+    @PostMapping("deletegh")
+    public JsonObject deleteGh(@RequestBody Gh gh){
+
+        return xsThService.deleteGh(gh);
+    }
+
     @Deprecated
     @GetMapping("queryxs")
     public ResponseEntity<AllBill> queryXs(@RequestParam("lsh") String lsh) {

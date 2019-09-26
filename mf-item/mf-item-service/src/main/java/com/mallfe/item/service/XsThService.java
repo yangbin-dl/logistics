@@ -446,4 +446,15 @@ public class XsThService {
         AllBill bill = ghMapper.selectOneBill(lsh);
         return new JsonData(bill);
     }
+
+    public JsonObject deleteGh(Gh gh) {
+        try {
+            if(ghMapper.updateStatusToCancel(gh.getLsh())!=1) {
+                return new JsonError("单据状态异常，作废失败！");
+            }
+        } catch (Exception e){
+            return new JsonError("系统异常，作废失败！");
+        }
+        return new JsonData("作废成功！");
+    }
 }
