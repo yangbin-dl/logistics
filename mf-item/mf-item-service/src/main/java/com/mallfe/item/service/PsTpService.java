@@ -321,13 +321,14 @@ public class PsTpService {
     }
 
     public void commitPs(Ps ps) {
-        String  storeCode = ps.getStoreCode();
+
         try{
             if(psMapper.updateStatusToOut(ps.getLsh()) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
 
             ps = queryPsByLsh(ps.getLsh());
+            String  storeCode = ps.getStoreCode();
             for(Xs mx : ps.getXsList()){
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
