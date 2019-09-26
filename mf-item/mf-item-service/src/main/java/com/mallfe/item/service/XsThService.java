@@ -220,7 +220,9 @@ public class XsThService {
         if(u.getLx()==1){
             list = xsMapper.selectAllBill(lruserid,phone,lsh,hh,contact);
         } else {
-            list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
+            //list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
+            //临时使用
+            list = xsMapper.selectAllBillForSh(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
         }
 
         //查询
