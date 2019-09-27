@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.common.MySqlMapper;
 
+import java.util.List;
+
 /**
  * 描述
  *
@@ -28,4 +30,8 @@ public interface GhMapper extends Mapper<Gh>, MySqlMapper<Gh> {
     int updateStatusToCancel(@Param("lsh") String lsh);
 
     AllBill selectOneBill(@Param("lsh") String lsh);
+
+    List<Gh> selectGhWithLsh(@Param("lsh") String lsh);
+
+    List<Gh> selectGhList(@Param("key") String key,@Param("status") Integer status,@Param("uid")Long uid);
 }

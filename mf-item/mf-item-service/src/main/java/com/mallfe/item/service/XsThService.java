@@ -459,4 +459,31 @@ public class XsThService {
         }
         return new JsonData("作废成功！");
     }
+
+    public List<Gh> queryGhForGh(Long uid, String lsh) {
+        List<Gh> list;
+
+        if(StringUtils.isNotBlank(lsh)){
+            list = ghMapper.selectGhWithLsh(lsh);
+        } else{
+            list = ghMapper.selectGhList(null,1,uid);
+        }
+
+        return list;
+    }
+
+    public PageResult<Gh> queryGhByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key, Long uid) {
+        //分页
+        PageHelper.startPage(page, rows);
+
+        List<Gh> list = ghMapper.selectGhList(key,null,uid);
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Gh> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+    }
 }

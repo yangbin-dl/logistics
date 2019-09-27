@@ -236,6 +236,12 @@ public class XsThController {
         return ResponseEntity.ok(xsThService.queryThForTp(uid,lsh));
     }
 
+    @GetMapping("ghmx")
+    public ResponseEntity<List<Gh>> queryThForGh(@RequestParam(value = "lsh", required = false) String lsh,
+                                                 @RequestParam(value = "uid") Long uid){
+        return ResponseEntity.ok(xsThService.queryGhForGh(uid,lsh));
+    }
+
     /**
      * App销售单新增
      * @param xs
@@ -335,6 +341,28 @@ public class XsThController {
     @GetMapping("appquerygh")
     public JsonObject appQueryGh(@RequestParam("lsh") String lsh) {
         return xsThService.appQueryGh(lsh);
+    }
+
+    /**
+     * 退货单分页查询
+     * @param page
+     * @param rows
+     * @param sortBy
+     * @param desc
+     * @param key
+     * @return
+     */
+    @GetMapping("pagegh")
+    public ResponseEntity<PageResult<Gh>> queryGhByPage(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "uid") Long uid
+    ) {
+        PageResult<Gh> result = xsThService.queryGhByPage(page, rows, sortBy, desc, key, uid);
+        return ResponseEntity.ok(result);
     }
 
 }
