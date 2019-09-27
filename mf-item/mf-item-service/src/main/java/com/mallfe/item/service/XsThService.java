@@ -214,10 +214,12 @@ public class XsThService {
         User u = userService.selectById(Long.parseLong(lruserid));
 
         //分页
-        PageHelper.startPage(page, 10);
+        //临时调整
+        //PageHelper.startPage(page, 10);
         //条件过滤
 
         if(u.getLx()==1){
+
             list = xsMapper.selectAllBill(lruserid,phone,lsh,hh,contact);
         } else {
             //list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
