@@ -248,7 +248,7 @@ public class XsThService {
         }
 
         //分页
-        PageHelper.startPage(page, 10);
+        //PageHelper.startPage(page, 10);
         //条件过滤
 
         List<AllBill> list = xsMapper.selectAllBillForSh(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
