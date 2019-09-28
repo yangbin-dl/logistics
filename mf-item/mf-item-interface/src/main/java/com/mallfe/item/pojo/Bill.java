@@ -176,4 +176,6 @@ public class Bill {
     private String storageName;
 
     private String remark;
+
+    private String picUrl;
 }

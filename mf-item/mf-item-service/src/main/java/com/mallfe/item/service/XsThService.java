@@ -116,12 +116,12 @@ public class XsThService {
         return th;
     }
 
-    public PageResult<Xs> queryXsByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key,Long uid) {
+    public PageResult<Xs> queryXsByPage(Integer page, Integer rows, String key, Long uid, Integer status) {
         //分页
         PageHelper.startPage(page, rows);
 
         //查询
-        List<Xs> list = xsMapper.selectXsList(key,null,uid);
+        List<Xs> list = xsMapper.selectXsList(key,status,uid);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -134,11 +134,11 @@ public class XsThService {
         return new PageResult<>(info.getTotal(), list);
     }
 
-    public PageResult<Th> queryThByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key,Long uid) {
+    public PageResult<Th> queryThByPage(Integer page, Integer rows, String key, Long uid, Integer status) {
         //分页
         PageHelper.startPage(page, rows);
 
-        List<Th> list = thMapper.selectThList(key,null,uid);
+        List<Th> list = thMapper.selectThList(key,status,uid);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -472,11 +472,11 @@ public class XsThService {
         return list;
     }
 
-    public PageResult<Gh> queryGhByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key, Long uid) {
+    public PageResult<Gh> queryGhByPage(Integer page, Integer rows, String key, Long uid, Integer status) {
         //分页
         PageHelper.startPage(page, rows);
 
-        List<Gh> list = ghMapper.selectGhList(key,null,uid);
+        List<Gh> list = ghMapper.selectGhList(key,status,uid);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -485,5 +485,47 @@ public class XsThService {
         PageInfo<Gh> info = new PageInfo<>(list);
 
         return new PageResult<>(info.getTotal(), list);
+    }
+
+    public void revertXs(String lsh) {
+        try {
+            if(xsMapper.updateStatusToRevert(lsh) != 1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
+
+            AllBill bill = xsMapper.selectOneBill(lsh);
+
+            if(kucnMapper.addRtKucn(bill.getHh(),bill.getSl(), bill.getStorageCode(), bill.getLx()) != 1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
+
+    public void revertTh(String lsh) {
+        try {
+            if(thMapper.updateStatusToRevert(lsh) != 1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
+
+    public void revertGh(String lsh) {
+        try {
+            if(ghMapper.updateStatusToRevert(lsh) != 1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
+
+            AllBill bill = xsMapper.selectOneBill(lsh);
+
+            if(kucnMapper.addRtKucn(bill.getHh(),bill.getSl(), bill.getStorageCode(), bill.getLx()) != 1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
     }
 }

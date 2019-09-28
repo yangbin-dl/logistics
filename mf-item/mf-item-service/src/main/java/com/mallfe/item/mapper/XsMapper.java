@@ -94,4 +94,11 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
                                      @Param("contact") String contact,
                                      @Param("uid") String uid
     );
+
+    /**
+     * 销售单撤销
+     * @param lsh
+     * @return
+     */
+    int updateStatusToRevert(@Param("lsh") String lsh);
 }

@@ -34,7 +34,13 @@ public class PsTpService {
     private PsMapper psMapper;
 
     @Autowired
+    private GhpsMapper ghpsMapper;
+
+    @Autowired
     private PsMxMapper psMxMapper;
+
+    @Autowired
+    private GhpsMxMapper ghpsMxMapper;
 
     @Autowired
     private TpMapper tpMapper;
@@ -52,6 +58,9 @@ public class PsTpService {
     private ThMapper thMapper;
 
     @Autowired
+    private GhMapper ghMapper;
+
+    @Autowired
     private KucnMapper kucnMapper;
 
     @Autowired
@@ -65,6 +74,9 @@ public class PsTpService {
 
     @Autowired
     private TprkMapper tprkMapper;
+
+    @Autowired
+    private GhpsrkMapper ghpsrkMapper;
 
     @Autowired
     private UserService userService;
@@ -102,10 +114,9 @@ public class PsTpService {
 
     /**
      * 修改配送单
-     * @param ps
-     * @return
+     * @param ps 配送单信息
      */
-    public Ps modifyPs(Ps ps){
+    public void modifyPs(Ps ps){
 
         //修改销售单为待配送
         try {
@@ -144,14 +155,84 @@ public class PsTpService {
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
-        return ps;
     }
 
+    /**
+     * 插入往返配送单
+     * @param ghps 单据信息
+     */
+    public void insertGhps(Ghps ghps) {
+        ghps.setStatus(0);
+        ghps.setLrsj(CommonService.getStringDate());
+
+        try {
+            for (GhpsDetail mx: ghps.getList()) {
+                //获取流水号
+                String lsh = commonService.getLsh("GHPS");
+                ghps.setLsh(lsh);
+                ghps.setId(null);
+                AllBill bill = xsMapper.selectOneBill(mx.getDdh());
+                ghps.setStoreCode(bill.getStorageCode());
+                ghpsMapper.insert(ghps);
+                //如果更新的行数不为1，则代表单据状态异常，回滚事务
+                if(ghMapper.updateStatusToGhps(mx.getDdh(),lsh,ghps.getDriverCode(),ghps.getPathCode())!=1){
+                    throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+                }
+                ghpsMxMapper.insertGhpsMx(lsh,mx.getDdh(),0);
+            }
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
+
+    /**
+     * 修改往返配送单
+     * @param ghps 往返配送单
+     */
+    public void modifyGhps(Ghps ghps){
+
+        //修改销售单为待配送
+        try {
+            ghMapper.updateStatusToUnGhps(ghps.getLsh());
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+
+        //更新销售单状态
+        try {
+            for (GhpsDetail mx: ghps.getList()) {
+                //如果更新的行数不为1，则代表单据状态异常，回滚事务
+                if(ghMapper.updateStatusToGhps(mx.getDdh(),ghps.getLsh(),ghps.getDriverCode(),ghps.getPathCode())!=1){
+                    throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+                }
+            }
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+
+        //删除配送明细
+        Example example = new Example(GhpsDetail.class);
+        example.createCriteria().andEqualTo("lsh",ghps.getLsh());
+        try {
+            ghpsMxMapper.deleteByExample(example);
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+
+
+        //插入配送明细
+        try {
+            for (GhpsDetail mx: ghps.getList()) {
+                ghpsMxMapper.insertGhpsMx(ghps.getLsh(),mx.getDdh(),0);
+            }
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
 
     /**
      * 新增退配单
-     * @param tp
-     * @return
+     * @param tp 退配单信息
      */
     public void insertTp(Tp tp){
 
@@ -180,13 +261,15 @@ public class PsTpService {
         }
     }
 
-    public Tp modifyTp(Tp tp){
+    /**
+     * 修改退配单
+     * @param tp 退配单信息
+     */
+    public void modifyTp(Tp tp){
 
         //修改销售单为待配送
         try {
-            for (TpDetail mx: tp.getList()) {
-                thMapper.updateStatusToUnTp(tp.getLsh());
-            }
+            thMapper.updateStatusToUnTp(tp.getLsh());
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
@@ -221,12 +304,11 @@ public class PsTpService {
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
-        return tp;
     }
 
     /**
      * 配送单作废
-     * @param ps
+     * @param ps 流水号字段
      */
     public void deletePs(Ps ps) {
         //修改销售单为待配送
@@ -244,6 +326,10 @@ public class PsTpService {
 
     }
 
+    /**
+     * 作废退配单
+     * @param tp 流水号字段
+     */
     public void deleteTp(Tp tp) {
         //修改销售单为待配送
         try {
@@ -259,6 +345,24 @@ public class PsTpService {
         }
     }
 
+    /**
+     * 作废往返配送单
+     * @param ghps 流水号字段
+     */
+    public void deleteGhps(Ghps ghps) {
+        //修改销售单为待配送
+        try {
+            ghMapper.updateStatusToUnGhps(ghps.getLsh());
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+
+        try {
+            ghMapper.updateStatusToCancel(ghps.getLsh());
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
     public PageResult<Ps> queryPsByPage(Integer page, Integer rows, Integer status) {
         //分页
         PageHelper.startPage(page, rows);
@@ -295,6 +399,24 @@ public class PsTpService {
 
     }
 
+    public PageResult<Ghps> queryGhpsByPage(Integer page, Integer rows, Integer status) {
+        //分页
+        PageHelper.startPage(page, rows);
+
+        //查询
+        List<Ghps> list = ghpsMapper.selectGhps(status,null);
+
+
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Ghps> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+    }
+
     public Ps queryPsByLsh(String lsh) {
         Ps ps = new Ps();
         ps.setLsh(lsh);
@@ -318,6 +440,19 @@ public class PsTpService {
         }
         tp.setThList(thMapper.selectThWithLsh(lsh));
         return tp;
+    }
+
+    public Ghps queryGhpsByLsh(String lsh) {
+        Ghps ghps = new Ghps();
+        ghps.setLsh(lsh);
+
+        List<Ghps> t = ghpsMapper.selectGhps(null,lsh);
+        if(!t.isEmpty()){
+            ghps = t.get(0);
+        }
+
+        ghps.setGhList(ghMapper.selectGhWithLsh(lsh));
+        return ghps;
     }
 
     public void commitPs(Ps ps) {
@@ -638,6 +773,35 @@ public class PsTpService {
         return tprk;
     }
 
+    public PageResult<Ghpsrk> queryGhpsrkByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key,
+                                            Long uid) {
+        //分页
+        PageHelper.startPage(page, rows);
+        //条件过滤
+        Example example = new Example(Ghpsrk.class);
+        if(StringUtils.isNotBlank(key)){
+            example.createCriteria().orLike("lsh",key+"%");
+        }
+        //排序
+        if(StringUtils.isNotBlank(sortBy)){
+            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
+            example.setOrderByClause(orderByClause);
+        }
+
+        //查询
+        List<Ghpsrk> list = ghpsrkMapper.selectGhpsrk(uid,2);
+
+
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Ghpsrk> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+    }
+
     public JsonObject applist(Integer page, String userid, String phone, Integer hh, String lsh, String psdh) {
 
         //分页
@@ -685,7 +849,7 @@ public class PsTpService {
             //准备数据完毕
             arrivedPs(ps);
         }
-        else {
+        else if(bill.getBilltype().equals("TP")){
             Tp tp = queryTpByLsh(psdh);
             //准备数据
             List<TpDetail> list = new ArrayList<>();
@@ -698,6 +862,7 @@ public class PsTpService {
             //准备数据完毕
             arrivedTp(tp);
         }
+        
 
         return new JsonData("提交成功！");
     }
@@ -722,7 +887,7 @@ public class PsTpService {
                 }
             }
         }
-        else {
+        else if(bill.getBilltype().equals("TP")){
             if(tpMapper.updateStatusToFinish(psdh) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
@@ -808,6 +973,24 @@ public class PsTpService {
         return new PageResult<>(info.getTotal(), list);
     }
 
+    public PageResult<Ghps> queryGhpsckByPage(Integer page, Integer rows, Integer status, Long uid) {
+        //分页
+        PageHelper.startPage(page, rows);
+
+        //查询
+        List<Ghps> list = ghpsMapper.selectGhpsWithUid(status,null,uid);
+
+
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Ghps> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+    }
+
     public PageResult<Psrk> queryPsrkhisByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key, Long uid) {
         //分页
         PageHelper.startPage(page, rows);
@@ -832,6 +1015,34 @@ public class PsTpService {
 
         //解析分页结果
         PageInfo<Psrk> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(), list);
+    }
+
+    public PageResult<Ghpsrk> queryGhpsrkhisByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key, Long uid) {
+        //分页
+        PageHelper.startPage(page, rows);
+        //条件过滤
+        Example example = new Example(Ghpsrk.class);
+        if(StringUtils.isNotBlank(key)){
+            example.createCriteria().orLike("lsh",key+"%");
+        }
+        //排序
+        if(StringUtils.isNotBlank(sortBy)){
+            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
+            example.setOrderByClause(orderByClause);
+        }
+
+        //查询
+        List<Ghpsrk> list = ghpsrkMapper.selectGhpsrk(uid,3);
+
+
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        //解析分页结果
+        PageInfo<Ghpsrk> info = new PageInfo<>(list);
 
         return new PageResult<>(info.getTotal(), list);
     }

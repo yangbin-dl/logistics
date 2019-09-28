@@ -62,4 +62,11 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
                               @Param("path") String path);
 
     List<Th> selectThWithLshForRk(@Param("lsh") String lsh);
+
+    /**
+     * 退货单撤销
+     * @param lsh
+     * @return
+     */
+    int updateStatusToRevert(@Param("lsh") String lsh);
 }

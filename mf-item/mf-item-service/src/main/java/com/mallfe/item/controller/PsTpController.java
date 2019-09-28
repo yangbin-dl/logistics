@@ -25,8 +25,8 @@ public class PsTpController {
 
     /**
      * 新增配送单
-     * @param ps
-     * @return
+     * @param ps 配送单
+     * @return 200
      */
     @PostMapping("insertps")
     public ResponseEntity<Null> insertPs(@RequestBody Ps ps){
@@ -36,8 +36,8 @@ public class PsTpController {
 
     /**
      * 新增退配单
-     * @param tp
-     * @return
+     * @param tp 退配单
+     * @return 200
      */
     @PostMapping("inserttp")
     public ResponseEntity<Null> insertPs(@RequestBody Tp tp){
@@ -46,9 +46,20 @@ public class PsTpController {
     }
 
     /**
+     * 新增往返配送单
+     * @param ghps 往返配送单
+     * @return 200
+     */
+    @PostMapping("insertghps")
+    public ResponseEntity<Null> insertPs(@RequestBody Ghps ghps){
+        psTpService.insertGhps(ghps);
+        return ResponseEntity.ok().build();
+    }
+
+    /**
      * 修改配送单
-     * @param ps
-     * @return
+     * @param ps 配送单
+     * @return 200
      */
     @PostMapping("modifyps")
     public ResponseEntity<Null> modifyPs(@RequestBody Ps ps){
@@ -58,8 +69,8 @@ public class PsTpController {
 
     /**
      * 修改退配单
-     * @param tp
-     * @return
+     * @param tp 退配单
+     * @return 200
      */
     @PostMapping("modifytp")
     public ResponseEntity<Null> modifyPs(@RequestBody Tp tp){
@@ -68,9 +79,20 @@ public class PsTpController {
     }
 
     /**
+     * 修改往返配送单
+     * @param ghps 往返配送单
+     * @return 200
+     */
+    @PostMapping("modifyghps")
+    public ResponseEntity<Null> modifyGhps(@RequestBody Ghps ghps){
+        psTpService.modifyGhps(ghps);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /**
      * 作废配送单
-     * @param ps
-     * @return
+     * @param ps 配送单信息
+     * @return 200
      */
     @PostMapping("deleteps")
     public ResponseEntity<Null> deletePs(@RequestBody Ps ps){
@@ -78,12 +100,39 @@ public class PsTpController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    /**
+     * 作废退配单
+     * @param tp 退配单信息
+     * @return 200
+     */
     @PostMapping("deletetp")
     public ResponseEntity<Null> deletePs(@RequestBody Tp tp){
         psTpService.deleteTp(tp);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    /**
+     * 作废往返配送单
+     * @param ghps 往返配送单
+     * @return 200
+     */
+    @PostMapping("deleteghps")
+    public ResponseEntity<Null> deleteGhps(@RequestBody Ghps ghps){
+        psTpService.deleteGhps(ghps);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /**
+     * 配送单新增及历史查询
+     * @param page 页数
+     * @param rows 每页行数
+     * @param sortBy 排序字段
+     * @param desc 是否倒序
+     * @param key 主键
+     * @param status 状态
+     * @param uid 查询人ID
+     * @return 查询结果
+     */
     @GetMapping("pageps")
     public ResponseEntity<PageResult<Ps>> queryPsByPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -98,6 +147,17 @@ public class PsTpController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 配送单出库查询
+     * @param page 页数
+     * @param rows 行数
+     * @param sortBy 排序字段
+     * @param desc 是否倒序
+     * @param key 主键
+     * @param status 状态
+     * @param uid 查询人ID
+     * @return 查询结果
+     */
     @GetMapping("pagepsck")
     public ResponseEntity<PageResult<Ps>> queryPsckByPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -112,6 +172,17 @@ public class PsTpController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 退配单新增及历史查询
+     * @param page 页数
+     * @param rows 行数
+     * @param sortBy 排序字段
+     * @param desc 是否倒序
+     * @param key 主键
+     * @param status 状态
+     * @param uid 查询人ID
+     * @return 查询结果
+     */
     @GetMapping("pagetp")
     public ResponseEntity<PageResult<Tp>> queryTpByPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -126,6 +197,17 @@ public class PsTpController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 退配单发出查询
+     * @param page 页数
+     * @param rows 行数
+     * @param sortBy 排序字段
+     * @param desc 是否倒序
+     * @param key 主键
+     * @param status 状态
+     * @param uid 查询人ID
+     * @return 查询结果
+     */
     @GetMapping("pagetpfc")
     public ResponseEntity<PageResult<Tp>> queryTpfcByPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -140,15 +222,86 @@ public class PsTpController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 往返配送单新增及历史查询
+     * @param page 页数
+     * @param rows 每页行数
+     * @param sortBy 排序字段
+     * @param desc 是否倒序
+     * @param key 主键
+     * @param status 状态
+     * @param uid 查询人ID
+     * @return 查询结果
+     */
+    @GetMapping("pageghps")
+    public ResponseEntity<PageResult<Ghps>> queryGhpsByPage(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "status", required = false) Integer status,
+            @RequestParam(value = "uid", required = false) Long uid
+    ) {
+        PageResult<Ghps> result = psTpService.queryGhpsByPage(page,rows, status);
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 往返配送单出库查询
+     * @param page 页数
+     * @param rows 行数
+     * @param sortBy 排序字段
+     * @param desc 是否倒序
+     * @param key 主键
+     * @param status 状态
+     * @param uid 查询人ID
+     * @return 查询结果
+     */
+    @GetMapping("pageghpsck")
+    public ResponseEntity<PageResult<Ghps>> queryGhpsckByPage(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "status", required = false) Integer status,
+            @RequestParam(value = "uid", required = false) Long uid
+    ) {
+        PageResult<Ghps> result = psTpService.queryGhpsckByPage(page,rows, status,uid);
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 配送明细查询
+     * @param lsh 流水号
+     * @return 配送单
+     */
     @GetMapping("queryps")
     public ResponseEntity<Ps> queryPsByLsh(@RequestParam("lsh")String lsh){
         Ps reulut = psTpService.queryPsByLsh(lsh);
         return ResponseEntity.ok(reulut);
     }
 
+    /**
+     * 退配明细查询
+     * @param lsh 流水号
+     * @return 退配单
+     */
     @GetMapping("querytp")
     public ResponseEntity<Tp> queryTpByLsh(@RequestParam("lsh")String lsh){
         Tp reulut = psTpService.queryTpByLsh(lsh);
+        return ResponseEntity.ok(reulut);
+    }
+
+    /**
+     * 往返配送明细查询
+     * @param lsh 流水号
+     * @return 往返配送单
+     */
+    @GetMapping("queryghps")
+    public ResponseEntity<Ghps> queryGhpsByLsh(@RequestParam("lsh")String lsh){
+        Ghps reulut = psTpService.queryGhpsByLsh(lsh);
         return ResponseEntity.ok(reulut);
     }
 
@@ -215,13 +368,14 @@ public class PsTpController {
     }
 
     /**
-     * 配送入库分页查询
-     * @param page
-     * @param rows
-     * @param sortBy
-     * @param desc
-     * @param key
-     * @return
+     * 配送入库单查询
+     * @param page 页数
+     * @param rows 行数
+     * @param sortBy 排序字段
+     * @param desc 是否倒序
+     * @param key 主键
+     * @param uid 查询人ID
+     * @return 查询结果
      */
     @GetMapping("pagepsrk")
     public ResponseEntity<PageResult<Psrk>> pagePsrk(
@@ -236,6 +390,16 @@ public class PsTpController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 配送入库单历史查询
+     * @param page 页数
+     * @param rows 行数
+     * @param sortBy 排序字段
+     * @param desc 是否倒序
+     * @param key 主键
+     * @param uid 查询人ID
+     * @return 查询结果
+     */
     @GetMapping("pagepsrkhis")
     public ResponseEntity<PageResult<Psrk>> pagePsrkhis(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -288,6 +452,52 @@ public class PsTpController {
         return ResponseEntity.ok(reulut);
     }
 
+    /**
+     * 往返配送入库分页查询
+     * @param page 页数
+     * @param rows 行数
+     * @param sortBy 排序字段
+     * @param desc 是否倒序
+     * @param key 主键
+     * @param uid 查询人ID
+     * @return 查询结果
+     */
+    @GetMapping("pageghpsrk")
+    public ResponseEntity<PageResult<Ghpsrk>> pageGhpsrk(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "uid") Long uid
+    ){
+        PageResult<Ghpsrk> result = psTpService.queryGhpsrkByPage(page, rows, sortBy, desc, key, uid);
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 往返配送入库单历史查询
+     * @param page 页数
+     * @param rows 行数
+     * @param sortBy 排序字段
+     * @param desc 是否倒序
+     * @param key 主键
+     * @param uid 查询人ID
+     * @return 查询结果
+     */
+    @GetMapping("pageghpsrkhis")
+    public ResponseEntity<PageResult<Ghpsrk>> pageGhpsrkhis(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "rows", defaultValue = "20") Integer rows,
+            @RequestParam(value = "sortBy", required = false) String sortBy,
+            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "key", required = false) String key,
+            @RequestParam(value = "uid") Long uid
+    ){
+        PageResult<Ghpsrk> result = psTpService.queryGhpsrkhisByPage(page, rows, sortBy, desc, key, uid);
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping("applist")
     public JsonObject applist(@RequestParam(value = "page", defaultValue = "1") Integer page,
                               @RequestParam(value = "userid") String userid,
@@ -296,8 +506,7 @@ public class PsTpController {
                               @RequestParam(value = "lsh", required = false) String lsh,
                               @RequestParam(value = "psdh", required = false) String psdh
     ) {
-        JsonObject result = psTpService.applist(page, userid,phone,hh,lsh,psdh);
-        return result;
+        return psTpService.applist(page, userid,phone,hh,lsh,psdh);
     }
 
     @GetMapping("applisthis")
@@ -308,14 +517,12 @@ public class PsTpController {
                               @RequestParam(value = "lsh", required = false) String lsh,
                               @RequestParam(value = "psdh", required = false) String psdh
     ) {
-        JsonObject result = psTpService.applisthis(page, userid,phone,hh,lsh,psdh);
-        return result;
+        return psTpService.applisthis(page, userid,phone,hh,lsh,psdh);
     }
 
     @GetMapping("appmx")
     public JsonObject appmx(@RequestParam(value = "lsh", required = false) String lsh) {
-        JsonObject result = psTpService.appmx(lsh);
-        return result;
+        return psTpService.appmx(lsh);
     }
 
     @PostMapping("apppsarrive")
