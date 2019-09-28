@@ -19,6 +19,7 @@ public class GlobalCorsConfig {
         config.addAllowedOrigin("http://localhost:9002");
         config.addAllowedOrigin("http://localhost:10010");
         config.addAllowedOrigin("http://127.0.0.1:9002");
+        config.addAllowedOrigin("http://47.105.221.242:81");
         config.addAllowedOrigin("http://172.31.53.68");
         config.addAllowedOrigin("http://47.105.221.242");
         config.addAllowedOrigin("http://172.17.196.112");
