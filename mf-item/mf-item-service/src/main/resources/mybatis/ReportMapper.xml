@@ -49,7 +49,7 @@
                a.xingh,a.store_code as storeCode,a.store_name as storeName,
                a.storage_code as storageCode,a.storage_name as storageName,a.contact,a.phone,
                concat(ifnull(a.province,''),' ',ifnull(a.city,''),' ',ifnull(a.district,''),
-                   ' ',ifnull(a.location,'')) as location,
+                   ' ',ifnull(a.location,'')) as location,ckuserid,ckusername
         from vw_xs a where a.billtype=#{type} and lrsj between #{strq} and concat(#{torq},' 23:59:59')
         <if test="storecode!= null and storecode != '' ">
             and a.store_code = #{storecode}
