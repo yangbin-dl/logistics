@@ -295,7 +295,7 @@ public class PsTpController {
     }
 
     /**
-     * 往返配送明细查询
+     * 往返配送查询
      * @param lsh 流水号
      * @return 往返配送单
      */
@@ -327,6 +327,16 @@ public class PsTpController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * 往返配送单发出
+     * @param ghps
+     * @return
+     */
+    @PostMapping("ghpsfc")
+    public ResponseEntity<Null> commitGhps(@RequestBody Ghps ghps){
+        psTpService.commitGhps(ghps);
+        return ResponseEntity.ok().build();
+    }
 
     /**
      * 配送到货
@@ -361,12 +371,18 @@ public class PsTpController {
         return ResponseEntity.ok().build();
     }
 
+
     @PostMapping("tprk")
     public ResponseEntity<Null> inStoreTp(@RequestBody Tprk tprk){
         psTpService.inStoreTp(tprk);
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("ghpsrk")
+    public ResponseEntity<Null> inStoreGhps(@RequestBody Ghpsrk ghpsrk){
+        psTpService.inStoreGhps(ghpsrk);
+        return ResponseEntity.ok().build();
+    }
     /**
      * 配送入库单查询
      * @param page 页数
@@ -496,6 +512,12 @@ public class PsTpController {
     ){
         PageResult<Ghpsrk> result = psTpService.queryGhpsrkhisByPage(page, rows, sortBy, desc, key, uid);
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("queryghpsrk")
+    public ResponseEntity<Ghpsrk> queryGhpsrk(@RequestParam("lsh") String lsh){
+        Ghpsrk reulut = psTpService.queryGhpsrkByLsh(lsh);
+        return ResponseEntity.ok(reulut);
     }
 
     @GetMapping("applist")

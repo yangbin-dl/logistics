@@ -2,7 +2,6 @@ package com.mallfe.item.mapper;
 
 import com.mallfe.item.pojo.Ghpsrk;
 import com.mallfe.item.pojo.GhpsrkDetail;
-import com.mallfe.item.pojo.Psrk;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -14,7 +13,7 @@ import java.util.List;
  * @author Yangbin
  * @since 2019/07/23
  */
-public interface GhpsrkMapper extends Mapper<Psrk> {
+public interface GhpsrkMapper extends Mapper<Ghpsrk> {
 
     int insertGhpsrkMx(@Param("lsh") String lsh);
 

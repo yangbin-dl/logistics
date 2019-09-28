@@ -507,6 +507,48 @@ public class PsTpService {
         }
     }
 
+    public void commitGhps(Ghps ghps) {
+
+        try{
+            if(ghpsMapper.updateStatusToOut(ghps.getLsh()) != 1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
+
+            ghps = queryGhpsByLsh(ghps.getLsh());
+            String  storeCode = ghps.getStoreCode();
+            for(Gh mx : ghps.getGhList()){
+                Kucn kc = new Kucn();
+                kc.setHh(mx.getHh());
+                kc.setLx(mx.getLx());
+                kc.setStoreCode(storeCode);
+                Kucn result = kucnMapper.selectOne(kc);
+                //更新库存
+                if(result == null){
+                    throw new MallfeException(ExceptionEnum.UNDER_STOCK);
+                }
+                else{
+                    if(kucnMapper.reduceKucn(mx.getHh(),mx.getSl(),storeCode,mx.getLx())!=1){
+                        throw new MallfeException(ExceptionEnum.UNDER_STOCK);
+                    }
+                }
+
+                KucnOut kucnOut = new KucnOut();
+                kucnOut.setHh(mx.getHh());
+                kucnOut.setYwbm("GHPS");
+                kucnOut.setSl(mx.getSl());
+                kucnOut.setLsh(ghps.getLsh());
+                kucnOut.setLx(mx.getLx());
+                kucnOut.setDeptCode(ghps.getDeptCode());
+                kucnOut.setStoreCode(ghps.getStoreCode());
+                //插入出库记录
+                kucnOutMapper.insert(kucnOut);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
+
     public void arrivedPs(Ps ps) {
         try {
             //更新配送单状态
@@ -614,6 +656,7 @@ public class PsTpService {
         }
 
     }
+    
 
     public PageResult<Psrk> queryPsrkByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key,
                                             Long uid) {
@@ -652,6 +695,17 @@ public class PsTpService {
 
         psrk.setXsList(xsMapper.selectXsWithLshForRk(lsh));
         return psrk;
+
+    }
+
+    public Ghpsrk queryGhpsrkByLsh(String lsh) {
+
+        Ghpsrk ghpsrk = new Ghpsrk();
+        ghpsrk.setLsh(lsh);
+        ghpsrk = ghpsrkMapper.selectOne(ghpsrk);
+
+        ghpsrk.setGhList(ghMapper.selectGhWithLshForRk(lsh));
+        return ghpsrk;
 
     }
 
@@ -698,6 +752,57 @@ public class PsTpService {
                 kucnIn.setLx(mx.getLx());
                 kucnIn.setStoreCode(tprk.getStoreCode());
                 kucnIn.setDeptCode(tprk.getDeptCode());
+                //插入入库记录
+                kucnInMapper.insert(kucnIn);
+            }
+        } catch (Exception e) {
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
+
+    public void inStoreGhps(Ghpsrk ghpsrk) {
+        try {
+            //更新退配入库单状态
+            if(ghpsrkMapper.updateGhpsrkStatus(ghpsrk.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
+            }
+
+            List<GhpsrkDetail> list = ghpsrkMapper.selectGhpsrkMx(ghpsrk.getLsh());
+
+            for(GhpsrkDetail mx: list){
+                Kucn kc = new Kucn();
+                kc.setHh(mx.getHh());
+                kc.setLx(mx.getLx());
+                kc.setDeptCode(ghpsrk.getDeptCode());
+                kc.setStoreCode(ghpsrk.getStoreCode());
+                Kucn result = kucnMapper.selectOne(kc);
+                //更新库存
+                if(result == null){
+                    kc.setKucn(mx.getSl());
+                    kucnMapper.insert(kc);
+                }
+                else{
+                    kucnMapper.addKucn(mx.getSl(),result.getId());
+                }
+
+                if(kucnMapper.addRtKucn(mx.getHh(),mx.getSl(),ghpsrk.getStoreCode(),mx.getLx())==0){
+                    Kucn rt = new Kucn();
+                    rt.setHh(mx.getHh());
+                    rt.setLx(mx.getLx());
+                    rt.setDeptCode(ghpsrk.getDeptCode());
+                    rt.setStoreCode(ghpsrk.getStoreCode());
+                    rt.setKucn(mx.getSl());
+                    kucnMapper.insertRtKucn(rt);
+                }
+
+                KucnIn kucnIn = new KucnIn();
+                kucnIn.setYwbm("GHPSRK");
+                kucnIn.setHh(mx.getHh());
+                kucnIn.setSl(mx.getSl());
+                kucnIn.setLsh(mx.getLsh());
+                kucnIn.setLx(mx.getLx());
+                kucnIn.setStoreCode(ghpsrk.getStoreCode());
+                kucnIn.setDeptCode(ghpsrk.getDeptCode());
                 //插入入库记录
                 kucnInMapper.insert(kucnIn);
             }
