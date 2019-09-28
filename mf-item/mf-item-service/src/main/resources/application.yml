@@ -3,4 +3,14 @@ spring:
     name: item-service
   profiles:
     active: dev
-
+  servlet:
+    multipart:
+      max-file-size: 50MB
+fdfs:
+  so-timeout: 1501
+  connect-timeout: 601
+  thumb-image: # 缩略图
+    width: 60
+    height: 60
+  tracker-list: # tracker地址
+    - 120.201.127.207:22122
