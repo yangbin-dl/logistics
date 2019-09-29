@@ -152,4 +152,9 @@ public class AllBill {
 
     private String plmc;
 
+    private String picUrl;
+
+    private String ckuserid;
+    @Transient
+    private String ckusername;
 }

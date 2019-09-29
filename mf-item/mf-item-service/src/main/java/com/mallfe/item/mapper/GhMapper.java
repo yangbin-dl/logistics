@@ -34,4 +34,33 @@ public interface GhMapper extends Mapper<Gh>, MySqlMapper<Gh> {
     List<Gh> selectGhWithLsh(@Param("lsh") String lsh);
 
     List<Gh> selectGhList(@Param("key") String key,@Param("status") Integer status,@Param("uid")Long uid);
+
+    /**
+     * 更新为已配车
+     * @param lsh
+     * @param psdh
+     * @param driver
+     * @param path
+     * @return
+     */
+    int updateStatusToGhps(@Param("lsh") String lsh,
+                         @Param("psdh") String psdh,
+                         @Param("driver") String driver,
+                         @Param("path") String path);
+
+    /**
+     * 将已配车更新为待配车,更换配送单用
+     * @param lsh
+     * @return
+     */
+    int updateStatusToUnGhps(@Param("lsh") String lsh);
+
+    /**
+     * 往返单撤销
+     * @param lsh
+     * @return
+     */
+    int updateStatusToRevert(@Param("lsh") String lsh);
+
+    List<Gh> selectGhWithLshForRk(@Param("lsh") String lsh);
 }

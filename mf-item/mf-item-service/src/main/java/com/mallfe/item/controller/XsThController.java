@@ -2,10 +2,7 @@ package com.mallfe.item.controller;
 
 import com.mallfe.common.json.JsonObject;
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.item.pojo.AllBill;
-import com.mallfe.item.pojo.Gh;
-import com.mallfe.item.pojo.Th;
-import com.mallfe.item.pojo.Xs;
+import com.mallfe.item.pojo.*;
 import com.mallfe.item.service.XsThService;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,8 +76,7 @@ public class XsThController {
      * 销售单分页查询
      * @param page
      * @param rows
-     * @param sortBy
-     * @param desc
+     * @param status
      * @param key
      * @return
      */
@@ -88,12 +84,11 @@ public class XsThController {
     public ResponseEntity<PageResult<Xs>> queryXsByPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
-            @RequestParam(value = "sortBy", required = false) String sortBy,
-            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "status", required = false) Integer status,
             @RequestParam(value = "key", required = false) String key,
             @RequestParam(value = "uid") Long uid
     ) {
-        PageResult<Xs> result = xsThService.queryXsByPage(page, rows, sortBy, desc, key,uid);
+        PageResult<Xs> result = xsThService.queryXsByPage(page, rows, key,uid,status);
         return ResponseEntity.ok(result);
     }
 
@@ -101,8 +96,7 @@ public class XsThController {
      * 退货单分页查询
      * @param page
      * @param rows
-     * @param sortBy
-     * @param desc
+     * @param status
      * @param key
      * @return
      */
@@ -110,12 +104,11 @@ public class XsThController {
     public ResponseEntity<PageResult<Th>> queryThByPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
-            @RequestParam(value = "sortBy", required = false) String sortBy,
-            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "status", required = false) Integer status,
             @RequestParam(value = "key", required = false) String key,
             @RequestParam(value = "uid") Long uid
     ) {
-        PageResult<Th> result = xsThService.queryThByPage(page, rows, sortBy, desc, key, uid);
+        PageResult<Th> result = xsThService.queryThByPage(page, rows, key, uid, status);
         return ResponseEntity.ok(result);
     }
 
@@ -347,8 +340,7 @@ public class XsThController {
      * 退货单分页查询
      * @param page
      * @param rows
-     * @param sortBy
-     * @param desc
+     * @param status
      * @param key
      * @return
      */
@@ -356,13 +348,44 @@ public class XsThController {
     public ResponseEntity<PageResult<Gh>> queryGhByPage(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
             @RequestParam(value = "rows", defaultValue = "20") Integer rows,
-            @RequestParam(value = "sortBy", required = false) String sortBy,
-            @RequestParam(value = "desc", defaultValue = "true") Boolean desc,
+            @RequestParam(value = "status", required = false) Integer status,
             @RequestParam(value = "key", required = false) String key,
             @RequestParam(value = "uid") Long uid
     ) {
-        PageResult<Gh> result = xsThService.queryGhByPage(page, rows, sortBy, desc, key, uid);
+        PageResult<Gh> result = xsThService.queryGhByPage(page, rows, key, uid, status);
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 物流经理撤销销售单
+     * @param xs 流水号
+     * @return 200
+     */
+    @PostMapping("revertxs")
+    public ResponseEntity<Null> revertXs(@RequestBody Xs xs){
+        xsThService.revertXs(xs.getLsh());
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /**
+     * 物流经理撤销退货单
+     * @param th 流水号
+     * @return 200
+     */
+    @PostMapping("revertth")
+    public ResponseEntity<Null> revertTh(@RequestBody Th th){
+        xsThService.revertTh(th.getLsh());
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    /**
+     * 物流经理撤销往返单
+     * @param gh 流水号
+     * @return 200
+     */
+    @PostMapping("revertgh")
+    public ResponseEntity<Null> revertTh(@RequestBody Gh gh){
+        xsThService.revertGh(gh.getLsh());
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

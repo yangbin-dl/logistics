@@ -176,4 +176,11 @@ public class Bill {
     private String storageName;
 
     private String remark;
+
+    private String picUrl;
+
+    private String ckuserid;
+
+    @Transient
+    private String ckusername;
 }

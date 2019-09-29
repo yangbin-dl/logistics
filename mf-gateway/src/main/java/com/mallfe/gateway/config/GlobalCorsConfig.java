@@ -23,6 +23,8 @@ public class GlobalCorsConfig {
         config.addAllowedOrigin("http://47.105.221.242");
         config.addAllowedOrigin("http://172.17.196.112");
         config.addAllowedOrigin("http://47.94.95.93");
+        config.addAllowedOrigin("http://47.105.221.242:9002");
+
         //2) 是否发送Cookie信息
         config.setAllowCredentials(true);
         //3) 允许的请求方式
