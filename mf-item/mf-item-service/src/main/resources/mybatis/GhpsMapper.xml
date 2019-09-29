@@ -13,7 +13,7 @@
     <update id="updateStatusToFinish">
         update mf_ghps set status = 2,sdsj = now() where lsh = #{lsh} and status = 1
     </update>
-    <update id="updatePsmxStatusToUnFinish">
+    <update id="updateGhpsmxStatusToUnFinish">
         update mf_ghps_mx set status= 2 where lsh = #{lsh}
     </update>
 
