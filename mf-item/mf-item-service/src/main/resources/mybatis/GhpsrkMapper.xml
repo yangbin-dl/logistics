@@ -29,7 +29,7 @@
         order by a.lsh desc
     </select>
     <select id="selectGhpsrkMx" resultType="com.mallfe.item.pojo.GhpsrkDetail">
-        select a.lsh,a.ddh,b.sl,b.lx,b.hh from mf_ghpsrk_mx a left join
+        select a.lsh,a.ddh,b.sl,b.lx,b.hh,a.status from mf_ghpsrk_mx a left join
             mf_gh b on a.ddh=b.lsh
             where a.lsh=#{lsh}
     </select>

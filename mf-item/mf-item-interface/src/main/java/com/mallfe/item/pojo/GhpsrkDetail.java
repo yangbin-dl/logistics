@@ -33,4 +33,10 @@ public class GhpsrkDetail extends WlBillDetail {
      */
     @Transient
     private Integer sl;
+
+    /**
+     * 状态
+     */
+    @Transient
+    private Integer status;
 }

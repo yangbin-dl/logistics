@@ -63,4 +63,6 @@ public interface GhMapper extends Mapper<Gh>, MySqlMapper<Gh> {
     int updateStatusToRevert(@Param("lsh") String lsh);
 
     List<Gh> selectGhWithLshForRk(@Param("lsh") String lsh);
+
+    int updateStatusToArrival(@Param("lsh") String lsh);
 }

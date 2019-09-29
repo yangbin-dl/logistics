@@ -37,7 +37,7 @@ public interface GhpsMapper extends Mapper<Ghps> {
      */
     int updateStatusToFinish(@Param("lsh") String lsh);
 
-    void updatePsmxStatusToUnFinish(@Param("lsh") String lsh);
+    void updateGhpsmxStatusToUnFinish(@Param("lsh") String lsh);
 
 
     List<Ghps> selectGhps(@Param("status") Integer status, @Param("lsh") String lsh);

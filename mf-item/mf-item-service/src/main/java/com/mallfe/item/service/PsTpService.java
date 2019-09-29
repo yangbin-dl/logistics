@@ -593,7 +593,7 @@ public class PsTpService {
             //根据传进来的数据，修改退配单明细中状态
             for(TpDetail mx : tp.getList()){
                 tpMxMapper.updateStatus(tp.getLsh(),mx.getDdh(),mx.getStatus());
-                thMapper.updateStatusToArrival(mx.getDdh(),tp.getLsh(),tp.getDriverCode(),tp.getPathCode());
+                thMapper.updateStatusToArrival(mx.getDdh());
             }
 
             //插入配送入库信息
@@ -603,6 +603,37 @@ public class PsTpService {
                 }
             }
 
+
+        } catch (Exception e){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
+
+    public void arrivedGhps(Ghps ghps) {
+        try{
+            if(ghpsMapper.updateStatusToFinish(ghps.getLsh()) != 1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
+
+            //修改所有退货单状态为待配车
+            ghMapper.updateStatusToUnGhps(ghps.getLsh());
+
+            //修改退配单明细状态为未送达
+            ghpsMapper.updateGhpsmxStatusToUnFinish(ghps.getLsh());
+
+
+            //根据传进来的数据，修改退配单明细中状态
+            for(GhpsDetail mx : ghps.getList()){
+                ghpsMxMapper.updateStatus(ghps.getLsh(),mx.getDdh(),mx.getStatus());
+                ghMapper.updateStatusToArrival(mx.getDdh());
+            }
+
+            //插入配送入库信息
+            if(ghpsrkMapper.insertGhpsrkMx(ghps.getLsh())!=0){
+                if(ghpsrkMapper.insertFromGhps(ghps.getLsh())!=1){
+                    throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+                }
+            }
 
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
@@ -795,6 +826,11 @@ public class PsTpService {
                     kucnMapper.insertRtKucn(rt);
                 }
 
+                if(mx.getStatus()== 2){
+                    ghMapper.updateStatusToUnGhps(mx.getDdh());
+                }
+
+
                 KucnIn kucnIn = new KucnIn();
                 kucnIn.setYwbm("GHPSRK");
                 kucnIn.setHh(mx.getHh());
@@ -967,8 +1003,19 @@ public class PsTpService {
             //准备数据完毕
             arrivedTp(tp);
         }
+        else {
+            Ghps ghps = queryGhpsByLsh(psdh);
+            List<GhpsDetail> list = new ArrayList<>();
+            GhpsDetail ghpsDetail = new GhpsDetail();
+            ghpsDetail.setLsh(psdh);
+            ghpsDetail.setDdh(ghps.getGhList().get(0).getLsh());
+            ghpsDetail.setStatus(1);
+            list.add(ghpsDetail);
+            ghps.setList(list);
+            //准备数据完毕
+            arrivedGhps(ghps);
+        }
         
-
         return new JsonData("提交成功！");
     }
 
@@ -1003,6 +1050,17 @@ public class PsTpService {
             //修改退配单明细状态为未送达
             tpMapper.updateTpmxToUnFinish(psdh);
 
+        }
+        else {
+            if(ghpsMapper.updateStatusToFinish(psdh)!=1){
+                throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+            }
+            ghpsMapper.updateGhpsmxStatusToUnFinish(psdh);
+            if(ghpsrkMapper.insertGhpsrkMx(psdh)!=0){
+                if(ghpsrkMapper.insertFromGhps(psdh)!=1){
+                    throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+                }
+            }
         }
 
         return new JsonData("提交成功！");
