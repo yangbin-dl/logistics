@@ -827,7 +827,7 @@ public class PsTpService {
                 }
 
                 if(mx.getStatus()== 2){
-                    ghMapper.updateStatusToUnGhps(mx.getDdh());
+                    ghMapper.updateStatusToUnGhps(ghpsrk.getLsh());
                 }
 
 
