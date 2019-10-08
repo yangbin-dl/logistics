@@ -584,10 +584,10 @@ public class PsTpService {
             }
 
             //修改所有退货单状态为待配车
-            thMapper.updateStatusToUnTp(tp.getLsh());
+            //thMapper.updateStatusToUnTp(tp.getLsh());
 
             //修改退配单明细状态为未送达
-            tpMapper.updateTpmxToUnFinish(tp.getLsh());
+            //tpMapper.updateTpmxToUnFinish(tp.getLsh());
 
 
             //根据传进来的数据，修改退配单明细中状态
@@ -616,10 +616,10 @@ public class PsTpService {
             }
 
             //修改所有退货单状态为待配车
-            ghMapper.updateStatusToUnGhps(ghps.getLsh());
+            //ghMapper.updateStatusToUnGhps(ghps.getLsh());
 
             //修改退配单明细状态为未送达
-            ghpsMapper.updateGhpsmxStatusToUnFinish(ghps.getLsh());
+            //ghpsMapper.updateGhpsmxStatusToUnFinish(ghps.getLsh());
 
 
             //根据传进来的数据，修改退配单明细中状态
