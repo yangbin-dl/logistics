@@ -33,7 +33,7 @@
                          path_code = null
         where psdh = #{lsh} and status = '2'
     </update>
-    <update id="updateStatusToUnGhpssByArrival">
+    <update id="updateStatusToUnGhpsByArrival">
         update mf_gh set status= '1',psdh = null,
             driver_code = null,
             path_code = null

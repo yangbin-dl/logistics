@@ -2,6 +2,7 @@ package com.mallfe.item.controller;
 
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.AllBill;
+import com.mallfe.item.pojo.KucnCompareReport;
 import com.mallfe.item.pojo.KucnReport;
 import com.mallfe.item.pojo.KucnStructure;
 import com.mallfe.item.service.ReportService;
@@ -84,6 +85,18 @@ public class ReportController {
                                                               @RequestParam(value = "page", required = false) Integer page,
                                                               @RequestParam(value = "rows", required = false) Integer rows){
         PageResult<KucnReport> result = reportService.getRtKucnList(deptCode,storageCode,plbm,hh,page,rows);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("kucncomparereport")
+    public ResponseEntity<PageResult<KucnCompareReport>> getKucnCompareList(
+            @RequestParam(value = "deptcode",required = false) String deptCode,
+            @RequestParam(value = "storagecode",required = false) String storageCode,
+            @RequestParam(value = "plbm",required = false) String plbm,
+            @RequestParam(value = "hh",required = false) Integer hh,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "rows", required = false) Integer rows){
+        PageResult<KucnCompareReport> result = reportService.getKucnCompareList(deptCode,storageCode,plbm,hh,page,rows);
         return ResponseEntity.ok(result);
     }
 }
