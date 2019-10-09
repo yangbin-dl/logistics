@@ -167,4 +167,41 @@
         group by a.dept_code , a.store_code  , d.store_name  , a.hh, b.pinm, b.xingh, c.plmc, b.plbm
         order by a.dept_code , a.store_code,b.plbm,a.hh
     </select>
+    <select id="selectKucnLxList" resultType="com.mallfe.item.pojo.KucnCompareReport">
+        select mk.dept_code as deptCode,mr.dept_name as deptName,ms.plbm,plmc,
+               mk.store_code as storageCode,m.store_name as storageName,
+               mk.hh,ms.pinm,ms.xingh,
+               mk.lx,msl.lxInfo, mk.kucn as kucn,mkr.kucn as rtKucn,
+               ifnull(dpc.sl,0) as dpcSl,ifnull(ypc.sl,0) as ypcSl
+            from mf_kucn mk left join mf_kucn_rt mkr on mk.store_code = mkr.store_code and mk.hh = mkr.hh and mk.lx = mkr.lx
+                left join (select hh,storage_code as store_code,lx,sum(sl) as sl from vw_xs
+                where billtype ='XS' and status=1 group by hh,storage_code,lx) dpc
+                    on mk.store_code = dpc.store_code and mk.hh = dpc.hh and mk.lx = dpc.lx
+                left join (select hh,storage_code as store_code,lx,sum(sl) as sl from vw_xs
+                where billtype ='XS' and  status=2 and ps_status=0 group by hh,storage_code,lx) ypc
+                    on mk.store_code = ypc.store_code and mk.hh = ypc.hh and mk.lx = ypc.lx
+                left join mf_sp ms on mk.hh = ms.hh
+                left join mf_sp_lx msl on mk.lx = msl.lx
+                left join mf_store m on mk.store_code = m.store_code
+                left join mf_region mr on mk.dept_code = mr.dept_code
+                left join mf_pl mp on ms.plbm = mp.plbm
+        <where>
+            <if test="deptcode != null and deptcode != ''">
+                mk.dept_code = #{deptcode}
+            </if>
+
+            <if test="storagecode != null and storagecode != ''">
+                and mk.store_code = #{storagecode}
+            </if>
+            <if test="plbm!= null and plbm != '' ">
+                and (ms.plbm = #{plbm} or concat(substr(ms.plbm,1,4),'00')=#{plbm} or
+                concat(substr(ms.plbm,1,2),'0000')=#{plbm})
+            </if>
+
+            <if test="hh!= null">
+                and mk.hh = #{hh}
+            </if>
+        </where>
+        order by mk.dept_code,mk.store_code,mk.hh,mk.lx
+    </select>
 </mapper>

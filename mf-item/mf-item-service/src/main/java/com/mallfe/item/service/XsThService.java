@@ -158,7 +158,10 @@ public class XsThService {
                 return new JsonError("库存不足，提交失败！");
             }
 
-            if(xsMapper.updateStatusToCommited(xs.getLsh())!=1){
+            kucnMapper.insertRtKucnLog(t.getHh(),t.getSl(),t.getStorageCode(),t.getDeptCode(),
+                    t.getLx(),t.getLsh(),"XS");
+
+            if(xsMapper.updateStatusToCommited(xs.getLsh(),xs.getCkuserid())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
@@ -169,7 +172,7 @@ public class XsThService {
 
     public JsonObject deleteXs(Xs xs){
         try {
-            if(xsMapper.updateStatusToCancel(xs.getLsh())!=1){
+            if(xsMapper.updateStatusToCancel(xs.getLsh(),xs.getCkuserid())!=1){
                 return new JsonError("单据状态异常，作废失败！");
             }
         } catch (Exception e){
@@ -180,7 +183,7 @@ public class XsThService {
 
     public JsonObject commitTh(Th th){
         try {
-            if(thMapper.updateStatusToCommited(th.getLsh())!=1){
+            if(thMapper.updateStatusToCommited(th.getLsh(),th.getCkuserid())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
@@ -191,7 +194,7 @@ public class XsThService {
 
     public JsonObject deleteTh(Th th){
         try {
-            if(thMapper.updateStatusToCancel(th.getLsh())!=1) {
+            if(thMapper.updateStatusToCancel(th.getLsh(),th.getCkuserid())!=1) {
                 return new JsonError("单据状态异常，作废失败！");
             }
         } catch (Exception e){
@@ -358,10 +361,14 @@ public class XsThService {
                 return new JsonError("库存不足，提交失败！");
             }
 
-            if(xsMapper.updateStatusToCommited(xs.getLsh())!=1){
+            kucnMapper.insertRtKucnLog(t.getHh(),t.getSl(),t.getStorageCode(),t.getDeptCode(),
+                    t.getLx(),t.getLsh(),"XS");
+
+            if(xsMapper.updateStatusToCommited(xs.getLsh(),xs.getCkuserid())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
+            e.printStackTrace();
             return new JsonError("系统异常，提交失败！");
         }
         return new JsonData("提交成功！");
@@ -370,7 +377,7 @@ public class XsThService {
 
     public JsonObject appCommitTh(Th th){
         try {
-            thMapper.updateStatusToCommited(th.getLsh());
+            thMapper.updateStatusToCommited(th.getLsh(),th.getCkuserid());
         } catch (Exception e){
             return new JsonError("单据保存失败");
         }
@@ -435,7 +442,10 @@ public class XsThService {
                 return new JsonError("库存不足，提交失败！");
             }
 
-            if(ghMapper.updateStatusToCommited(gh.getLsh())!=1){
+            kucnMapper.insertRtKucnLog(t.getHh(),t.getSl(),t.getStorageCode(),t.getDeptCode(),
+                    t.getLx(),t.getLsh(),"GH");
+
+            if(ghMapper.updateStatusToCommited(gh.getLsh(),gh.getCkuserid())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
@@ -451,7 +461,7 @@ public class XsThService {
 
     public JsonObject deleteGh(Gh gh) {
         try {
-            if(ghMapper.updateStatusToCancel(gh.getLsh())!=1) {
+            if(ghMapper.updateStatusToCancel(gh.getLsh(),gh.getCkuserid())!=1) {
                 return new JsonError("单据状态异常，作废失败！");
             }
         } catch (Exception e){
@@ -498,6 +508,9 @@ public class XsThService {
             if(kucnMapper.addRtKucn(bill.getHh(),bill.getSl(), bill.getStorageCode(), bill.getLx()) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
+
+            kucnMapper.insertRtKucnLog(bill.getHh(),bill.getSl()*(-1),bill.getStorageCode(),bill.getDeptCode(),
+                    bill.getLx(),bill.getLsh(),"XSCX");
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
@@ -524,6 +537,9 @@ public class XsThService {
             if(kucnMapper.addRtKucn(bill.getHh(),bill.getSl(), bill.getStorageCode(), bill.getLx()) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
+
+            kucnMapper.insertRtKucnLog(bill.getHh(),bill.getSl()*(-1),bill.getStorageCode(),bill.getDeptCode(),
+                    bill.getLx(),bill.getLsh(),"GHCX");
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }

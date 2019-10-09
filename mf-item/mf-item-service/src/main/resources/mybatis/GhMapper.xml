@@ -3,11 +3,11 @@
 <mapper namespace="com.mallfe.item.mapper.GhMapper">
 
     <update id="updateStatusToCommited" parameterType="com.mallfe.item.pojo.Gh">
-        update mf_gh set status = 1 where lsh = #{lsh} and status = 0
+        update mf_gh set status = 1,ckuserid=#{ckuserid},cksj=now() where lsh = #{lsh} and status = 0
     </update>
 
     <update id="updateStatusToCancel" parameterType="com.mallfe.item.pojo.Gh">
-        update mf_gh set status = 9 where lsh = #{lsh} and status = 0
+        update mf_gh set status = 9,ckuserid=#{ckuserid},cksj=now() where lsh = #{lsh} and status = 0
     </update>
 
     <update id="updateStatusToRevert" parameterType="com.mallfe.item.pojo.Gh">
@@ -33,7 +33,7 @@
                          path_code = null
         where psdh = #{lsh} and status = '2'
     </update>
-    <update id="updateStatusToUnGhpssByArrival">
+    <update id="updateStatusToUnGhpsByArrival">
         update mf_gh set status= '1',psdh = null,
             driver_code = null,
             path_code = null

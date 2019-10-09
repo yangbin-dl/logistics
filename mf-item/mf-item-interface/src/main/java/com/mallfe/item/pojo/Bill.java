@@ -179,7 +179,7 @@ public class Bill {
 
     private String picUrl;
 
-    private String ckuserid;
+    private Long ckuserid;
 
     @Transient
     private String ckusername;

@@ -5,6 +5,10 @@
         insert into mf_kucn_rt(dept_code, store_code, hh, lx, kucn)
         values (#{deptCode},#{storeCode},#{hh},#{lx},#{kucn})
     </insert>
+    <insert id="insertRtKucnLog">
+        insert into mf_kucn_rt_log(dept_code, store_code, hh, lx, sl, lsh, ywbm, lrsj)
+        values (#{deptcode},#{storecode},#{hh},#{lx},#{sl},#{lsh},#{ywbm},now())
+    </insert>
     <update id="addRtKucn">
         update mf_kucn_rt set kucn=kucn+#{sl}
         where hh=#{hh} and store_code = #{storecode} and lx = #{lx}

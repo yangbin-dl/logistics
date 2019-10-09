@@ -3,11 +3,11 @@
 <mapper namespace="com.mallfe.item.mapper.XsMapper">
 
     <update id="updateStatusToCommited" parameterType="com.mallfe.item.pojo.Xs">
-        update mf_xs set status = 1 where lsh = #{lsh} and status = 0
+        update mf_xs set status = 1,ckuserid=#{ckuserid},cksj=now() where lsh = #{lsh} and status = 0
     </update>
 
     <update id="updateStatusToCancel" parameterType="com.mallfe.item.pojo.Xs">
-        update mf_xs set status = 9 where lsh = #{lsh} and status = 0
+        update mf_xs set status = 9,ckuserid=#{ckuserid},cksj=now() where lsh = #{lsh} and status = 0
     </update>
 
     <update id="updateStatusToRevert" parameterType="com.mallfe.item.pojo.Xs">

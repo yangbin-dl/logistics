@@ -20,14 +20,14 @@ public interface GhMapper extends Mapper<Gh>, MySqlMapper<Gh> {
      * @param lsh 单据号
      * @return 影响的行数
      */
-    int updateStatusToCommited(@Param("lsh") String lsh);
+    int updateStatusToCommited(@Param("lsh") String lsh, @Param("ckuserid") Long ckuserid);
 
     /**
      * 取消换货单
      * @param lsh 单据号
      * @return 影响的行数
      */
-    int updateStatusToCancel(@Param("lsh") String lsh);
+    int updateStatusToCancel(@Param("lsh") String lsh, @Param("ckuserid") Long ckuserid);
 
     AllBill selectOneBill(@Param("lsh") String lsh);
 
