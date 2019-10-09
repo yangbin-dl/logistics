@@ -14,7 +14,7 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
      * @param lsh 退货单
      * @return
      */
-    int updateStatusToCommited(@Param("lsh") String lsh);
+    int updateStatusToCommited(@Param("lsh") String lsh, @Param("ckuserid") Long ckuserid);
 
     /**
      * 取消退货单

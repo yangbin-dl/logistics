@@ -161,7 +161,7 @@ public class XsThService {
             kucnMapper.insertRtKucnLog(t.getHh(),t.getSl(),t.getStorageCode(),t.getDeptCode(),
                     t.getLx(),t.getLsh(),"XS");
 
-            if(xsMapper.updateStatusToCommited(xs.getLsh())!=1){
+            if(xsMapper.updateStatusToCommited(xs.getLsh(),xs.getCkuserid())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
@@ -183,7 +183,7 @@ public class XsThService {
 
     public JsonObject commitTh(Th th){
         try {
-            if(thMapper.updateStatusToCommited(th.getLsh())!=1){
+            if(thMapper.updateStatusToCommited(th.getLsh(),th.getCkuserid())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
@@ -364,7 +364,7 @@ public class XsThService {
             kucnMapper.insertRtKucnLog(t.getHh(),t.getSl(),t.getStorageCode(),t.getDeptCode(),
                     t.getLx(),t.getLsh(),"XS");
 
-            if(xsMapper.updateStatusToCommited(xs.getLsh())!=1){
+            if(xsMapper.updateStatusToCommited(xs.getLsh(),xs.getCkuserid())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
@@ -377,7 +377,7 @@ public class XsThService {
 
     public JsonObject appCommitTh(Th th){
         try {
-            thMapper.updateStatusToCommited(th.getLsh());
+            thMapper.updateStatusToCommited(th.getLsh(),th.getCkuserid());
         } catch (Exception e){
             return new JsonError("单据保存失败");
         }
@@ -445,7 +445,7 @@ public class XsThService {
             kucnMapper.insertRtKucnLog(t.getHh(),t.getSl(),t.getStorageCode(),t.getDeptCode(),
                     t.getLx(),t.getLsh(),"GH");
 
-            if(ghMapper.updateStatusToCommited(gh.getLsh())!=1){
+            if(ghMapper.updateStatusToCommited(gh.getLsh(),gh.getCkuserid())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
