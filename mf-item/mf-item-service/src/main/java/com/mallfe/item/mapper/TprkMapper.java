@@ -15,6 +15,7 @@ import java.util.List;
  */
 public interface TprkMapper extends Mapper<Tprk> {
 
+    Tprk selectOneBill(@Param("lsh") String lsh);
 
     int insertTprkMx(@Param("lsh") String lsh);
 

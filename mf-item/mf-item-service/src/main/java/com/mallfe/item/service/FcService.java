@@ -246,6 +246,9 @@ public class FcService {
                     throw new MallfeException(ExceptionEnum.UNDER_STOCK);
                 }
 
+                kucnMapper.insertRtKucnLog(mx.getHh(),mx.getSl(),fc.getStoreCode(),fc.getDeptCode(),
+                        fc.getLx(),fc.getLsh(),"FC");
+
                 KucnOut kucnOut = new KucnOut();
                 BeanUtils.copyProperties(kc,kucnOut);
                 kucnOut.setYwbm("FC");

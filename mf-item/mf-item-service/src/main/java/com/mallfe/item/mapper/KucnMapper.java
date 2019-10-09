@@ -49,4 +49,13 @@ public interface KucnMapper extends Mapper<Kucn> {
     Kucn selectRtKucn(@Param("hh") Integer hh,
                       @Param("storecode") String storeCode,
                       @Param("lx") Integer lx);
+
+    int insertRtKucnLog(@Param("hh") Integer hh,
+                       @Param("sl") Integer sl,
+                       @Param("storecode") String storeCode,
+                       @Param("deptcode") String deptCode,
+                       @Param("lx") Integer lx,
+                       @Param("lsh") String lsh,
+                       @Param("ywbm") String ywbm
+                       );
 }

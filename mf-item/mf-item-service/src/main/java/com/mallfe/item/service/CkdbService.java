@@ -6,10 +6,10 @@ import com.mallfe.common.enums.ExceptionEnum;
 import com.mallfe.common.exception.MallfeException;
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.mapper.CkdbMapper;
+import com.mallfe.item.mapper.KucnInMapper;
 import com.mallfe.item.mapper.KucnMapper;
-import com.mallfe.item.pojo.Ckdb;
-import com.mallfe.item.pojo.CkdbDetail;
-import com.mallfe.item.pojo.Kucn;
+import com.mallfe.item.mapper.KucnOutMapper;
+import com.mallfe.item.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +34,12 @@ public class CkdbService {
 
     @Autowired
     KucnMapper kucnMapper;
+
+    @Autowired
+    private KucnInMapper kucnInMapper;
+
+    @Autowired
+    private KucnOutMapper kucnOutMapper;
 
     public Ckdb insert(Ckdb ckdb) {
 
@@ -123,6 +129,10 @@ public class CkdbService {
                 throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
             }
 
+            kucnMapper.insertRtKucnLog(mx.getHh(),mx.getSl(),ckdb.getOutStoreCode(),ckdb.getDeptCode(),
+                    ckdb.getLx(),ckdb.getLsh(),"CKDB");
+
+
             Kucn kc = new Kucn();
             kc.setHh(mx.getHh());
             kc.setLx(ckdb.getLx());
@@ -148,6 +158,31 @@ public class CkdbService {
                 rt.setKucn(mx.getSl());
                 kucnMapper.insertRtKucn(rt);
             }
+
+            kucnMapper.insertRtKucnLog(mx.getHh(),mx.getSl()*(-1),ckdb.getInStoreCode(),ckdb.getDeptCode(),
+                    ckdb.getLx(),ckdb.getLsh(),"CKDB");
+
+            KucnOut kucnOut = new KucnOut();
+            kucnOut.setYwbm("CKDB");
+            kucnOut.setHh(mx.getHh());
+            kucnOut.setSl(mx.getSl());
+            kucnOut.setLsh(ckdb.getLsh());
+            kucnOut.setLx(ckdb.getLx());
+            kucnOut.setDeptCode(ckdb.getDeptCode());
+            kucnOut.setStoreCode(ckdb.getOutStoreCode());
+            //插入出库记录
+            kucnOutMapper.insert(kucnOut);
+
+            KucnIn kucnIn = new KucnIn();
+            kucnIn.setYwbm("CKDB");
+            kucnIn.setHh(mx.getHh());
+            kucnIn.setSl(mx.getSl());
+            kucnIn.setLsh(ckdb.getLsh());
+            kucnIn.setLx(ckdb.getLx());
+            kucnIn.setStoreCode(ckdb.getInStoreCode());
+            kucnIn.setDeptCode(ckdb.getDeptCode());
+            //插入入库记录
+            kucnInMapper.insert(kucnIn);
         }
     }
 

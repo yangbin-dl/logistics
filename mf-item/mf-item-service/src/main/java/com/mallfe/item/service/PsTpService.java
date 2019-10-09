@@ -100,6 +100,7 @@ public class PsTpService {
                 ps.setId(null);
                 AllBill bill = xsMapper.selectOneBill(mx.getDdh());
                 ps.setStoreCode(bill.getStorageCode());
+                ps.setDeptCode(bill.getDeptCode());
                 psMapper.insert(ps);
                 //如果更新的行数不为1，则代表单据状态异常，回滚事务
                 if(xsMapper.updateStatusToPs(mx.getDdh(),lsh,ps.getDriverCode(),ps.getPathCode())!=1){
@@ -173,6 +174,7 @@ public class PsTpService {
                 ghps.setId(null);
                 AllBill bill = xsMapper.selectOneBill(mx.getDdh());
                 ghps.setStoreCode(bill.getStorageCode());
+                ghps.setDeptCode(bill.getDeptCode());
                 ghpsMapper.insert(ghps);
                 //如果更新的行数不为1，则代表单据状态异常，回滚事务
                 if(ghMapper.updateStatusToGhps(mx.getDdh(),lsh,ghps.getDriverCode(),ghps.getPathCode())!=1){
@@ -249,6 +251,7 @@ public class PsTpService {
                 //根据单据的销售仓库，生成配送单所属店铺
                 AllBill bill = xsMapper.selectOneBill(mx.getDdh());
                 tp.setStoreCode(bill.getStorageCode());
+                tp.setDeptCode(bill.getDeptCode());
                 tpMapper.insert(tp);
                 //如果更新的行数不为1，则代表单据状态异常，回滚事务
                 if(thMapper.updateStatusToTp(mx.getDdh(),lsh,tp.getDriverCode(),tp.getPathCode())!=1){
@@ -747,6 +750,8 @@ public class PsTpService {
                 throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
             }
 
+            tprk = tprkMapper.selectOneBill(tprk.getLsh());
+
             List<TprkDetail> list = tprkMapper.selectTprkMx(tprk.getLsh());
 
             for(TprkDetail mx: list){
@@ -774,6 +779,9 @@ public class PsTpService {
                     rt.setKucn(mx.getSl());
                     kucnMapper.insertRtKucn(rt);
                 }
+
+                kucnMapper.insertRtKucnLog(mx.getHh(),mx.getSl()*(-1),tprk.getStoreCode(),tprk.getDeptCode(),
+                        mx.getLx(),tprk.getLsh(),"TPRK");
 
                 KucnIn kucnIn = new KucnIn();
                 kucnIn.setYwbm("TPRK");
@@ -825,6 +833,9 @@ public class PsTpService {
                     rt.setKucn(mx.getSl());
                     kucnMapper.insertRtKucn(rt);
                 }
+
+                kucnMapper.insertRtKucnLog(mx.getHh(),mx.getSl()*(-1),ghpsrk.getStoreCode(),ghpsrk.getDeptCode(),
+                        mx.getLx(),ghpsrk.getLsh(),"GHPSRK");
 
                 if(mx.getStatus()== 2){
                     ghMapper.updateStatusToUnGhps(ghpsrk.getLsh());

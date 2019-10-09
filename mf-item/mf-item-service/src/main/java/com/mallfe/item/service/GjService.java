@@ -251,6 +251,9 @@ public class GjService {
                     kucnMapper.insertRtKucn(rt);
                 }
 
+                kucnMapper.insertRtKucnLog(mx.getHh(),mx.getSl()*(-1),gj.getStoreCode(),gj.getDeptCode(),
+                        gj.getLx(),gj.getLsh(),"GJ");
+
                 KucnIn kucnIn = new KucnIn();
                 kucnIn.setYwbm("GJ");
                 kucnIn.setHh(mx.getHh());

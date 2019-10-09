@@ -158,6 +158,9 @@ public class XsThService {
                 return new JsonError("库存不足，提交失败！");
             }
 
+            kucnMapper.insertRtKucnLog(t.getHh(),t.getSl(),t.getStorageCode(),t.getDeptCode(),
+                    t.getLx(),t.getLsh(),"XS");
+
             if(xsMapper.updateStatusToCommited(xs.getLsh())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
@@ -358,10 +361,14 @@ public class XsThService {
                 return new JsonError("库存不足，提交失败！");
             }
 
+            kucnMapper.insertRtKucnLog(t.getHh(),t.getSl(),t.getStorageCode(),t.getDeptCode(),
+                    t.getLx(),t.getLsh(),"XS");
+
             if(xsMapper.updateStatusToCommited(xs.getLsh())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
+            e.printStackTrace();
             return new JsonError("系统异常，提交失败！");
         }
         return new JsonData("提交成功！");
@@ -435,6 +442,9 @@ public class XsThService {
                 return new JsonError("库存不足，提交失败！");
             }
 
+            kucnMapper.insertRtKucnLog(t.getHh(),t.getSl(),t.getStorageCode(),t.getDeptCode(),
+                    t.getLx(),t.getLsh(),"GH");
+
             if(ghMapper.updateStatusToCommited(gh.getLsh())!=1){
                 return new JsonError("单据状态异常，提交失败！");
             }
@@ -498,6 +508,9 @@ public class XsThService {
             if(kucnMapper.addRtKucn(bill.getHh(),bill.getSl(), bill.getStorageCode(), bill.getLx()) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
+
+            kucnMapper.insertRtKucnLog(bill.getHh(),bill.getSl()*(-1),bill.getStorageCode(),bill.getDeptCode(),
+                    bill.getLx(),bill.getLsh(),"XSCX");
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
@@ -524,6 +537,9 @@ public class XsThService {
             if(kucnMapper.addRtKucn(bill.getHh(),bill.getSl(), bill.getStorageCode(), bill.getLx()) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
+
+            kucnMapper.insertRtKucnLog(bill.getHh(),bill.getSl()*(-1),bill.getStorageCode(),bill.getDeptCode(),
+                    bill.getLx(),bill.getLsh(),"GHCX");
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }

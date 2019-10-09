@@ -129,6 +129,9 @@ public class LxtzService {
                 throw new MallfeException(ExceptionEnum.UNDER_STOCK);
             }
 
+            kucnMapper.insertRtKucnLog(lxtz.getHh(),lxtz.getSl(),lxtz.getStoreCode(),lxtz.getDeptCode(),
+                    lxtz.getOldLx(),lxtz.getLsh(),"TZ");
+
             KucnOut kucnOut = new KucnOut();
             BeanUtils.copyProperties(kc1,kucnOut);
             kucnOut.setYwbm("TZ");
@@ -169,6 +172,9 @@ public class LxtzService {
                 rt.setKucn(lxtz.getSl());
                 kucnMapper.insertRtKucn(rt);
             }
+
+            kucnMapper.insertRtKucnLog(lxtz.getHh(),lxtz.getSl()*(-1),lxtz.getStoreCode(),lxtz.getDeptCode(),
+                    lxtz.getNewLx(),lxtz.getLsh(),"TZ");
 
             KucnIn kucnIn = new KucnIn();
             kucnIn.setYwbm("TZ");
