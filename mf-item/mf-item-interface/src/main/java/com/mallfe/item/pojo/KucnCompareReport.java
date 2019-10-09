@@ -10,12 +10,24 @@ import lombok.Data;
  */
 @Data
 public class KucnCompareReport extends Sp{
+    /**
+     * 系统库存
+     */
     private Integer Kucn;
 
+    /**
+     * 即时库存
+     */
     private Integer rtKucn;
 
+    /**
+     * 待配车数量
+     */
     private Integer dpcSl;
 
+    /**
+     * 已配车数量
+     */
     private Integer ypcSl;
 
     private String storageCode;
