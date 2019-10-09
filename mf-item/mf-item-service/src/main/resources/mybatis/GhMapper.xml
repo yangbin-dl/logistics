@@ -7,7 +7,7 @@
     </update>
 
     <update id="updateStatusToCancel" parameterType="com.mallfe.item.pojo.Gh">
-        update mf_gh set status = 9 where lsh = #{lsh} and status = 0
+        update mf_gh set status = 9,ckuserid=#{ckuserid},cksj=now() where lsh = #{lsh} and status = 0
     </update>
 
     <update id="updateStatusToRevert" parameterType="com.mallfe.item.pojo.Gh">

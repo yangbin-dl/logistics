@@ -172,7 +172,7 @@ public class XsThService {
 
     public JsonObject deleteXs(Xs xs){
         try {
-            if(xsMapper.updateStatusToCancel(xs.getLsh())!=1){
+            if(xsMapper.updateStatusToCancel(xs.getLsh(),xs.getCkuserid())!=1){
                 return new JsonError("单据状态异常，作废失败！");
             }
         } catch (Exception e){
@@ -194,7 +194,7 @@ public class XsThService {
 
     public JsonObject deleteTh(Th th){
         try {
-            if(thMapper.updateStatusToCancel(th.getLsh())!=1) {
+            if(thMapper.updateStatusToCancel(th.getLsh(),th.getCkuserid())!=1) {
                 return new JsonError("单据状态异常，作废失败！");
             }
         } catch (Exception e){
@@ -461,7 +461,7 @@ public class XsThService {
 
     public JsonObject deleteGh(Gh gh) {
         try {
-            if(ghMapper.updateStatusToCancel(gh.getLsh())!=1) {
+            if(ghMapper.updateStatusToCancel(gh.getLsh(),gh.getCkuserid())!=1) {
                 return new JsonError("单据状态异常，作废失败！");
             }
         } catch (Exception e){

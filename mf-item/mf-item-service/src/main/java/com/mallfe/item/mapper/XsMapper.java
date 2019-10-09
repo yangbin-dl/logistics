@@ -21,7 +21,7 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
      * @param lsh 单据号
      * @return 影响的行数
      */
-    int updateStatusToCancel(@Param("lsh") String lsh);
+    int updateStatusToCancel(@Param("lsh") String lsh,@Param("ckuserid") Long ckuserid);
 
     /**
      * 销售单更新

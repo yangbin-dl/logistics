@@ -361,7 +361,7 @@ public class PsTpService {
         }
 
         try {
-            ghMapper.updateStatusToCancel(ghps.getLsh());
+            ghpsMapper.updateStatusToCancel(ghps.getLsh());
         } catch (Exception e){
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
