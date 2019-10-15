@@ -218,16 +218,16 @@ public class XsThService {
 
         //分页
         //临时调整
-        //PageHelper.startPage(page, 10);
+        PageHelper.startPage(page, 10);
         //条件过滤
 
         if(u.getLx()==1){
 
             list = xsMapper.selectAllBill(lruserid,phone,lsh,hh,contact);
         } else {
-            //list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
+            list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
             //临时使用
-            list = xsMapper.selectAllBillForSh(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
+            //list = xsMapper.selectAllBillForSh(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
         }
 
         //查询
@@ -253,7 +253,7 @@ public class XsThService {
         }
 
         //分页
-        //PageHelper.startPage(page, 10);
+        PageHelper.startPage(page, 10);
         //条件过滤
 
         List<AllBill> list = xsMapper.selectAllBillForSh(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
