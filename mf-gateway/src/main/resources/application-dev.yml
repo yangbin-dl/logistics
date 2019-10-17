@@ -78,3 +78,8 @@ filter:
     - /api/item/upload/image
     - /zuul/api/item/upload/image
     - /api/item/xsth/pagesh
+    - /api/item/xsth/appinsertgh
+    - /api/item/xsth/appcommitgh
+    - /api/item/xsth/deletegh
+    - /api/item/xsth/appquerygh
+    - /zuul/api/item/upload/image

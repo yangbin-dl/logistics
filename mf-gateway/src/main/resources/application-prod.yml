@@ -79,5 +79,7 @@ filter:
     - /zuul/api/item/upload/image
     - /api/item/xsth/appinsertgh
     - /api/item/xsth/appcommitgh
+    - /api/item/xsth/deletegh
+    - /api/item/xsth/appquerygh
 logging:
   config: classpath:logback-spring.xml
