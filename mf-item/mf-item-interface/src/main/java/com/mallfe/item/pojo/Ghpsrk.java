@@ -26,4 +26,6 @@ public class Ghpsrk extends WlBill {
      * 入库时间
      */
     private String rksj;
+    @Transient
+    private String lxInfo;
 }

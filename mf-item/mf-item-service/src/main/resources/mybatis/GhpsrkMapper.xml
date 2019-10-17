@@ -3,20 +3,22 @@
 <mapper namespace="com.mallfe.item.mapper.GhpsrkMapper">
 
     <insert id="insertFromGhps">
-        insert into mf_ghpsrk(lsh, lrid, lrusername, truename, status, lrsj, cksj, fcsj, sdsj, driver_code, path_code,dept_code,store_code)
-        select lsh, lrid, lrusername, truename, 2, lrsj, cksj, fcsj, sdsj, driver_code, path_code,dept_code,store_code from mf_ghps
-        where lsh=#{lsh}
+        insert into mf_ghpsrk(lx, lsh, lrid, lrusername, truename, status, lrsj, cksj, fcsj, sdsj, driver_code,
+                              path_code,dept_code,store_code)
+        select b.status,a.lsh, lrid, lrusername, truename, 2, lrsj, cksj, fcsj, sdsj, driver_code,
+               path_code,dept_code,store_code from mf_ghps a left join mf_ghps_mx b on a.lsh=b.lsh
+        where a.lsh=#{lsh}
     </insert>
     <insert id="insertGhpsrkMx">
         insert into mf_ghpsrk_mx(lsh,ddh,status)
-        select  lsh,ddh,status from mf_ghps_mx where lsh=#{lsh} and status=2
+        select  lsh,ddh,status from mf_ghps_mx where lsh=#{lsh}
     </insert>
     <update id="updateGhpsrkStatus">
         update mf_ghpsrk set status = 3 where lsh=#{lsh} and status=2
     </update>
     <select id="selectGhpsrk" resultType="com.mallfe.item.pojo.Ghpsrk">
         select lsh,a.lrid,a.driver_code as driverCode,b.driver_name as driverName,
-               a.lrusername, a.truename,
+               a.lrusername, a.truename,case a.lx when 1 then '送达' when 2 then '未送达' end as lxInfo,
                a.path_code as pathCode,c.path_name as pathName,
                a.lrsj,a.fcsj,a.sdsj,a.status,a.store_code as storeCode,d.store_name as storeName,
                case a.status when 2 then '待入库' when 3 then '已入库' end as statusInfo

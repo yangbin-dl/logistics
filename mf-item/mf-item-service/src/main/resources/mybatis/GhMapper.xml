@@ -132,7 +132,7 @@
                    when 10 then '已撤销'
                    end as statusInfo,
                store_code as storeCode,store_name as storename,storage_code as storageCode,storage_name as storageName,
-               dept_code as deptName,dept_name as deptName,driver_name as driverName,driver_phone as driverPhone
+               dept_code as deptCode,dept_name as deptName,driver_name as driverName,driver_phone as driverPhone
         from vw_xs where lsh = #{lsh}
     </select>
 
