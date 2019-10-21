@@ -81,3 +81,5 @@ filter:
     - /api/item/xsth/appcommitgh
     - /api/item/xsth/deletegh
     - /api/item/xsth/appquerygh
+    - /api/item/upload/fileUploadByRequest
+    - /zuul/api/item/upload/fileUploadByRequest
