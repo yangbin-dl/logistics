@@ -125,7 +125,7 @@ public class UploadService {
             }
             String extension = StringUtils.substringAfterLast(file.getOriginalFilename(),".");
             StorePath storePath = fastFileStorageClient.uploadImageAndCrtThumbImage(file.getInputStream(),file.getSize(),extension,null);
-            return new JsonData(storePath);
+            return new JsonData(storePath.getFullPath());
         }
         catch (IOException e){
             throw new MallfeException(ExceptionEnum.INVALID_FILE_TYPE);

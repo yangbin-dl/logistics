@@ -82,3 +82,5 @@ filter:
     - /api/item/xsth/appquerygh
     - /api/item/upload/fileUploadByRequest
     - /zuul/api/item/upload/fileUploadByRequest
+    - /api/item/upload/imagejson
+    - /zuul/api/item/upload/imagejson
