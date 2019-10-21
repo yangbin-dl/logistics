@@ -76,8 +76,15 @@ filter:
     - /api/item/item/pl
     - /api/item/item/pltree
     - /api/item/xsth/pagesh
+    - /api/item/upload/image
     - /zuul/api/item/upload/image
-
-
+    - /api/item/xsth/appinsertgh
+    - /api/item/xsth/appcommitgh
+    - /api/item/xsth/deletegh
+    - /api/item/xsth/appquerygh
+    - /api/item/upload/fileUploadByRequest
+    - /zuul/api/item/upload/fileUploadByRequest
+    - /api/item/upload/imagejson
+    - /zuul/api/item/upload/imagejson
 logging:
   config: classpath:logback-spring.xml

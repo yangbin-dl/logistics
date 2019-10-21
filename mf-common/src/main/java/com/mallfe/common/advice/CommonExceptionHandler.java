@@ -12,6 +12,7 @@ public class CommonExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ExceptionResult> handleException(MallfeException e){
+        e.printStackTrace();
         ExceptionEnum em = e.getExceptionEnum();
         return ResponseEntity.status(em.getCode())
                 .body(new ExceptionResult(e.getExceptionEnum()));

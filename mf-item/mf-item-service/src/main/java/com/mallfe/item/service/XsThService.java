@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
@@ -68,6 +69,7 @@ public class XsThService {
         try {
             xsMapper.insert(xs);
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
 
@@ -88,6 +90,7 @@ public class XsThService {
         try {
             thMapper.insert(th);
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
 
@@ -100,6 +103,7 @@ public class XsThService {
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
         return xs;
@@ -162,9 +166,11 @@ public class XsThService {
                     t.getLx(),t.getLsh(),"XS");
 
             if(xsMapper.updateStatusToCommited(xs.getLsh(),xs.getCkuserid())!=1){
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new JsonError("系统异常，提交失败！");
         }
         return new JsonData("提交成功！");
@@ -218,16 +224,16 @@ public class XsThService {
 
         //分页
         //临时调整
-        //PageHelper.startPage(page, 10);
+        PageHelper.startPage(page, 10);
         //条件过滤
 
         if(u.getLx()==1){
 
             list = xsMapper.selectAllBill(lruserid,phone,lsh,hh,contact);
         } else {
-            //list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
+            list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
             //临时使用
-            list = xsMapper.selectAllBillForSh(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
+            //list = xsMapper.selectAllBillForSh(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
         }
 
         //查询
@@ -253,7 +259,7 @@ public class XsThService {
         }
 
         //分页
-        //PageHelper.startPage(page, 10);
+        PageHelper.startPage(page, 10);
         //条件过滤
 
         List<AllBill> list = xsMapper.selectAllBillForSh(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
@@ -321,6 +327,7 @@ public class XsThService {
         try {
             xsMapper.insert(xs);
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new JsonError("单据保存失败");
         }
 
@@ -347,6 +354,7 @@ public class XsThService {
         try {
             thMapper.insert(th);
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new JsonError("单据保存失败");
         }
 
@@ -365,10 +373,12 @@ public class XsThService {
                     t.getLx(),t.getLsh(),"XS");
 
             if(xsMapper.updateStatusToCommited(xs.getLsh(),xs.getCkuserid())!=1){
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
             e.printStackTrace();
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new JsonError("系统异常，提交失败！");
         }
         return new JsonData("提交成功！");
@@ -379,6 +389,7 @@ public class XsThService {
         try {
             thMapper.updateStatusToCommited(th.getLsh(),th.getCkuserid());
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new JsonError("单据保存失败");
         }
         return new JsonData("提交成功");
@@ -428,6 +439,7 @@ public class XsThService {
         try {
             ghMapper.insert(gh);
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new JsonError("单据保存失败");
         }
 
@@ -446,9 +458,11 @@ public class XsThService {
                     t.getLx(),t.getLsh(),"GH");
 
             if(ghMapper.updateStatusToCommited(gh.getLsh(),gh.getCkuserid())!=1){
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
                 return new JsonError("单据状态异常，提交失败！");
             }
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new JsonError("系统异常，提交失败！");
         }
         return new JsonData("提交成功！");
@@ -465,6 +479,7 @@ public class XsThService {
                 return new JsonError("单据状态异常，作废失败！");
             }
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             return new JsonError("系统异常，作废失败！");
         }
         return new JsonData("作废成功！");
@@ -512,6 +527,7 @@ public class XsThService {
             kucnMapper.insertRtKucnLog(bill.getHh(),bill.getSl()*(-1),bill.getStorageCode(),bill.getDeptCode(),
                     bill.getLx(),bill.getLsh(),"XSCX");
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
     }
@@ -522,6 +538,7 @@ public class XsThService {
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
     }
@@ -541,6 +558,7 @@ public class XsThService {
             kucnMapper.insertRtKucnLog(bill.getHh(),bill.getSl()*(-1),bill.getStorageCode(),bill.getDeptCode(),
                     bill.getLx(),bill.getLsh(),"GHCX");
         } catch (Exception e){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
     }

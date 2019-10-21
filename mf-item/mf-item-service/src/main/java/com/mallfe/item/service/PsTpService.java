@@ -824,21 +824,25 @@ public class PsTpService {
                     kucnMapper.addKucn(mx.getSl(),result.getId());
                 }
 
-                if(kucnMapper.addRtKucn(mx.getHh(),mx.getSl(),ghpsrk.getStoreCode(),mx.getLx())==0){
-                    Kucn rt = new Kucn();
-                    rt.setHh(mx.getHh());
-                    rt.setLx(mx.getLx());
-                    rt.setDeptCode(ghpsrk.getDeptCode());
-                    rt.setStoreCode(ghpsrk.getStoreCode());
-                    rt.setKucn(mx.getSl());
-                    kucnMapper.insertRtKucn(rt);
-                }
 
-                kucnMapper.insertRtKucnLog(mx.getHh(),mx.getSl()*(-1),ghpsrk.getStoreCode(),ghpsrk.getDeptCode(),
-                        mx.getLx(),ghpsrk.getLsh(),"GHPSRK");
 
+                //未送达，不修改即时库存
                 if(mx.getStatus()== 2){
                     ghMapper.updateStatusToUnGhps(ghpsrk.getLsh());
+                }
+                else{
+                    if(kucnMapper.addRtKucn(mx.getHh(),mx.getSl(),ghpsrk.getStoreCode(),mx.getLx())==0){
+                        Kucn rt = new Kucn();
+                        rt.setHh(mx.getHh());
+                        rt.setLx(mx.getLx());
+                        rt.setDeptCode(ghpsrk.getDeptCode());
+                        rt.setStoreCode(ghpsrk.getStoreCode());
+                        rt.setKucn(mx.getSl());
+                        kucnMapper.insertRtKucn(rt);
+                    }
+
+                    kucnMapper.insertRtKucnLog(mx.getHh(),mx.getSl()*(-1),ghpsrk.getStoreCode(),ghpsrk.getDeptCode(),
+                            mx.getLx(),ghpsrk.getLsh(),"GHPSRK");
                 }
 
 
