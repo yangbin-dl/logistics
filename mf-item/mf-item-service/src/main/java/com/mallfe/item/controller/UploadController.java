@@ -33,6 +33,11 @@ public class UploadController {
         return ResponseEntity.ok(uploadService.uploadImage(file));
     }
 
+    @PostMapping("imagejson")
+    public JsonObject uploadImageReturnJosn(@RequestParam("file")MultipartFile file){
+        return uploadService.uploadImageReturnJson(file);
+    }
+
     @ResponseBody
     @RequestMapping("/fileUploadByRequest")
     public JsonObject fileUploadByRequest(UploadRequestMessage request, HttpServletRequest servlet) throws Exception {

@@ -109,4 +109,26 @@ public class UploadService {
         jsonData = new JsonData(response);
         return jsonData;
     }
+
+    public JsonObject uploadImageReturnJson(MultipartFile file) {
+        try{
+            //校验文件类型
+            String contentType = file.getContentType();
+            if(!ALLOW_TYPES.contains(contentType)){
+                throw new MallfeException(ExceptionEnum.INVALID_FILE_TYPE);
+            }
+
+            //校验文件内容
+            BufferedImage image = ImageIO.read(file.getInputStream());
+            if(image == null){
+                throw new MallfeException(ExceptionEnum.INVALID_FILE_TYPE);
+            }
+            String extension = StringUtils.substringAfterLast(file.getOriginalFilename(),".");
+            StorePath storePath = fastFileStorageClient.uploadImageAndCrtThumbImage(file.getInputStream(),file.getSize(),extension,null);
+            return new JsonData(storePath);
+        }
+        catch (IOException e){
+            throw new MallfeException(ExceptionEnum.INVALID_FILE_TYPE);
+        }
+    }
 }
