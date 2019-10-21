@@ -76,6 +76,7 @@ filter:
     - /api/item/item/pl
     - /api/item/item/pltree
     - /api/item/xsth/pagesh
+    - /api/item/upload/image
     - /zuul/api/item/upload/image
     - /api/item/xsth/appinsertgh
     - /api/item/xsth/appcommitgh
