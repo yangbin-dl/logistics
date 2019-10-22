@@ -46,7 +46,8 @@ public class UploadService {
             }
             String extension = StringUtils.substringAfterLast(file.getOriginalFilename(),".");
             StorePath storePath = fastFileStorageClient.uploadImageAndCrtThumbImage(file.getInputStream(),file.getSize(),extension,null);
-            return "http://120.201.127.207:2389/"+storePath.getFullPath();
+            //return "http://120.201.127.207:2389/"+storePath.getFullPath();
+            return storePath.getFullPath();
         }
         catch (IOException e){
             throw new MallfeException(ExceptionEnum.INVALID_FILE_TYPE);
