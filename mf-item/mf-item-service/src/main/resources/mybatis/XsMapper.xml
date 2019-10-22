@@ -153,6 +153,43 @@
         </where>
         order by lrsj desc
     </select>
+
+    <select id="selectAllBill2" resultType="com.mallfe.item.pojo.AllBill">
+        select billtype, lsh, lrid, a.truename, status, lrsj, hh, pinm, sl, a.lx,
+        concat(ifnull(province,''),' ',ifnull(city,''),' ',ifnull(district,''),' ',ifnull(location,'')) as location, phone, contact, qwsj, sdsj,xingh,tm,remark,province,city,district,
+        case status
+        when 0 then '新增'
+        when 1 then '未派车'
+        when 2 then '已派车'
+        when 3 then '已送达'
+        when 9 then '已作废'
+        end as statusInfo,
+        a.store_code as storeCode,store_name as storeName,a.storage_code as storageCode,storage_name as storageName,
+        a.dept_code as deptCode,dept_name as deptName,driver_name as driverName,driver_phone as driverPhone
+        from vw_xs a left join mf_user_pl b on a.plbm=b.plbm
+        inner join mf_user c on a.store_code=c.store_code and b.uid=c.id and c.lx= 1
+        <where>
+            <if test="lrid != null">
+                c.id = #{lrid}
+            </if>
+
+            <if test="phone != null">
+                and a.phone = #{phone}
+            </if>
+            <if test="lsh != null">
+                and a.lsh = #{lsh}
+            </if>
+            <if test="hh != null">
+                and a.hh = #{hh}
+            </if>
+            <if test="contact != null">
+                and a.contact = #{contact}
+            </if>
+
+        </where>
+        order by a.lrsj desc
+    </select>
+
     <select id="selectOneBill" resultType="com.mallfe.item.pojo.AllBill">
         select lsh, lrid, truename, status, lrsj, hh, pinm, sl, lx,province,city,district,
                concat(ifnull(province,''),' ',ifnull(city,''),' ',ifnull(district,''),' ',ifnull(location,'')) as location, phone, contact, qwsj, sdsj,xingh,tm,remark,
