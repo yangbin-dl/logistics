@@ -1,14 +1,14 @@
 package com.mallfe.item.controller;
 
 import com.mallfe.common.json.JsonObject;
-import com.mallfe.item.pojo.UploadRequestMessage;
 import com.mallfe.item.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 描述
@@ -38,11 +38,4 @@ public class UploadController {
         return uploadService.uploadImageReturnJson(file);
     }
 
-    @ResponseBody
-    @RequestMapping("/fileUploadByRequest")
-    public JsonObject fileUploadByRequest(UploadRequestMessage request, HttpServletRequest servlet) throws Exception {
-        JsonObject jObject = new JsonObject();
-        jObject = uploadService.fileUpload(request,servlet);
-        return jObject;
-    }
 }
