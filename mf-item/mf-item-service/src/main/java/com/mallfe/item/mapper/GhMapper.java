@@ -33,7 +33,10 @@ public interface GhMapper extends Mapper<Gh>, MySqlMapper<Gh> {
 
     List<Gh> selectGhWithLsh(@Param("lsh") String lsh);
 
-    List<Gh> selectGhList(@Param("key") String key,@Param("status") Integer status,@Param("uid")Long uid);
+    List<Gh> selectGhList(@Param("key") String key,
+                          @Param("status") Integer status,
+                          @Param("uid")Long uid,
+                          @Param("rq") String rq);
 
     /**
      * 更新为已配车

@@ -114,7 +114,10 @@
 
             <if test="uid != null">
                 and g.id =#{uid}
+            </if>
 
+            <if test ="rq != null and rq !='' ">
+                and b.qwsj &lt;= #{rq}
             </if>
         </where>
         order by b.lsh desc

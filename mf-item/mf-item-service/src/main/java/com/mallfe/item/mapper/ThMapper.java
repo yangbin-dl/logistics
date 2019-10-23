@@ -52,7 +52,10 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
     
     List<Th> selectThWithLsh(@Param("lsh") String lsh);
 
-    List<Th> selectThList(@Param("key") String key,@Param("status") Integer status, @Param("uid") Long uid);
+    List<Th> selectThList(@Param("key") String key,
+                          @Param("status") Integer status,
+                          @Param("uid") Long uid,
+                          @Param("rq") String rq);
 
     int updateStatusToArrival(@Param("lsh") String lsh);
 
