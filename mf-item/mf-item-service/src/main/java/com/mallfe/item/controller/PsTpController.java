@@ -193,7 +193,7 @@ public class PsTpController {
             @RequestParam(value = "status", required = false) Integer status,
             @RequestParam(value = "uid", required = false) Long uid
     ) {
-        PageResult<Tp> result = psTpService.queryTpByPage(page, rows, status);
+        PageResult<Tp> result = psTpService.queryTpByPage(page, rows, status, key);
         return ResponseEntity.ok(result);
     }
 
@@ -243,7 +243,7 @@ public class PsTpController {
             @RequestParam(value = "status", required = false) Integer status,
             @RequestParam(value = "uid", required = false) Long uid
     ) {
-        PageResult<Ghps> result = psTpService.queryGhpsByPage(page,rows, status);
+        PageResult<Ghps> result = psTpService.queryGhpsByPage(page,rows, status,key);
         return ResponseEntity.ok(result);
     }
 

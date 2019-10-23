@@ -25,7 +25,7 @@ public interface TpMapper extends Mapper<Tp> {
 
     int updateStatusToFinish(@Param("lsh") String lsh);
 
-    List<Tp> selectTp(@Param("status")Integer status, @Param("lsh") String lsh);
+    List<Tp> selectTp(@Param("status")Integer status, @Param("lsh") String lsh, @Param("key") String key);
 
     void updateTpmxToUnFinish(@Param("lsh") String lsh);
 
