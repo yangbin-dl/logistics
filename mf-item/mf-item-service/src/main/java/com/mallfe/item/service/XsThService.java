@@ -125,7 +125,7 @@ public class XsThService {
         PageHelper.startPage(page, rows);
 
         //查询
-        List<Xs> list = xsMapper.selectXsList(key,status,uid);
+        List<Xs> list = xsMapper.selectXsList(key,status,uid,null);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -142,7 +142,7 @@ public class XsThService {
         //分页
         PageHelper.startPage(page, rows);
 
-        List<Th> list = thMapper.selectThList(key,status,uid);
+        List<Th> list = thMapper.selectThList(key,status,uid,null);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }
@@ -281,20 +281,20 @@ public class XsThService {
         return new JsonData(consumer);
     }
 
-    public List<Xs> queryXsForPs(Long uid,String lsh) {
+    public List<Xs> queryXsForPs(Long uid,String lsh,String rq) {
         List<Xs> list;
 
         if(StringUtils.isNotBlank(lsh)){
             list = xsMapper.selectXsWithLsh(lsh);
         } else{
-            list = xsMapper.selectXsList(null,1,uid);
+            list = xsMapper.selectXsList(null,1,uid,rq);
         }
 
         return list;
     }
 
 
-    public List<Th> queryThForTp(Long uid,String lsh) {
+    public List<Th> queryThForTp(Long uid,String lsh,String rq) {
         List<Th> list;
 
         if(StringUtils.isNotBlank(lsh)){
@@ -302,7 +302,7 @@ public class XsThService {
         } else{
             Th th = new Th();
             th.setStatus(1);
-            list = thMapper.selectThList(null,1,uid);
+            list = thMapper.selectThList(null,1,uid,rq);
         }
         return list;
     }
@@ -485,13 +485,13 @@ public class XsThService {
         return new JsonData("作废成功！");
     }
 
-    public List<Gh> queryGhForGh(Long uid, String lsh) {
+    public List<Gh> queryGhForGh(Long uid, String lsh, String rq) {
         List<Gh> list;
 
         if(StringUtils.isNotBlank(lsh)){
             list = ghMapper.selectGhWithLsh(lsh);
         } else{
-            list = ghMapper.selectGhList(null,1,uid);
+            list = ghMapper.selectGhList(null,1,uid,rq);
         }
 
         return list;
@@ -501,7 +501,7 @@ public class XsThService {
         //分页
         PageHelper.startPage(page, rows);
 
-        List<Gh> list = ghMapper.selectGhList(key,status,uid);
+        List<Gh> list = ghMapper.selectGhList(key,status,uid,null);
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
         }

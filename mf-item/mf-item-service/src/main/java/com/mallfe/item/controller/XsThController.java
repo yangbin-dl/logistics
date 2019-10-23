@@ -219,20 +219,23 @@ public class XsThController {
 
     @GetMapping("psmx")
     public ResponseEntity<List<Xs>> queryXsForPs(@RequestParam(value = "lsh", required = false) String lsh,
-                                                 @RequestParam(value = "uid") Long uid){
-        return ResponseEntity.ok(xsThService.queryXsForPs(uid,lsh));
+                                                 @RequestParam(value = "uid") Long uid,
+                                                 @RequestParam(value = "rq", required = false) String rq){
+        return ResponseEntity.ok(xsThService.queryXsForPs(uid,lsh,rq));
     }
 
     @GetMapping("tpmx")
     public ResponseEntity<List<Th>> queryThForTp(@RequestParam(value = "lsh", required = false) String lsh,
-                                                 @RequestParam(value = "uid") Long uid){
-        return ResponseEntity.ok(xsThService.queryThForTp(uid,lsh));
+                                                 @RequestParam(value = "uid") Long uid,
+                                                 @RequestParam(value = "rq", required = false) String rq){
+        return ResponseEntity.ok(xsThService.queryThForTp(uid,lsh,rq));
     }
 
     @GetMapping("ghmx")
     public ResponseEntity<List<Gh>> queryThForGh(@RequestParam(value = "lsh", required = false) String lsh,
-                                                 @RequestParam(value = "uid") Long uid){
-        return ResponseEntity.ok(xsThService.queryGhForGh(uid,lsh));
+                                                 @RequestParam(value = "uid") Long uid,
+                                                 @RequestParam(value = "rq", required = false) String rq){
+        return ResponseEntity.ok(xsThService.queryGhForGh(uid,lsh,rq));
     }
 
     /**

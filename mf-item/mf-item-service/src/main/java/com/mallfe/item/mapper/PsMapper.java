@@ -40,7 +40,7 @@ public interface PsMapper extends Mapper<Ps> {
     void updatePsmxStatusToUnFinish(@Param("lsh")String lsh);
 
 
-    List<Ps> selectPs(@Param("status")Integer status, @Param("lsh") String lsh);
+    List<Ps> selectPs(@Param("status")Integer status, @Param("lsh") String lsh,@Param("key") String key);
 
     List<AllBill> selectList(@Param("driverCode") String driveCode,
                              @Param("phone") String phone,

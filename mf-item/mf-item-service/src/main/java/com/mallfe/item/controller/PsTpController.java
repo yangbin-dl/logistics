@@ -143,7 +143,7 @@ public class PsTpController {
             @RequestParam(value = "status", required = false) Integer status,
             @RequestParam(value = "uid", required = false) Long uid
     ) {
-        PageResult<Ps> result = psTpService.queryPsByPage(page,rows, status);
+        PageResult<Ps> result = psTpService.queryPsByPage(page,rows, status,key);
         return ResponseEntity.ok(result);
     }
 

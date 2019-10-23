@@ -108,4 +108,38 @@ public class WlBill {
      */
     @Transient
     private String storeName ;
+    /**
+     * 省
+     */
+    @Transient
+    private String province;
+
+    /**
+     * 市
+     */
+    @Transient
+    private String city;
+
+    /**
+     * 区
+     */
+    @Transient
+    private String district;
+    /**
+     * 详细地址
+     */
+    @Transient
+    private String location;
+
+    /**
+     * 联系电话
+     */
+    @Transient
+    private String phone;
+
+    /**
+     * 联系人
+     */
+    @Transient
+    private String contact;
 }

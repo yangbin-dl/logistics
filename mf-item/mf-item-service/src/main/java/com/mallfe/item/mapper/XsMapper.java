@@ -63,7 +63,10 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
 
     List<Xs> selectXsWithLshForRk(@Param("lsh") String lsh);
 
-    List<Xs> selectXsList(@Param("key") String key,@Param("status") Integer status,@Param("uid")Long uid);
+    List<Xs> selectXsList(@Param("key") String key,
+                          @Param("status") Integer status,
+                          @Param("uid")Long uid,
+                          @Param("rq") String rq);
 
     List<AllBill> selectAllBill(@Param("lrid") String lrid,
                                 @Param("phone")String phone,

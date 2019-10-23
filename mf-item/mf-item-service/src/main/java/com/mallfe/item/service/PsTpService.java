@@ -366,12 +366,12 @@ public class PsTpService {
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
     }
-    public PageResult<Ps> queryPsByPage(Integer page, Integer rows, Integer status) {
+    public PageResult<Ps> queryPsByPage(Integer page, Integer rows, Integer status,String key) {
         //分页
         PageHelper.startPage(page, rows);
 
         //查询
-        List<Ps> list = psMapper.selectPs(status,null);
+        List<Ps> list = psMapper.selectPs(status,null,key);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -424,7 +424,7 @@ public class PsTpService {
         Ps ps = new Ps();
         ps.setLsh(lsh);
 
-        List<Ps> t = psMapper.selectPs(null,lsh);
+        List<Ps> t = psMapper.selectPs(null,lsh,null);
         if(!t.isEmpty()){
             ps = t.get(0);
         }
