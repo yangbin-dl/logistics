@@ -40,7 +40,9 @@ public interface GhpsMapper extends Mapper<Ghps> {
     void updateGhpsmxStatusToUnFinish(@Param("lsh") String lsh);
 
 
-    List<Ghps> selectGhps(@Param("status") Integer status, @Param("lsh") String lsh);
+    List<Ghps> selectGhps(@Param("status") Integer status,
+                          @Param("lsh") String lsh,
+                          @Param("key") String key);
 
     List<AllBill> selectList(@Param("driverCode") String driveCode,
                              @Param("phone") String phone,

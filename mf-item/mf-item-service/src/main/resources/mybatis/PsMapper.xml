@@ -35,21 +35,22 @@
         <where>
             a.billtype='PS'
 
-            <if test="lsh != null">
+            <if test="lsh != null and lsh != ''">
                 and a.psdh = #{lsh}
             </if>
             <if test="status != null">
                 and a.wl_status = #{status}
             </if>
 
-            <if test="key != null">
+            <if test="key != null and lsh != ''">
                 and (a.location like CONCAT('%',#{key},'%')
                 or a.lsh like CONCAT('%',#{key},'%')
+                or a.psdh like CONCAT('%',#{key},'%')
                 or a.phone like CONCAT('%',#{key},'%')
                 )
             </if>
         </where>
-        order by a.lsh desc
+        order by a.psdh desc
 
     </select>
     <select id="selectList" resultType="com.mallfe.item.pojo.AllBill">

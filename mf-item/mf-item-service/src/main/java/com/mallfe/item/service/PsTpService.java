@@ -384,12 +384,12 @@ public class PsTpService {
         return new PageResult<>(info.getTotal(), list);
     }
 
-    public PageResult<Tp> queryTpByPage(Integer page, Integer rows, Integer status) {
+    public PageResult<Tp> queryTpByPage(Integer page, Integer rows, Integer status, String key) {
         //分页
         PageHelper.startPage(page, rows);
 
         //查询
-        List<Tp> list = tpMapper.selectTp(status,null);
+        List<Tp> list = tpMapper.selectTp(status,null,key);
 
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
@@ -402,12 +402,12 @@ public class PsTpService {
 
     }
 
-    public PageResult<Ghps> queryGhpsByPage(Integer page, Integer rows, Integer status) {
+    public PageResult<Ghps> queryGhpsByPage(Integer page, Integer rows, Integer status, String key) {
         //分页
         PageHelper.startPage(page, rows);
 
         //查询
-        List<Ghps> list = ghpsMapper.selectGhps(status,null);
+        List<Ghps> list = ghpsMapper.selectGhps(status,null, key);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -437,7 +437,7 @@ public class PsTpService {
         Tp tp = new Tp();
         tp.setLsh(lsh);
 
-        List<Tp> t = tpMapper.selectTp(null,lsh);
+        List<Tp> t = tpMapper.selectTp(null,lsh,null);
         if(!t.isEmpty()){
             tp = t.get(0);
         }
@@ -449,7 +449,7 @@ public class PsTpService {
         Ghps ghps = new Ghps();
         ghps.setLsh(lsh);
 
-        List<Ghps> t = ghpsMapper.selectGhps(null,lsh);
+        List<Ghps> t = ghpsMapper.selectGhps(null,lsh,null);
         if(!t.isEmpty()){
             ghps = t.get(0);
         }

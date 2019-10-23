@@ -19,27 +19,37 @@
 
 
     <select id="selectGhps" resultType="com.mallfe.item.pojo.Ghps">
-        select a.id,a.lsh,a.driver_code as driverCode,b.driver_name as driverName,
-               a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.status,a.sdsj,
+        select a.psdh as lsh,a.driver_code as driverCode,b.driver_name as driverName,
+               a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.wl_status as status,a.sdsj,
+               a.location,a.phone,a.contact,
                a.lrid,a.lrusername,a.truename,a.store_code as storeCode,a.dept_code as deptCode,
-               case a.status
+               case a.wl_status
                    when 0 then '新增'
                    when 1 then '已发出'
                    when 2 then '已送达'
                    when 9 then '已作废'
                end as statusInfo,d.store_name as storeName
-        from mf_ghps a left join mf_driver b on a.driver_code = b.driver_code
+        from vw_ps a left join mf_driver b on a.driver_code = b.driver_code
         left join mf_path c on a.path_code = c.path_code
         left join mf_store d on a.store_code = d.store_code
         <where>
+            a.billtype='GHPS'
+
             <if test="lsh != null">
-                a.lsh = #{lsh}
+                and a.psdh = #{lsh}
             </if>
             <if test="status != null">
-                and a.status = #{status}
+                and a.wl_status = #{status}
+            </if>
+            <if test="key != null and lsh != ''">
+                and (a.location like CONCAT('%',#{key},'%')
+                or a.lsh like CONCAT('%',#{key},'%')
+                or a.psdh like CONCAT('%',#{key},'%')
+                or a.phone like CONCAT('%',#{key},'%')
+                )
             </if>
         </where>
-        order by a.lsh desc
+        order by a.psdh desc
 
     </select>
     <select id="selectList" resultType="com.mallfe.item.pojo.AllBill">
