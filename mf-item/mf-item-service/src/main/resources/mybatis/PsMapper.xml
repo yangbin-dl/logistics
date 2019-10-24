@@ -21,9 +21,9 @@
     <select id="selectPs" resultType="com.mallfe.item.pojo.Ps">
         select a.psdh as lsh,a.driver_code as driverCode,b.driver_name as driverName,
                a.location,a.phone,a.contact,
-               a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.wl_status as status,a.sdsj,
+               a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.ps_status as status,a.sdsj,
                a.lrid,a.lrusername,a.truename,a.store_code as storeCode,a.dept_code as deptCode,
-               case a.wl_status
+               case a.ps_status
                    when 0 then '新增'
                    when 1 then '已发出'
                    when 2 then '已送达'
@@ -39,10 +39,10 @@
                 and a.psdh = #{lsh}
             </if>
             <if test="status != null">
-                and a.wl_status = #{status}
+                and a.ps_status = #{status}
             </if>
 
-            <if test="key != null and lsh != ''">
+            <if test="key != null and key != ''">
                 and (a.location like CONCAT('%',#{key},'%')
                 or a.lsh like CONCAT('%',#{key},'%')
                 or a.psdh like CONCAT('%',#{key},'%')
