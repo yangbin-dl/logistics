@@ -108,13 +108,13 @@ public class CkdbService {
 
 
     public void finishBilll(Ckdb ckdb){
-        ckdb = ckdbMapper.selectBill(ckdb.getLsh(),null,3).get(0);
+        ckdb = ckdbMapper.selectBill(ckdb.getLsh(),null,2).get(0);
 
         if(ckdb == null){
             throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
         }
 
-        ckdbMapper.updateStatus(ckdb.getLsh(),4,3);
+        ckdbMapper.updateStatus(ckdb.getLsh(),4,2);
 
 
         for(CkdbDetail mx : ckdbMapper.selectMx(ckdb.getLsh())){

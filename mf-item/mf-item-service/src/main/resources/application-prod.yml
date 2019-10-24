@@ -9,6 +9,8 @@ spring:
     hikari:
       maximum-pool-size: 30
       minimum-idle: 10
+logging:
+  config: classpath:logback-spring.xml
 eureka:
   client:
     service-url:

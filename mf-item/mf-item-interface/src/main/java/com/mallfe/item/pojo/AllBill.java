@@ -157,4 +157,10 @@ public class AllBill {
     private String ckuserid;
     @Transient
     private String ckusername;
+
+    private String billNumber;
+
+    private String sdpicUrl;
+    @Transient
+    private String picServer = "http://120.201.127.207:2389/";
 }

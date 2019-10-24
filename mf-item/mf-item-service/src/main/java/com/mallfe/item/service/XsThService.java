@@ -313,6 +313,12 @@ public class XsThService {
             return new JsonError("单据保存失败");
         }
 
+        if(xs.getBillNumber() != null){
+            if(xsMapper.selectBillNumberCount(xs.getBillNumber())>=0 ){
+                return new JsonError("单据保存失败");
+            }
+        }
+
         String lsh = commonService.getLsh("XS");
         xs.setLsh(lsh);
         xs.setStatus(0);

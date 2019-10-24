@@ -104,13 +104,14 @@ public class CkdbController {
 
     @PostMapping("shenhe2")
     public ResponseEntity<Null> shenhe2(@RequestBody Ckdb ckdb){
-        ckdbService.shenhe2(ckdb.getLsh());
+        //ckdbService.shenhe2(ckdb.getLsh());
+        ckdbService.finishBilll(ckdb);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("shenhe3")
     public ResponseEntity<Null> shenhe3(@RequestBody Ckdb ckdb){
-        ckdbService.finishBilll(ckdb);
+        //ckdbService.finishBilll(ckdb);
         return ResponseEntity.ok().build();
     }
 

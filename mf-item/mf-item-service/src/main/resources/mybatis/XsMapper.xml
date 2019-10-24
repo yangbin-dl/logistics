@@ -295,4 +295,7 @@
 
         order by a.lrsj desc
     </select>
+    <select id="selectBillNumberCount" resultType="java.lang.Integer">
+        select count(*) from mf_xs where status != 9 and bill_number = #{billNumber}
+    </select>
 </mapper>
