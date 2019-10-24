@@ -2,7 +2,7 @@
 
 <configuration scan="true" scanPeriod="10 seconds">
     <include resource="org/springframework/boot/logging/logback/base.xml" />
-    <property name="LOG_PATH" value="../logs" />
+    <property name="LOG_PATH" value="logs" />
     <!-- ERROR级别日志 -->
     <!-- 滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件 RollingFileAppender-->
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -31,6 +31,13 @@
     <!-- DEBUG级别日志 appender -->
     <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>${LOG_PATH}/pms_debug.log</File>
+
+        <!-- 过滤器，只记录WARN级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_PATH}/service-debug-%d{yyyyMMdd}.log.%i</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -67,9 +74,9 @@
     <logger name="com.mallfe.item" level="DEBUG"/>
 
     <root level="INFO">
-<!--        <appender-ref ref="INFO" />
+        <appender-ref ref="INFO" />
         <appender-ref ref="DEBUG" />
-        <appender-ref ref="ERROR" />-->
+        <appender-ref ref="ERROR" />
     </root>
 
 </configuration>
