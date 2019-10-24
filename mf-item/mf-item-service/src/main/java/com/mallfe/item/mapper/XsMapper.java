@@ -110,4 +110,6 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
      * @return
      */
     int updateStatusToRevert(@Param("lsh") String lsh);
+
+    int selectBillNumberCount(@Param("billNumber") String billNumber);
 }
