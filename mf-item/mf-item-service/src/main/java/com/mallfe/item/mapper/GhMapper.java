@@ -68,4 +68,6 @@ public interface GhMapper extends Mapper<Gh>, MySqlMapper<Gh> {
     List<Gh> selectGhWithLshForRk(@Param("lsh") String lsh);
 
     int updateStatusToArrival(@Param("lsh") String lsh);
+
+    Integer selectBillNumberCount(@Param("billNumber") String billNumber);
 }

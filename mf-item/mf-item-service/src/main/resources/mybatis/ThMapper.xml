@@ -112,4 +112,7 @@
                           left join mf_sp c on b.hh=c.hh
         where a.lsh = #{lsh}
     </select>
+    <select id="selectBillNumberCount" resultType="java.lang.Integer">
+        select count(*) from mf_th where status != 9 and bill_number = #{billNumber}
+    </select>
 </mapper>

@@ -314,8 +314,8 @@ public class XsThService {
         }
 
         if(xs.getBillNumber() != null){
-            if(xsMapper.selectBillNumberCount(xs.getBillNumber())>=0 ){
-                return new JsonError("单据保存失败");
+            if(xsMapper.selectBillNumberCount(xs.getBillNumber()) !=0 ){
+                return new JsonError("单据号重复");
             }
         }
 
@@ -345,6 +345,12 @@ public class XsThService {
 
         if(th.getProvince() == null || th.getCity() == null || th.getDistrict() == null){
             return new JsonError("单据保存失败");
+        }
+
+        if(th.getBillNumber() != null){
+            if(thMapper.selectBillNumberCount(th.getBillNumber()) !=0 ){
+                return new JsonError("单据号重复");
+            }
         }
 
         String lsh = commonService.getLsh("TH");
@@ -429,6 +435,12 @@ public class XsThService {
     public JsonObject appInsertGh(Gh gh) {
         if(gh.getProvince() == null || gh.getCity() == null || gh.getDistrict() == null){
             return new JsonError("单据保存失败");
+        }
+
+        if(gh.getBillNumber() != null){
+            if(ghMapper.selectBillNumberCount(gh.getBillNumber()) !=0 ){
+                return new JsonError("单据号重复");
+            }
         }
 
         String lsh = commonService.getLsh("GH");

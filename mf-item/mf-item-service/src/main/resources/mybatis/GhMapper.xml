@@ -138,5 +138,8 @@
                dept_code as deptCode,dept_name as deptName,driver_name as driverName,driver_phone as driverPhone
         from vw_xs where lsh = #{lsh}
     </select>
+    <select id="selectBillNumberCount" resultType="java.lang.Integer">
+        select count(*) from mf_gh where status != 9 and bill_number = #{billNumber}
+    </select>
 
 </mapper>
