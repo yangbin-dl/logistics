@@ -6,7 +6,7 @@
         update mf_th set status = 1,ckuserid=#{ckuserid},cksj=now() where lsh = #{lsh} and status = 0
     </update>
 
-    <update id="updateStatusToCancel" parameterType="com.mallfe.item.pojo.Xs">
+    <update id="updateStatusToCancel" parameterType="com.mallfe.item.pojo.Th">
         update mf_th set status = 9,ckuserid=#{ckuserid},cksj=now() where lsh = #{lsh} and status = 0
     </update>
 
@@ -14,7 +14,7 @@
         update mf_th set status = 10 where lsh = #{lsh} and status = 1
     </update>
 
-    <update id="updateBill" parameterType="com.mallfe.item.pojo.Xs">
+    <update id="updateBill" parameterType="com.mallfe.item.pojo.Th">
         update mf_th set hh=#{hh},sl=#{sl},lx=#{lx},province=#{province},city=#{city},
             district=#{district},location=#{location},phone=#{phone},contact=#{contact},remark=#{remark},
                          qwsj=#{qwsj} where lsh = #{lsh} and status = 0
