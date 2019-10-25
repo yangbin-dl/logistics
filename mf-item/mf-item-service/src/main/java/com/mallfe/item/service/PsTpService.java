@@ -744,9 +744,14 @@ public class PsTpService {
     }
 
     public void inStoreTp(Tprk tprk) {
+        Integer newLx = tprk.getNewLx();
         try {
             //更新退配入库单状态
             if(tprkMapper.updateTprkStatus(tprk.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
+            }
+
+            if(tprkMapper.updateTprkMxLx(tprk.getLsh(),newLx)!=1){
                 throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
             }
 
@@ -757,7 +762,7 @@ public class PsTpService {
             for(TprkDetail mx: list){
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
-                kc.setLx(mx.getLx());
+                kc.setLx(newLx);
                 kc.setDeptCode(tprk.getDeptCode());
                 kc.setStoreCode(tprk.getStoreCode());
                 Kucn result = kucnMapper.selectOne(kc);
@@ -770,10 +775,10 @@ public class PsTpService {
                     kucnMapper.addKucn(mx.getSl(),result.getId());
                 }
 
-                if(kucnMapper.addRtKucn(mx.getHh(),mx.getSl(),tprk.getStoreCode(),mx.getLx())==0){
+                if(kucnMapper.addRtKucn(mx.getHh(),mx.getSl(),tprk.getStoreCode(),newLx)==0){
                     Kucn rt = new Kucn();
                     rt.setHh(mx.getHh());
-                    rt.setLx(mx.getLx());
+                    rt.setLx(newLx);
                     rt.setDeptCode(tprk.getDeptCode());
                     rt.setStoreCode(tprk.getStoreCode());
                     rt.setKucn(mx.getSl());
@@ -781,14 +786,14 @@ public class PsTpService {
                 }
 
                 kucnMapper.insertRtKucnLog(mx.getHh(),mx.getSl()*(-1),tprk.getStoreCode(),tprk.getDeptCode(),
-                        mx.getLx(),tprk.getLsh(),"TPRK");
+                        newLx,tprk.getLsh(),"TPRK");
 
                 KucnIn kucnIn = new KucnIn();
                 kucnIn.setYwbm("TPRK");
                 kucnIn.setHh(mx.getHh());
                 kucnIn.setSl(mx.getSl());
                 kucnIn.setLsh(mx.getLsh());
-                kucnIn.setLx(mx.getLx());
+                kucnIn.setLx(newLx);
                 kucnIn.setStoreCode(tprk.getStoreCode());
                 kucnIn.setDeptCode(tprk.getDeptCode());
                 //插入入库记录
@@ -800,9 +805,14 @@ public class PsTpService {
     }
 
     public void inStoreGhps(Ghpsrk ghpsrk) {
+        Integer newLx = ghpsrk.getNewLx();
         try {
             //更新退配入库单状态
             if(ghpsrkMapper.updateGhpsrkStatus(ghpsrk.getLsh())!=1){
+                throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
+            }
+
+            if(ghpsrkMapper.updateGhpsrkMxLx(ghpsrk.getLsh(),newLx)!=1){
                 throw new MallfeException(ExceptionEnum.BILL_STATUS_ERROR);
             }
 
@@ -811,7 +821,7 @@ public class PsTpService {
             for(GhpsrkDetail mx: list){
                 Kucn kc = new Kucn();
                 kc.setHh(mx.getHh());
-                kc.setLx(mx.getLx());
+                kc.setLx(newLx);
                 kc.setDeptCode(ghpsrk.getDeptCode());
                 kc.setStoreCode(ghpsrk.getStoreCode());
                 Kucn result = kucnMapper.selectOne(kc);
@@ -831,10 +841,10 @@ public class PsTpService {
                     ghMapper.updateStatusToUnGhps(ghpsrk.getLsh());
                 }
                 else{
-                    if(kucnMapper.addRtKucn(mx.getHh(),mx.getSl(),ghpsrk.getStoreCode(),mx.getLx())==0){
+                    if(kucnMapper.addRtKucn(mx.getHh(),mx.getSl(),ghpsrk.getStoreCode(),newLx)==0){
                         Kucn rt = new Kucn();
                         rt.setHh(mx.getHh());
-                        rt.setLx(mx.getLx());
+                        rt.setLx(newLx);
                         rt.setDeptCode(ghpsrk.getDeptCode());
                         rt.setStoreCode(ghpsrk.getStoreCode());
                         rt.setKucn(mx.getSl());
@@ -842,7 +852,7 @@ public class PsTpService {
                     }
 
                     kucnMapper.insertRtKucnLog(mx.getHh(),mx.getSl()*(-1),ghpsrk.getStoreCode(),ghpsrk.getDeptCode(),
-                            mx.getLx(),ghpsrk.getLsh(),"GHPSRK");
+                            newLx,ghpsrk.getLsh(),"GHPSRK");
                 }
 
 
@@ -851,7 +861,7 @@ public class PsTpService {
                 kucnIn.setHh(mx.getHh());
                 kucnIn.setSl(mx.getSl());
                 kucnIn.setLsh(mx.getLsh());
-                kucnIn.setLx(mx.getLx());
+                kucnIn.setLx(newLx);
                 kucnIn.setStoreCode(ghpsrk.getStoreCode());
                 kucnIn.setDeptCode(ghpsrk.getDeptCode());
                 //插入入库记录

@@ -62,11 +62,11 @@
         where a.lsh = #{lsh}
     </select>
     <select id="selectGhWithLshForRk" resultType="com.mallfe.item.pojo.Gh">
-        select b.id, b.lsh, b.hh, b.sl, b.lx, b.province, b.city, b.district, concat(ifnull(b.province,''),' ',ifnull(b.city,''),' ',ifnull(b.district,''),' ',ifnull(b.location,'')) as location, b.phone,
+        select b.id, b.lsh, b.hh, b.sl, b.province, b.city, b.district, concat(ifnull(b.province,''),' ',ifnull(b.city,''),' ',ifnull(b.district,''),' ',ifnull(b.location,'')) as location, b.phone,
                b.contact, b.qwsj, b.lrid, b.lrusername, b.truename, a.status,
-               case b.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
+               case IF(a.new_lx is null, b.lx, a.new_lx) when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
                b.driver_code as driverCode, b.path_code as pathCode,
-               b.store_code as storeCode,e.store_name as storeName,
+               b.store_code as storeCode,e.store_name as storeName,IF(a.new_lx is null, b.lx, a.new_lx) as lx,
                b.storage_code as storageCode,f.store_name as storageName,
                b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,
                c.pinm,c.xingh,c.tm,b.remark,

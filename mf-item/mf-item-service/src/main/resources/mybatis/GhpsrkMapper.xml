@@ -16,6 +16,9 @@
     <update id="updateGhpsrkStatus">
         update mf_ghpsrk set status = 3 where lsh=#{lsh} and status=2
     </update>
+    <update id="updateGhpsrkMxLx">
+        update mf_ghpsrk_mx set new_lx = #{newlx} where lsh=#{lsh}
+    </update>
     <select id="selectGhpsrk" resultType="com.mallfe.item.pojo.Ghpsrk">
         select lsh,a.lrid,a.driver_code as driverCode,b.driver_name as driverName,
                a.lrusername, a.truename,case a.lx when 1 then '送达' when 2 then '未送达' end as lxInfo,
