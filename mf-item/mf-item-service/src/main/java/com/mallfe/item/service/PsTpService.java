@@ -993,7 +993,7 @@ public class PsTpService {
         return new JsonData(new PageResult<>(info.getTotal(), list));
     }
 
-    public JsonObject appPsArrive(String psdh) {
+    public JsonObject appPsArrive(String psdh,String sdpicUrl) {
         List<AllBill> billList = psMapper.selectList(null,null,null,null,psdh,0,1);
 
         if(billList == null){
@@ -1014,6 +1014,11 @@ public class PsTpService {
             ps.setList(list);
             //准备数据完毕
             arrivedPs(ps);
+            //更新送达照片
+            if(sdpicUrl != null){
+                xsMapper.updateSdpicUrl(ps.getXsList().get(0).getLsh(),sdpicUrl);
+            }
+
         }
         else if(bill.getBilltype().equals("TP")){
             Tp tp = queryTpByLsh(psdh);
@@ -1027,6 +1032,11 @@ public class PsTpService {
             tp.setList(list);
             //准备数据完毕
             arrivedTp(tp);
+            //更新送达照片
+            if(sdpicUrl != null){
+                thMapper.updateSdpicUrl(tp.getThList().get(0).getLsh(),sdpicUrl);
+            }
+
         }
         else {
             Ghps ghps = queryGhpsByLsh(psdh);
@@ -1039,6 +1049,11 @@ public class PsTpService {
             ghps.setList(list);
             //准备数据完毕
             arrivedGhps(ghps);
+            //更新送达照片
+            if(sdpicUrl != null){
+                ghMapper.updateSdpicUrl(ghps.getGhList().get(0).getLsh(),sdpicUrl);
+            }
+
         }
         
         return new JsonData("提交成功！");
@@ -1233,5 +1248,31 @@ public class PsTpService {
         PageInfo<Ghpsrk> info = new PageInfo<>(list);
 
         return new PageResult<>(info.getTotal(), list);
+    }
+
+    public JsonObject updateSdpic(String psdh, String sdpicUrl) {
+
+        List<AllBill> billList = psMapper.selectList(null,null,null,null,psdh,null,null);
+
+        if(CollectionUtils.isEmpty(billList)){
+            return new JsonError("操作失败！");
+        }
+
+        AllBill bill = billList.get(0);
+
+        if(bill.getBilltype().equals("PS")){
+            //更新送达照片
+            xsMapper.updateSdpicUrl(bill.getLsh(),sdpicUrl);
+        }
+        else if(bill.getBilltype().equals("TP")){
+            //更新送达照片
+            thMapper.updateSdpicUrl(bill.getLsh(),sdpicUrl);
+        }
+        else {
+            //更新送达照片
+            ghMapper.updateSdpicUrl(bill.getLsh(),sdpicUrl);
+        }
+
+        return new JsonData("提交成功！");
     }
 }

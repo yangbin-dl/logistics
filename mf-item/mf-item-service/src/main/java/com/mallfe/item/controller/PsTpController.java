@@ -550,7 +550,8 @@ public class PsTpController {
     @PostMapping("apppsarrive")
     public JsonObject appPsArrive(@RequestBody Ps ps){
 
-        return psTpService.appPsArrive(ps.getLsh());
+        return psTpService.appPsArrive(ps.getLsh(),ps.getSdpicUrl());
+
     }
 
     @PostMapping("apppsnotarrive")
@@ -558,4 +559,8 @@ public class PsTpController {
         return psTpService.appPsNotArrive(ps.getLsh());
     }
 
+    @PostMapping("appupdatesdpic")
+    public JsonObject appUpdateSdpic(@RequestBody Ps ps){
+        return psTpService.updateSdpic(ps.getLsh(),ps.getSdpicUrl());
+    }
 }

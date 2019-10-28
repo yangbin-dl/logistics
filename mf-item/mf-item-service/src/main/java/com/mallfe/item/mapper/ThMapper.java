@@ -69,4 +69,6 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
     int updateStatusToRevert(@Param("lsh") String lsh);
 
     Integer selectBillNumberCount(@Param("billNumber") String billNumber);
+
+    int updateSdpicUrl(@Param("lsh") String lsh,@Param("sdpicUrl") String sdpicUrl);
 }

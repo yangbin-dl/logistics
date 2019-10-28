@@ -83,3 +83,4 @@ filter:
     - /api/item/xsth/appquerygh
     - /api/item/upload/imagejson
     - /zuul/api/item/upload/imagejson
+    - /api/item/pstp/appupdatesdpic

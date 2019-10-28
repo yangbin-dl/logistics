@@ -42,6 +42,9 @@
     <update id="updateStatusToArrival">
         update mf_gh set status = '3',sdsj=now() where lsh=#{lsh} and status = '2'
     </update>
+    <update id="updateSdpicUrl">
+        update mf_gh set sdpic_url = #{sdpicUrl} where lsh=#{lsh}
+    </update>
 
     <select id="selectGhWithLsh" resultType="com.mallfe.item.pojo.Gh">
         select b.id, b.lsh , b.hh, b.sl, b.lx, b.province, b.city, b.district,
