@@ -97,4 +97,11 @@ public class Lxtz extends Sp{
     private String deptName;
 
     private String remark;
+    @Transient
+    private String newLxInfo;
+    @Transient
+    private String oldLxInfo;
+    @Transient
+    private String cksj;
+
 }

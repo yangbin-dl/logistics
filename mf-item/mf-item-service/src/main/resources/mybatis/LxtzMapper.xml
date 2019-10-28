@@ -13,7 +13,7 @@
         update mf_lxtz set sl=#{sl},old_lx = #{oldLx},new_lx = #{newLx},remark = #{remark} where lsh=#{lsh} and status=0
     </update>
     <update id="updateStatsuToFinish">
-        update mf_lxtz set status=3 where lsh=#{lsh}
+        update mf_lxtz set status=3,cksj = now() where lsh=#{lsh}
     </update>
     <update id="updateStatusToZero">
         update mf_lxtz set status=0 where lsh=#{lsh} and status=1
@@ -22,6 +22,18 @@
         select lsh,a.dept_code as deptCode,a.store_code as storeCode,b.store_name as storeName,
                a.hh,c.pinm,c.xingh,a.sl,a.old_lx as oldLx,a.new_lx as
         newLx,remark,a.truename,a.lrsj,a.cksj,
+               case a.new_lx
+                   when 0 then '正常'
+                   when 1 then '样机'
+                   when 2 then '赠品'
+                   when 3 then '残次'
+                   end  as newLxInfo,
+               case a.old_lx
+                   when 0 then '正常'
+                   when 1 then '样机'
+                   when 2 then '赠品'
+                   when 3 then '残次'
+                   end  as oldLxInfo,
                a.status,
                case a.status
                    when 0 then '新增'
@@ -48,6 +60,18 @@
                a.hh,c.pinm,c.xingh,a.sl,a.old_lx as oldLx,a.new_lx as
                    newLx,remark,a.truename,a.lrsj,a.cksj,
                a.status,
+               case a.new_lx
+                   when 0 then '正常'
+                   when 1 then '样机'
+                   when 2 then '赠品'
+                   when 3 then '残次'
+                   end  as newLxInfo,
+               case a.old_lx
+                   when 0 then '正常'
+                   when 1 then '样机'
+                   when 2 then '赠品'
+                   when 3 then '残次'
+                   end  as oldLxInfo,
                case a.status
                    when 0 then '新增'
                    when 1 then '配送经理审核'

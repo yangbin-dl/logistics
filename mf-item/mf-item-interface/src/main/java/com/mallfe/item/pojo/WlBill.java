@@ -148,4 +148,7 @@ public class WlBill {
      */
     @Transient
     private Integer newLx;
+
+    @Transient
+    private String sdpicUrl;
 }
