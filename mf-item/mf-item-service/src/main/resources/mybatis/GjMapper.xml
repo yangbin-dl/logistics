@@ -7,6 +7,9 @@
     <update id="updateBillStatus">
         update mf_gj set status=#{status} where lsh=#{lsh}
     </update>
+    <update id="updateStatusToZero">
+        update mf_gj set status=0 where lsh=#{lsh} and (status !=3 and status !=9)
+    </update>
 
     <select id="selectBill" resultType="com.mallfe.item.pojo.Gj">
         select a.id,lsh,lrid,username,truename,status,

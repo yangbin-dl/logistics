@@ -112,4 +112,10 @@ public class LxtzController {
         Lxtz result = lxtzService.queryBill(lsh);
         return ResponseEntity.ok(result);
     }
+
+    @PostMapping("reject")
+    public ResponseEntity<Null> reject(@RequestBody Lxtz lxtz){
+        lxtzService.reject(lxtz);
+        return ResponseEntity.ok().build();
+    }
 }

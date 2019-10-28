@@ -269,4 +269,10 @@ public class GjService {
             throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
     }
+
+    public void reject(Gj gj) {
+        if(gjMapper.updateStatusToZero(gj.getLsh())!=1){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
 }

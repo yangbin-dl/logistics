@@ -265,4 +265,10 @@ public class FcService {
             throw new MallfeException(ExceptionEnum.UNDER_STOCK);
         }
     }
+
+    public void reject(Fc fc) {
+        if(fcMapper.updateStatusToZero(fc.getLsh())!=1){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
 }

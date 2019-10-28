@@ -18,6 +18,9 @@
     <update id="updateStatus">
         update mf_ckdb set status=#{status} where status=#{oldStatus} and lsh=#{lsh}
     </update>
+    <update id="updateStatusToZero">
+        update mf_ckdb set status=0 where lsh=#{lsh} and (status= 1 or status= 2)
+    </update>
     <delete id="deleteMx">
         delete from mf_ckdb_mx where lsh=#{lsh}
     </delete>

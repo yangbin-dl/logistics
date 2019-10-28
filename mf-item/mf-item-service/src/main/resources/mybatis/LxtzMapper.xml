@@ -15,6 +15,9 @@
     <update id="updateStatsuToFinish">
         update mf_lxtz set status=3 where lsh=#{lsh}
     </update>
+    <update id="updateStatusToZero">
+        update mf_lxtz set status=0 where lsh=#{lsh} and status=1
+    </update>
     <select id="selectBills" resultType="com.mallfe.item.pojo.Lxtz">
         select lsh,a.dept_code as deptCode,a.store_code as storeCode,b.store_name as storeName,
                a.hh,c.pinm,c.xingh,a.sl,a.old_lx as oldLx,a.new_lx as

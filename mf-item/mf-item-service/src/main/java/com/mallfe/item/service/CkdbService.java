@@ -224,4 +224,10 @@ public class CkdbService {
             throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
         }
     }
+
+    public void reject(Ckdb ckdb) {
+        if(ckdbMapper.updateStatusToZero(ckdb.getLsh())!=1){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
 }
