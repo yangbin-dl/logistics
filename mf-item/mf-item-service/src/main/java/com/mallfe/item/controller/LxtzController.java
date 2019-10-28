@@ -48,7 +48,8 @@ public class LxtzController {
 
     @PostMapping("shenhe1")
     public ResponseEntity<Null> shenhe1(@RequestBody Lxtz lxtz) {
-        lxtzService.shenhe1(lxtz.getLsh());
+        //lxtzService.shenhe1(lxtz.getLsh());
+        lxtzService.shenhe2(lxtz.getLsh());
         return ResponseEntity.ok().build();
     }
 
