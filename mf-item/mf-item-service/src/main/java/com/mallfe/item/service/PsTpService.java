@@ -1015,7 +1015,7 @@ public class PsTpService {
             //准备数据完毕
             arrivedPs(ps);
             //更新送达照片
-            if(sdpicUrl != null){
+            if(StringUtils.isNotBlank(sdpicUrl)){
                 xsMapper.updateSdpicUrl(ps.getXsList().get(0).getLsh(),sdpicUrl);
             }
 
@@ -1033,7 +1033,7 @@ public class PsTpService {
             //准备数据完毕
             arrivedTp(tp);
             //更新送达照片
-            if(sdpicUrl != null){
+            if(!StringUtils.isNotBlank(sdpicUrl)){
                 thMapper.updateSdpicUrl(tp.getThList().get(0).getLsh(),sdpicUrl);
             }
 
@@ -1050,7 +1050,7 @@ public class PsTpService {
             //准备数据完毕
             arrivedGhps(ghps);
             //更新送达照片
-            if(sdpicUrl != null){
+            if(!StringUtils.isNotBlank(sdpicUrl)){
                 ghMapper.updateSdpicUrl(ghps.getGhList().get(0).getLsh(),sdpicUrl);
             }
 

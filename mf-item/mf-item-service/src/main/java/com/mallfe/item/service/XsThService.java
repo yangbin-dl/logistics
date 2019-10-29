@@ -536,6 +536,8 @@ public class XsThService {
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
 
+
+
             AllBill bill = xsMapper.selectOneBill(lsh);
 
             if(kucnMapper.addRtKucn(bill.getHh(),bill.getSl(), bill.getStorageCode(), bill.getLx()) != 1){
