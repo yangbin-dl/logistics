@@ -24,7 +24,8 @@ eureka:
     instance-id: ${spring.application.name}:${server.port}
 mybatis:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    log-impl: org.apache.ibatis.logging.log4j.Log4jImpl
   mapper-locations: classpath*:/mybatis/*.xml
 # 开启和暴露所有端点
 management:
