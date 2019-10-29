@@ -82,7 +82,7 @@
                          when 9 then '已作废'
                         end as statusInfo,a.qwsj,a.dept_code as deptCode,a.dept_name as deptName,
                hh,pinm,sl,case a.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo,
-               a.xingh,a.store_code as storeCode,a.store_name as storeName,
+               a.xingh,a.store_code as storeCode,a.store_name as storeName,picUrl,sdpicUrl,
                a.storage_code as storageCode,a.storage_name as storageName,a.contact,a.phone,
                concat(ifnull(a.province,''),' ',ifnull(a.city,''),' ',ifnull(a.district,''),
                    ' ',ifnull(a.location,'')) as location,a.plbm,b.plmc,a.truename,a.driver_name as driverName,
