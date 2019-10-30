@@ -56,7 +56,7 @@
         </if>
 
         <if test="storagecode!= null and storagecode != '' ">
-            and a.store_code = #{storagecode}
+            and a.storage_code = #{storagecode}
         </if>
 
         <if test="lsh!= null and lsh != '' ">
