@@ -204,4 +204,46 @@
         </where>
         order by mk.dept_code,mk.store_code,mk.hh,mk.lx
     </select>
+    <select id="selectSpInAndOutDeatil" resultType="com.mallfe.item.pojo.SpInAndOutDeatilReport">
+        select sj,a.ywbm,b.ywmc,a.store_code as storeCode,c.store_name as storeName,a.lsh,a.lx,a.rksl,a.cksl,
+               case a.lx when 0 then '正常' when 1 then '样机' when 2 then '赠品' when 3 then '残次' end as lxInfo
+        from (
+                 select sj,ywbm,store_code,lsh,sl as rksl,null as cksl,lx from mf_kucn_in
+                <where>
+                    hh=#{hh} and dept_code = #{deptcode}
+
+                    <if test="lx!= null">
+                        and lx = #{lx}
+                    </if>
+
+                    <if test="storecode != null and storecode != ''">
+                        and store_code = #{storecode}
+                    </if>
+
+                    <if test="strq != null and strq != '' and torq != null and torq != ''">
+                        and sj between #{strq} and concat(#{torq},' 23:59:59')
+                    </if>
+                </where>
+                 union all
+                 select sj,ywbm,store_code,lsh,null as rksl,sl as cksl,lx from mf_kucn_out
+                <where>
+                    hh=#{hh}  and dept_code = #{deptcode}
+
+                    <if test="lx!= null">
+                        and lx = #{lx}
+                    </if>
+
+                    <if test="storecode != null and storecode != ''">
+                        and store_code = #{storecode}
+                    </if>
+
+                    <if test="strq != null and strq != '' and torq != null and torq != ''">
+                        and sj between #{strq} and concat(#{torq},' 23:59:59')
+                    </if>
+                </where>
+             ) a
+                 left join mf_ywbm b on a.ywbm=b.ywbm
+                 left join mf_store c on a.store_code = c.store_code
+        order by sj
+    </select>
 </mapper>

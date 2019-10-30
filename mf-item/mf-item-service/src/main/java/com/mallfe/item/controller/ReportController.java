@@ -1,10 +1,7 @@
 package com.mallfe.item.controller;
 
 import com.mallfe.common.vo.PageResult;
-import com.mallfe.item.pojo.AllBill;
-import com.mallfe.item.pojo.KucnCompareReport;
-import com.mallfe.item.pojo.KucnReport;
-import com.mallfe.item.pojo.KucnStructure;
+import com.mallfe.item.pojo.*;
 import com.mallfe.item.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -97,6 +94,22 @@ public class ReportController {
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "rows", required = false) Integer rows){
         PageResult<KucnCompareReport> result = reportService.getKucnCompareList(deptCode,storageCode,plbm,hh,page,rows);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("spinandoutdetail")
+    public ResponseEntity<PageResult<SpInAndOutDeatilReport>> getSpInAndOutDeatil(
+            @RequestParam(value = "deptcode",required = false) String deptCode,
+            @RequestParam(value = "storecode",required = false) String storeCode,
+            @RequestParam(value = "hh") Integer hh,
+            @RequestParam(value = "lx",required = false) Integer lx,
+            @RequestParam(value = "strq",required = false) String strq,
+            @RequestParam(value = "torq",required = false) String torq,
+            @RequestParam(value = "page", required = false) Integer page,
+            @RequestParam(value = "rows", required = false) Integer rows){
+        PageResult<SpInAndOutDeatilReport> result = reportService.getSpInAndOutDeatil(deptCode,storeCode,hh,lx,strq
+                ,torq,page,
+                rows);
         return ResponseEntity.ok(result);
     }
 }
