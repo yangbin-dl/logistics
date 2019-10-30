@@ -13,7 +13,7 @@
         select  lsh,ddh,status from mf_tp_mx where lsh=#{lsh} and status=1
     </insert>
     <update id="updateTprkStatus">
-        update mf_tprk set status = 3 where lsh=#{lsh} and status=2
+        update mf_tprk set status = 3,rksj=now() where lsh=#{lsh} and status=2
     </update>
     <update id="updateTprkMxLx">
         update mf_tprk_mx set new_lx = #{newlx} where lsh = #{lsh}
