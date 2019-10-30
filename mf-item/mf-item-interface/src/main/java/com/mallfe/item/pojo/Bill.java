@@ -189,4 +189,7 @@ public class Bill {
     private String sdpicUrl;
     @Transient
     private String picServer = "http://120.201.127.207:2389/";
+
+    @Transient
+    private String revertInfo;
 }

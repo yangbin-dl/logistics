@@ -26,7 +26,7 @@
                case a.ps_status
                    when 0 then '新增'
                    when 1 then '已发出'
-                   when 2 then '已送达'
+                   when 2 then '已完成'
                    when 9 then '已作废'
                end as statusInfo,d.store_name as storeName
         from vw_ps a left join mf_driver b on a.driver_code = b.driver_code
@@ -57,13 +57,13 @@
         select billtype, lsh, hh, pinm, sl, lx, psdh,
                concat(ifnull(province,''),' ',ifnull(city,''),' ',ifnull(district,''),' ',ifnull(location,'')) as location,
                phone, contact, qwsj, sdsj,xingh,tm,ifnull(remark,'') as remark,province,city,district,
-               store_code as storeCode,store_name as storeName,lrsj,lrid,truename,
+               store_code as storeCode,store_name as storeName,lrsj,lrid,truename,sdpicurl as sdpicUrl,
                dept_code as deptCode,dept_name as deptName,driver_name as driverName,driver_phone as driverPhone,
                ps_status as psStatus,
                case ps_status
                    when 0 then '新增'
                    when 1 then '已发出'
-                   when 2 then '已送达'
+                   when 2 then '已完成'
                    when 3 then '已作废'
                    end as psStatusInfo,
                wl_status as wlStatus,
@@ -106,7 +106,7 @@
         case a.status
         when 0 then '新增'
         when 1 then '已发出'
-        when 2 then '已送达'
+        when 2 then '已完成'
         when 9 then '已作废'
         end as statusInfo,e.store_name as storeName
         from mf_ps a left join mf_driver b on a.driver_code = b.driver_code
