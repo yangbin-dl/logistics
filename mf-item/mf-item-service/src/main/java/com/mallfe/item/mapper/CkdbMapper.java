@@ -24,4 +24,6 @@ public interface CkdbMapper {
                      @Param("oldStatus") Integer oldStatus);
 
     int updateStatusToZero(@Param("lsh") String lsh);
+
+    int updateStatusToCkFinksh(@Param("lsh") String lsh);
 }

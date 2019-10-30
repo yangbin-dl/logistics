@@ -114,7 +114,8 @@ public class CkdbService {
             throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
         }
 
-        ckdbMapper.updateStatus(ckdb.getLsh(),4,2);
+        //终审使用专用方法
+        ckdbMapper.updateStatusToCkFinksh(ckdb.getLsh());
 
 
         for(CkdbDetail mx : ckdbMapper.selectMx(ckdb.getLsh())){
