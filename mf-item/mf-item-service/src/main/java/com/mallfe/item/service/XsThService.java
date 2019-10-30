@@ -229,7 +229,9 @@ public class XsThService {
 
         if(u.getLx()==1){
 
-            list = xsMapper.selectAllBill(lruserid,phone,lsh,hh,contact);
+
+            //20191030升级为实现同品类商品的查询
+            list = xsMapper.selectAllBill2(lruserid,phone,lsh,hh,contact);
         } else {
             list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
             //临时使用
