@@ -151,7 +151,7 @@ public class ReportService {
                                                                   String storeCode, Integer hh, Integer lx,
                                                                   String strq,
                                                                   String torq, Integer page, Integer rows) {
-        if(deptCode == null){
+        if(deptCode == null || deptCode.equals("")){
             deptCode = "0001";
         }
 
