@@ -126,7 +126,7 @@
         order by b.lsh desc
     </select>
     <select id="selectAllBill" resultType="com.mallfe.item.pojo.AllBill">
-        select billtype, lsh, lrid, truename, status, lrsj, hh, pinm, sl, lx,
+        select billtype, lsh, lrid, truename, status, lrsj, hh, pinm, sl, lx,ckusername,
         concat(ifnull(province,''),' ',ifnull(city,''),' ',ifnull(district,''),' ',ifnull(location,'')) as location,
                phone, contact, qwsj, sdsj,xingh,tm,remark,province,city,district,picUrl,sdpicUrl,billNumber,
                case status
@@ -162,7 +162,7 @@
     </select>
 
     <select id="selectAllBill2" resultType="com.mallfe.item.pojo.AllBill">
-        select billtype, lsh, lrid, a.truename, status, lrsj, hh, pinm, sl, a.lx,
+        select billtype, lsh, lrid, a.truename, status, lrsj, hh, pinm, sl, a.lx,ckusername,
         concat(ifnull(province,''),' ',ifnull(city,''),' ',ifnull(district,''),' ',ifnull(location,'')) as location, phone, contact, qwsj, sdsj,xingh,tm,remark,province,city,district,
         case status
         when 0 then '新增'
@@ -200,7 +200,7 @@
     <select id="selectOneBill" resultType="com.mallfe.item.pojo.AllBill">
         select lsh, lrid, truename, status, lrsj, hh, pinm, sl, lx,province,city,district,
                concat(ifnull(province,''),' ',ifnull(city,''),' ',ifnull(district,''),' ',ifnull(location,'')) as location,
-               phone, contact, qwsj, sdsj,xingh,tm,remark,picUrl,sdpicUrl,billNumber,
+               phone, contact, qwsj, sdsj,xingh,tm,remark,picUrl,sdpicUrl,billNumber,ckusername,
                case status
                    when 0 then '新增'
                    when 1 then '已提交'
@@ -216,7 +216,7 @@
     <select id="selectAllBillByStore" resultType="com.mallfe.item.pojo.AllBill">
         select billtype, lsh, lrid, a.truename, status, lrsj, hh, pinm, sl, a.lx,province,city,district,
         concat(ifnull(province,''),' ',ifnull(city,''),' ',ifnull(district,''),' ',ifnull(location,'')) as location,
-               phone, contact, qwsj, sdsj,xingh,tm,remark,picUrl,sdpicUrl,billNumber,
+               phone, contact, qwsj, sdsj,xingh,tm,remark,picUrl,sdpicUrl,billNumber,ckusername,
         case status
         when 0 then '新增'
         when 1 then '已提交'
