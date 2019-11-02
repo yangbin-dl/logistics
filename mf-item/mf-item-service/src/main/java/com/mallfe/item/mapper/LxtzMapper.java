@@ -16,7 +16,9 @@ public interface LxtzMapper {
 
     int updateStatsuToFinish(@Param("lsh") String lsh);
 
-    List<Lxtz> selectBills(@Param("lsh") String lsh, @Param("status")int status);
+    List<Lxtz> selectBills(@Param("lsh") String lsh, @Param("status")Integer status);
 
     Lxtz selectOneBill(@Param("lsh") String lsh);
+
+    int updateStatusToZero(@Param("lsh")String lsh);
 }

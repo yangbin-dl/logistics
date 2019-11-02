@@ -14,7 +14,10 @@
         select  lsh,ddh,status from mf_ghps_mx where lsh=#{lsh}
     </insert>
     <update id="updateGhpsrkStatus">
-        update mf_ghpsrk set status = 3 where lsh=#{lsh} and status=2
+        update mf_ghpsrk set status = 3,rksj=now() where lsh=#{lsh} and status=2
+    </update>
+    <update id="updateGhpsrkMxLx">
+        update mf_ghpsrk_mx set new_lx = #{newlx} where lsh=#{lsh}
     </update>
     <select id="selectGhpsrk" resultType="com.mallfe.item.pojo.Ghpsrk">
         select lsh,a.lrid,a.driver_code as driverCode,b.driver_name as driverName,

@@ -84,3 +84,4 @@ filter:
     - /zuul/api/item/upload/fileUploadByRequest
     - /api/item/upload/imagejson
     - /zuul/api/item/upload/imagejson
+    - /api/item/pstp/appupdatesdpic

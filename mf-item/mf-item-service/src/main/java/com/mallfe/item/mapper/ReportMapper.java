@@ -1,9 +1,6 @@
 package com.mallfe.item.mapper;
 
-import com.mallfe.item.pojo.AllBill;
-import com.mallfe.item.pojo.KucnCompareReport;
-import com.mallfe.item.pojo.KucnReport;
-import com.mallfe.item.pojo.KucnStructure;
+import com.mallfe.item.pojo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -57,4 +54,11 @@ public interface ReportMapper
                                              @Param("storagecode") String storageCode,
                                              @Param("plbm") String plbm,
                                              @Param("hh") Integer hh);
+
+    List<SpInAndOutDeatilReport> selectSpInAndOutDeatil(@Param("deptcode") String deptCode,
+                                                        @Param("storecode") String storageCode,
+                                                        @Param("hh") Integer hh,
+                                                        @Param("lx") Integer lx,
+                                                        @Param("strq") String strq,
+                                                        @Param("torq") String torq);
 }

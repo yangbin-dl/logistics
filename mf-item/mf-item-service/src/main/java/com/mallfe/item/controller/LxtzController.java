@@ -48,7 +48,8 @@ public class LxtzController {
 
     @PostMapping("shenhe1")
     public ResponseEntity<Null> shenhe1(@RequestBody Lxtz lxtz) {
-        lxtzService.shenhe1(lxtz.getLsh());
+        //lxtzService.shenhe1(lxtz.getLsh());
+        lxtzService.shenhe2(lxtz.getLsh());
         return ResponseEntity.ok().build();
     }
 
@@ -110,5 +111,11 @@ public class LxtzController {
     public ResponseEntity<Lxtz> queryMx(@RequestParam("lsh") String lsh) {
         Lxtz result = lxtzService.queryBill(lsh);
         return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("reject")
+    public ResponseEntity<Null> reject(@RequestBody Lxtz lxtz){
+        lxtzService.reject(lxtz);
+        return ResponseEntity.ok().build();
     }
 }

@@ -3,8 +3,10 @@
 <mapper namespace="com.mallfe.item.mapper.LxtzMapper">
 
     <insert id="insertBill" parameterType="com.mallfe.item.pojo.Lxtz" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into mf_lxtz(lsh, dept_code, store_code,lrid, lrusername, truename, status, lrsj, hh, sl, old_lx, new_lx, remark)
-        VALUES(#{lsh},#{deptCode},#{storeCode},#{lrid},#{lrusername},#{truename},0,#{lrsj},#{hh},#{sl},#{oldLx},#{newLx},#{remark})
+        insert into mf_lxtz(lsh, dept_code, store_code,lrid, lrusername, truename, status, lrsj, hh, sl, old_lx,
+                            new_lx, remark,lrsj)
+        VALUES(#{lsh},#{deptCode},#{storeCode},#{lrid},#{lrusername},#{truename},0,#{lrsj},#{hh},#{sl},#{oldLx},
+               #{newLx},#{remark},now())
     </insert>
     <update id="updateStatus">
         update mf_lxtz set status=#{newstatus} where lsh=#{lsh} and status =#{oldstatus}
@@ -13,12 +15,27 @@
         update mf_lxtz set sl=#{sl},old_lx = #{oldLx},new_lx = #{newLx},remark = #{remark} where lsh=#{lsh} and status=0
     </update>
     <update id="updateStatsuToFinish">
-        update mf_lxtz set status=4 where lsh=#{lsh}
+        update mf_lxtz set status=3,cksj = now() where lsh=#{lsh}
+    </update>
+    <update id="updateStatusToZero">
+        update mf_lxtz set status=0 where lsh=#{lsh} and status=1
     </update>
     <select id="selectBills" resultType="com.mallfe.item.pojo.Lxtz">
         select lsh,a.dept_code as deptCode,a.store_code as storeCode,b.store_name as storeName,
                a.hh,c.pinm,c.xingh,a.sl,a.old_lx as oldLx,a.new_lx as
         newLx,remark,a.truename,a.lrsj,a.cksj,
+               case a.new_lx
+                   when 0 then '正常'
+                   when 1 then '样机'
+                   when 2 then '赠品'
+                   when 3 then '残次'
+                   end  as newLxInfo,
+               case a.old_lx
+                   when 0 then '正常'
+                   when 1 then '样机'
+                   when 2 then '赠品'
+                   when 3 then '残次'
+                   end  as oldLxInfo,
                a.status,
                case a.status
                    when 0 then '新增'
@@ -45,6 +62,18 @@
                a.hh,c.pinm,c.xingh,a.sl,a.old_lx as oldLx,a.new_lx as
                    newLx,remark,a.truename,a.lrsj,a.cksj,
                a.status,
+               case a.new_lx
+                   when 0 then '正常'
+                   when 1 then '样机'
+                   when 2 then '赠品'
+                   when 3 then '残次'
+                   end  as newLxInfo,
+               case a.old_lx
+                   when 0 then '正常'
+                   when 1 then '样机'
+                   when 2 then '赠品'
+                   when 3 then '残次'
+                   end  as oldLxInfo,
                case a.status
                    when 0 then '新增'
                    when 1 then '配送经理审核'

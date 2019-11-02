@@ -146,4 +146,29 @@ public class ReportService {
                 list);
 
     }
+
+    public PageResult<SpInAndOutDeatilReport> getSpInAndOutDeatil(String deptCode,
+                                                                  String storeCode, Integer hh, Integer lx,
+                                                                  String strq,
+                                                                  String torq, Integer page, Integer rows) {
+        if(deptCode == null || deptCode.equals("")){
+            deptCode = "0001";
+        }
+
+        if(page != null && rows !=null){
+            PageHelper.startPage(page, rows);
+        }
+
+        List<SpInAndOutDeatilReport> list= reportMapper.selectSpInAndOutDeatil(deptCode,storeCode,hh,lx,strq,torq);
+
+        if(CollectionUtils.isEmpty(list)){
+            throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
+        }
+
+        PageInfo<SpInAndOutDeatilReport> info = new PageInfo<>(list);
+
+        return new PageResult<>(info.getTotal(),(rows == null || rows==0 )  ? 1: info.getTotal()%rows == 0 ?
+                info.getTotal()/rows : info.getTotal()/rows+1,
+                list);
+    }
 }

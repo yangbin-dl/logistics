@@ -35,7 +35,7 @@
         <!-- 过滤器，只记录WARN级别的日志 -->
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>DEBUG</level>
-            <onMatch>ACCEPT</onMatch>
+            <onMatch>ACCEPT</onMatch> 
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -71,8 +71,8 @@
         </encoder>
     </appender>
 
-    <logger name="com.mallfe.item" level="DEBUG"/>
-
+    <logger name="com.mallfe" level="INFO"/>
+    
     <root level="INFO">
         <appender-ref ref="INFO" />
         <appender-ref ref="DEBUG" />

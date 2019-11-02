@@ -114,7 +114,8 @@ public class CkdbService {
             throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
         }
 
-        ckdbMapper.updateStatus(ckdb.getLsh(),4,2);
+        //终审使用专用方法
+        ckdbMapper.updateStatusToCkFinksh(ckdb.getLsh());
 
 
         for(CkdbDetail mx : ckdbMapper.selectMx(ckdb.getLsh())){
@@ -222,6 +223,12 @@ public class CkdbService {
     public void delete(String lsh) {
         if(ckdbMapper.updateStatus(lsh,9,0)!=1){
             throw new MallfeException(ExceptionEnum.OPERATION_FALURE);
+        }
+    }
+
+    public void reject(Ckdb ckdb) {
+        if(ckdbMapper.updateStatusToZero(ckdb.getLsh())!=1){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
         }
     }
 }

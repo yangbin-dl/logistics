@@ -26,4 +26,6 @@ public interface TprkMapper extends Mapper<Tprk> {
     int updateTprkStatus(@Param("lsh") String lsh);
 
     List<TprkDetail> selectTprkMx(@Param("lsh") String lsh);
+
+    int updateTprkMxLx(@Param("lsh") String lsh, @Param("newlx") Integer newLx);
 }

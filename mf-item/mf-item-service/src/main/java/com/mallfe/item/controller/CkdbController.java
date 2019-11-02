@@ -2,6 +2,7 @@ package com.mallfe.item.controller;
 
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.Ckdb;
+import com.mallfe.item.pojo.Lxtz;
 import com.mallfe.item.service.CkdbService;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.jdbc.Null;
@@ -127,5 +128,9 @@ public class CkdbController {
         return ResponseEntity.ok().build();
     }
 
-
+    @PostMapping("reject")
+    public ResponseEntity<Null> reject(@RequestBody Ckdb ckdb){
+        ckdbService.reject(ckdb);
+        return ResponseEntity.ok().build();
+    }
 }

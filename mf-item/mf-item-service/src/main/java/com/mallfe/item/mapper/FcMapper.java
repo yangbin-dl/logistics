@@ -21,4 +21,5 @@ public interface FcMapper extends Mapper<Fc>, MySqlMapper<Fc> {
 
     List<Fc> selectBill(@Param("lsh") String lsh, @Param("status") Integer status);
 
+    int updateStatusToZero(@Param("lsh") String lsh);
 }

@@ -15,4 +15,5 @@ public interface GjMapper extends Mapper<Gj>, MySqlMapper<Gj> {
 
     List<Gj> selectBill(@Param("lsh") String lsh, @Param("status") Integer status);
 
+    int updateStatusToZero(@Param("lsh") String lsh);
 }

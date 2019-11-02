@@ -2,6 +2,7 @@ package com.mallfe.item.controller;
 
 import com.mallfe.common.vo.PageResult;
 import com.mallfe.item.pojo.Fc;
+import com.mallfe.item.pojo.Gj;
 import com.mallfe.item.service.FcService;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,5 +116,11 @@ public class FcController {
     public ResponseEntity<Null> shenhe2(@RequestBody Fc fc){
         fcService.shenhe2(fc);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PostMapping("reject")
+    public ResponseEntity<Null> reject(@RequestBody Fc fc){
+        fcService.reject(fc);
+        return ResponseEntity.ok().build();
     }
 }

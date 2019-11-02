@@ -229,7 +229,9 @@ public class XsThService {
 
         if(u.getLx()==1){
 
-            list = xsMapper.selectAllBill(lruserid,phone,lsh,hh,contact);
+
+            //20191030升级为实现同品类商品的查询
+            list = xsMapper.selectAllBill2(lruserid,phone,lsh,hh,contact);
         } else {
             list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
             //临时使用
@@ -314,8 +316,8 @@ public class XsThService {
         }
 
         if(xs.getBillNumber() != null){
-            if(xsMapper.selectBillNumberCount(xs.getBillNumber())>=0 ){
-                return new JsonError("单据保存失败");
+            if(xsMapper.selectBillNumberCount(xs.getBillNumber()) !=0 ){
+                return new JsonError("单据号重复");
             }
         }
 
@@ -345,6 +347,12 @@ public class XsThService {
 
         if(th.getProvince() == null || th.getCity() == null || th.getDistrict() == null){
             return new JsonError("单据保存失败");
+        }
+
+        if(th.getBillNumber() != null){
+            if(thMapper.selectBillNumberCount(th.getBillNumber()) !=0 ){
+                return new JsonError("单据号重复");
+            }
         }
 
         String lsh = commonService.getLsh("TH");
@@ -429,6 +437,12 @@ public class XsThService {
     public JsonObject appInsertGh(Gh gh) {
         if(gh.getProvince() == null || gh.getCity() == null || gh.getDistrict() == null){
             return new JsonError("单据保存失败");
+        }
+
+        if(gh.getBillNumber() != null){
+            if(ghMapper.selectBillNumberCount(gh.getBillNumber()) !=0 ){
+                return new JsonError("单据号重复");
+            }
         }
 
         String lsh = commonService.getLsh("GH");
@@ -523,6 +537,8 @@ public class XsThService {
             if(xsMapper.updateStatusToRevert(lsh) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
+
+
 
             AllBill bill = xsMapper.selectOneBill(lsh);
 

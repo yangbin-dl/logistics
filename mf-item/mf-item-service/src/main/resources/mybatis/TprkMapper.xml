@@ -13,18 +13,26 @@
         select  lsh,ddh,status from mf_tp_mx where lsh=#{lsh} and status=1
     </insert>
     <update id="updateTprkStatus">
-        update mf_tprk set status = 3 where lsh=#{lsh} and status=2
+        update mf_tprk set status = 3,rksj=now() where lsh=#{lsh} and status=2
+    </update>
+    <update id="updateTprkMxLx">
+        update mf_tprk_mx set new_lx = #{newlx} where lsh = #{lsh}
     </update>
     <select id="selectTprk" resultType="com.mallfe.item.pojo.Tprk">
-        select lsh,a.lrid,a.driver_code as driverCode,b.driver_name as driverName,
-               lrusername, a.truename,
+        select a.lsh,a.lrid,a.driver_code as driverCode,b.driver_name as driverName,
+               a.lrusername, a.truename,
                a.path_code as pathCode,c.path_name as pathName,
                a.lrsj,a.fcsj,a.sdsj,a.status,d.store_name as storeName,
+               concat(ifnull(g.province,''),' ',ifnull(g.city,''),' ',
+                      ifnull(g.district,''),'',ifnull(g.location,'')) as location,
+               g.phone, g.contact,
                case a.status when 2 then '待入库' when 3 then '已入库' end as statusInfo
         from mf_tprk a left join mf_driver b on a.driver_code = b.driver_code
                        left join mf_path c on a.path_code = c.path_code
                        left join mf_store d on a.store_code = d.store_code
                        inner join mf_user e on a.store_code = e.storage_code
+                       left join mf_tprk_mx f on a.lsh=f.lsh
+                       left join mf_th g on f.ddh=g.lsh
                 where e.id=#{uid} and a.status = #{status}
         order by a.lsh desc
     </select>

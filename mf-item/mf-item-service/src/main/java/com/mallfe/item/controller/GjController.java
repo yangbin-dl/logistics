@@ -145,4 +145,10 @@ public class GjController {
         gjService.shenhe2(gj);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("reject")
+    public ResponseEntity<Null> reject(@RequestBody Gj gj){
+        gjService.reject(gj);
+        return ResponseEntity.ok().build();
+    }
 }

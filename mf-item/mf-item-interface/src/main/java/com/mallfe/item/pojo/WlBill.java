@@ -142,4 +142,13 @@ public class WlBill {
      */
     @Transient
     private String contact;
+
+    /**
+     * 新类型
+     */
+    @Transient
+    private Integer newLx;
+
+    @Transient
+    private String sdpicUrl;
 }

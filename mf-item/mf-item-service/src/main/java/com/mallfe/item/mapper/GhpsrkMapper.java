@@ -24,4 +24,6 @@ public interface GhpsrkMapper extends Mapper<Ghpsrk> {
     int updateGhpsrkStatus(@Param("lsh") String lsh);
 
     List<GhpsrkDetail> selectGhpsrkMx(@Param("lsh") String lsh);
+
+    int updateGhpsrkMxLx(@Param("lsh") String lsh, @Param("newlx") Integer newLx);
 }

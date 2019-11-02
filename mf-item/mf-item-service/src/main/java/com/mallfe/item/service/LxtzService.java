@@ -196,4 +196,10 @@ public class LxtzService {
         Lxtz lxtz = lxtzMapper.selectOneBill(lsh);
         return lxtz;
     }
+
+    public void reject(Lxtz lxtz) {
+        if(lxtzMapper.updateStatusToZero(lxtz.getLsh())!=1){
+            throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
+        }
+    }
 }
