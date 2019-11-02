@@ -315,7 +315,7 @@ public class XsThService {
             return new JsonError("单据保存失败");
         }
 
-        if(xs.getBillNumber() != null){
+        if(StringUtils.isNotEmpty(xs.getBillNumber())){
             if(xsMapper.selectBillNumberCount(xs.getBillNumber()) !=0 ){
                 return new JsonError("单据号重复");
             }
@@ -349,8 +349,9 @@ public class XsThService {
             return new JsonError("单据保存失败");
         }
 
-        if(th.getBillNumber() != null){
-            if(thMapper.selectBillNumberCount(th.getBillNumber()) !=0 ){
+            if(StringUtils.isNotEmpty(th.getBillNumber())){
+
+                if(thMapper.selectBillNumberCount(th.getBillNumber()) !=0 ){
                 return new JsonError("单据号重复");
             }
         }
