@@ -11,7 +11,7 @@
     </update>
 
     <update id="updateStatusToRevert" parameterType="com.mallfe.item.pojo.Gh">
-        update mf_gh set status = 10 where lsh = #{lsh} and status = 1
+        update mf_gh set status = 10,revert_info = #{revertInfo} where lsh = #{lsh} and status = 1
     </update>
 
     <update id="updateBill" parameterType="com.mallfe.item.pojo.Gh">

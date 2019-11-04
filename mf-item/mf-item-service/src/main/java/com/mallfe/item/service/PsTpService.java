@@ -1141,12 +1141,12 @@ public class PsTpService {
         return new JsonData(new PageResult<>(info.getTotal(), list));
     }
 
-    public PageResult<Ps> queryPsckByPage(Integer page, Integer rows, Integer status, Long uid) {
+    public PageResult<Ps> queryPsckByPage(Integer page, Integer rows, Integer status, Long uid, String key) {
         //分页
         PageHelper.startPage(page, rows);
 
         //查询
-        List<Ps> list = psMapper.selectPsWithUid(status,null,uid);
+        List<Ps> list = psMapper.selectPsWithUid(status,null,uid,key);
 
 
         if(CollectionUtils.isEmpty(list)){

@@ -50,5 +50,8 @@ public interface PsMapper extends Mapper<Ps> {
                              @Param("wlstatus") Integer wlstatus,
                              @Param("psstatus") Integer psstatus);
 
-    List<Ps> selectPsWithUid(@Param("status") Integer status, @Param("lsh") String lsh, @Param("uid")Long uid);
+    List<Ps> selectPsWithUid(@Param("status") Integer status,
+                             @Param("lsh") String lsh,
+                             @Param("uid")Long uid,
+                             @Param("key") String key);
 }

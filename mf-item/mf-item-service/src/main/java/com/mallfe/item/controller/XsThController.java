@@ -366,7 +366,7 @@ public class XsThController {
      */
     @PostMapping("revertxs")
     public ResponseEntity<Null> revertXs(@RequestBody Xs xs){
-        xsThService.revertXs(xs.getLsh());
+        xsThService.revertXs(xs);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -377,7 +377,7 @@ public class XsThController {
      */
     @PostMapping("revertth")
     public ResponseEntity<Null> revertTh(@RequestBody Th th){
-        xsThService.revertTh(th.getLsh());
+        xsThService.revertTh(th);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -388,7 +388,7 @@ public class XsThController {
      */
     @PostMapping("revertgh")
     public ResponseEntity<Null> revertTh(@RequestBody Gh gh){
-        xsThService.revertGh(gh.getLsh());
+        xsThService.revertGh(gh);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

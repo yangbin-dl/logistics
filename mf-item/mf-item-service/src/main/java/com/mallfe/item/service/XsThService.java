@@ -545,15 +545,15 @@ public class XsThService {
         return new PageResult<>(info.getTotal(), list);
     }
 
-    public void revertXs(String lsh) {
+    public void revertXs(Xs xs) {
         try {
-            if(xsMapper.updateStatusToRevert(lsh) != 1){
+            if(xsMapper.updateStatusToRevert(xs) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
 
 
 
-            AllBill bill = xsMapper.selectOneBill(lsh);
+            AllBill bill = xsMapper.selectOneBill(xs.getLsh());
 
             if(kucnMapper.addRtKucn(bill.getHh(),bill.getSl(), bill.getStorageCode(), bill.getLx()) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
@@ -567,9 +567,9 @@ public class XsThService {
         }
     }
 
-    public void revertTh(String lsh) {
+    public void revertTh(Th th) {
         try {
-            if(thMapper.updateStatusToRevert(lsh) != 1){
+            if(thMapper.updateStatusToRevert(th) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
         } catch (Exception e){
@@ -578,13 +578,13 @@ public class XsThService {
         }
     }
 
-    public void revertGh(String lsh) {
+    public void revertGh(Gh gh) {
         try {
-            if(ghMapper.updateStatusToRevert(lsh) != 1){
+            if(ghMapper.updateStatusToRevert(gh) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);
             }
 
-            AllBill bill = xsMapper.selectOneBill(lsh);
+            AllBill bill = xsMapper.selectOneBill(gh.getLsh());
 
             if(kucnMapper.addRtKucn(bill.getHh(),bill.getSl(), bill.getStorageCode(), bill.getLx()) != 1){
                 throw new MallfeException(ExceptionEnum.BILL_SAVE_FALURE);

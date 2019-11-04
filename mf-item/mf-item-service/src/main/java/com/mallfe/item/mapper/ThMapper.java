@@ -63,10 +63,10 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
 
     /**
      * 退货单撤销
-     * @param lsh
+     * @param th
      * @return
      */
-    int updateStatusToRevert(@Param("lsh") String lsh);
+    int updateStatusToRevert(Th th);
 
     Integer selectBillNumberCount(@Param("billNumber") String billNumber);
 
