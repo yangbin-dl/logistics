@@ -315,10 +315,14 @@ public class XsThService {
             return new JsonError("单据保存失败");
         }
 
-        if(StringUtils.isNotEmpty(xs.getBillNumber())){
+        if(StringUtils.isNotBlank(xs.getBillNumber())){
             if(xsMapper.selectBillNumberCount(xs.getBillNumber()) !=0 ){
                 return new JsonError("单据号重复");
             }
+        }
+
+        if(StringUtils.isNotBlank(xs.getPicUrl())){
+            xs.setPicUrl(null);
         }
 
         String lsh = commonService.getLsh("XS");
@@ -349,11 +353,15 @@ public class XsThService {
             return new JsonError("单据保存失败");
         }
 
-            if(StringUtils.isNotEmpty(th.getBillNumber())){
+            if(StringUtils.isNotBlank(th.getBillNumber())){
 
                 if(thMapper.selectBillNumberCount(th.getBillNumber()) !=0 ){
                 return new JsonError("单据号重复");
             }
+        }
+
+        if(StringUtils.isNotBlank(th.getPicUrl())){
+            th.setPicUrl(null);
         }
 
         String lsh = commonService.getLsh("TH");
@@ -440,10 +448,14 @@ public class XsThService {
             return new JsonError("单据保存失败");
         }
 
-        if(gh.getBillNumber() != null){
+        if(StringUtils.isNotBlank(gh.getBillNumber())){
             if(ghMapper.selectBillNumberCount(gh.getBillNumber()) !=0 ){
                 return new JsonError("单据号重复");
             }
+        }
+
+        if(StringUtils.isNotBlank(gh.getPicUrl())){
+            gh.setPicUrl(null);
         }
 
         String lsh = commonService.getLsh("GH");
