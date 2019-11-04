@@ -321,7 +321,7 @@ public class XsThService {
             }
         }
 
-        if(StringUtils.isNotBlank(xs.getPicUrl())){
+        if(StringUtils.isBlank(xs.getPicUrl())){
             xs.setPicUrl(null);
         }
 
@@ -360,7 +360,7 @@ public class XsThService {
             }
         }
 
-        if(StringUtils.isNotBlank(th.getPicUrl())){
+        if(StringUtils.isBlank(th.getPicUrl())){
             th.setPicUrl(null);
         }
 
@@ -454,7 +454,7 @@ public class XsThService {
             }
         }
 
-        if(StringUtils.isNotBlank(gh.getPicUrl())){
+        if(StringUtils.isBlank(gh.getPicUrl())){
             gh.setPicUrl(null);
         }
 
