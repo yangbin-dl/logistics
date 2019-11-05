@@ -696,19 +696,10 @@ public class PsTpService {
                                             Long uid) {
         //分页
         PageHelper.startPage(page, rows);
-        //条件过滤
-        Example example = new Example(Psrk.class);
-        if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("lsh",key+"%");
-        }
-        //排序
-        if(StringUtils.isNotBlank(sortBy)){
-            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
+
 
         //查询
-        List<Psrk> list = psrkMapper.selectPsrk(uid,2);
+        List<Psrk> list = psrkMapper.selectPsrk(uid,2,key);
 
 
         if(CollectionUtils.isEmpty(list)){
@@ -1197,19 +1188,9 @@ public class PsTpService {
     public PageResult<Psrk> queryPsrkhisByPage(Integer page, Integer rows, String sortBy, Boolean desc, String key, Long uid) {
         //分页
         PageHelper.startPage(page, rows);
-        //条件过滤
-        Example example = new Example(Psrk.class);
-        if(StringUtils.isNotBlank(key)){
-            example.createCriteria().orLike("lsh",key+"%");
-        }
-        //排序
-        if(StringUtils.isNotBlank(sortBy)){
-            String orderByClause = sortBy + (desc ? " DESC" : " ASC");
-            example.setOrderByClause(orderByClause);
-        }
 
         //查询
-        List<Psrk> list = psrkMapper.selectPsrk(uid,3);
+        List<Psrk> list = psrkMapper.selectPsrk(uid,3,key);
 
 
         if(CollectionUtils.isEmpty(list)){
