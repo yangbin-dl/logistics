@@ -118,7 +118,7 @@
                 a.lsh = #{lsh}
             </if>
             <if test="status != null">
-                and a.status = #{status}
+                and a.ps_status = #{status}
             </if>
             <if test="uid != null and uid != ''">
                 and d.id = #{uid}
