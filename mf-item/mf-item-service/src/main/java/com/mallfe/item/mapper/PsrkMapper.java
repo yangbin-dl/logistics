@@ -20,7 +20,7 @@ public interface PsrkMapper extends Mapper<Psrk> {
 
     int insertFromPs(@Param("lsh") String lsh);
 
-    List<Psrk> selectPsrk(@Param("uid") Long uid, @Param("status") Integer status,@Param("lsh") String lsh);
+    List<Psrk> selectPsrk(@Param("uid") Long uid, @Param("status") Integer status,@Param("key") String key);
 
     int updatePsrkStatus(@Param("lsh") String lsh);
 
