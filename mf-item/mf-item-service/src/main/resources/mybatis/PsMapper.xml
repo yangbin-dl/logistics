@@ -100,7 +100,7 @@
         order by lrsj desc
     </select>
     <select id="selectPsWithUid" resultType="com.mallfe.item.pojo.Ps">
-        select a.lsh,a.driver_code as driverCode,b.driver_name as driverName,
+        select a.psdh as lsh,a.driver_code as driverCode,b.driver_name as driverName,
         a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.ps_status as status,a.sdsj,
         a.lrid,a.lrusername,a.truename,a.store_code as storeCode,a.dept_code as deptCode,
         case a.ps_status
