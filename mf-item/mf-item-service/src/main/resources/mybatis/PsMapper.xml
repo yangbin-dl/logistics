@@ -115,7 +115,7 @@
         left join mf_store e on a.store_code = e.store_code
         <where>
             <if test="lsh != null and lsh != ''">
-                a.lsh = #{lsh}
+                a.psdh = #{lsh}
             </if>
             <if test="status != null">
                 and a.ps_status = #{status}
