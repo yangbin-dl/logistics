@@ -3,9 +3,9 @@
 <mapper namespace="com.mallfe.item.mapper.LxtzMapper">
 
     <insert id="insertBill" parameterType="com.mallfe.item.pojo.Lxtz" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into mf_lxtz(lsh, dept_code, store_code,lrid, lrusername, truename, status, lrsj, hh, sl, old_lx,
+        insert into mf_lxtz(lsh, dept_code, store_code,lrid, lrusername, truename, status,  hh, sl, old_lx,
                             new_lx, remark,lrsj)
-        VALUES(#{lsh},#{deptCode},#{storeCode},#{lrid},#{lrusername},#{truename},0,#{lrsj},#{hh},#{sl},#{oldLx},
+        VALUES(#{lsh},#{deptCode},#{storeCode},#{lrid},#{lrusername},#{truename},0,#{hh},#{sl},#{oldLx},
                #{newLx},#{remark},now())
     </insert>
     <update id="updateStatus">
