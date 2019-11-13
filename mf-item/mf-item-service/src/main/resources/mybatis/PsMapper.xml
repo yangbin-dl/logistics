@@ -74,9 +74,8 @@
                    end as wlStatusInfo
         from vw_ps
         <where>
-            a.billtype='PS'
             <if test="driverCode != null and driverCode != ''">
-                and driver_code = #{driverCode}
+                driver_code = #{driverCode}
             </if>
 
             <if test="phone != null and phone != ''">
