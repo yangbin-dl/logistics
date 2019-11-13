@@ -74,8 +74,9 @@
                    end as wlStatusInfo
         from vw_ps
         <where>
+            a.billtype='PS'
             <if test="driverCode != null and driverCode != ''">
-                driver_code = #{driverCode}
+                and driver_code = #{driverCode}
             </if>
 
             <if test="phone != null and phone != ''">
@@ -114,8 +115,9 @@
         inner join mf_user d on a.store_code = d.storage_code
         left join mf_store e on a.store_code = e.store_code
         <where>
+            a.billtype='PS'
             <if test="lsh != null and lsh != ''">
-                a.psdh = #{lsh}
+                and a.psdh = #{lsh}
             </if>
             <if test="status != null">
                 and a.ps_status = #{status}
