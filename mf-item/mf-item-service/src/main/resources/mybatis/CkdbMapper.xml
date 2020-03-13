@@ -4,8 +4,8 @@
 
 
     <insert id="insertBill" parameterType="com.mallfe.item.pojo.Ckdb">
-        insert into mf_ckdb(lsh, lrid, username, truename, dept_code, instore_code, outstore_code, status,lrsj)
-        values(#{lsh},#{lrid},#{username},#{truename},#{deptCode},#{inStoreCode},#{outStoreCode},0,now())
+        insert into mf_ckdb(lsh, lrid, username, truename, dept_code, instore_code, outstore_code,lx, status,lrsj)
+        values(#{lsh},#{lrid},#{username},#{truename},#{deptCode},#{inStoreCode},#{outStoreCode},#{lx},0,now())
     </insert>
     <insert id="insertMx" parameterType="com.mallfe.item.pojo.Ckdb">
         insert into mf_ckdb_mx(lsh, hh, sl)
