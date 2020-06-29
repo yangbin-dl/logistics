@@ -59,8 +59,16 @@ public class ReportService {
             PageHelper.startPage(page, rows);
         }
 
-        List<AllBill> list  = reportMapper.selectXsthList(type,deptCode,strq,torq,lsh,hh,plbm,storeCode,
-                storageCode);
+        List<AllBill> list = null;
+        if(type.equals("XS")){
+            list = reportMapper.selectXsList(deptCode,strq,torq,lsh,hh,plbm,storeCode,
+                    storageCode);
+        }
+        else if(type.equals("TH")){
+            list = reportMapper.selectThList(deptCode,strq,torq,lsh,hh,plbm,storeCode,
+                    storageCode);
+        }
+
 
         if(CollectionUtils.isEmpty(list)){
             throw new MallfeException(ExceptionEnum.BILL_NOT_EXISTS);
@@ -171,4 +179,5 @@ public class ReportService {
                 info.getTotal()/rows : info.getTotal()/rows+1,
                 list);
     }
+
 }

@@ -73,6 +73,117 @@
 
         order by a.lrsj desc
     </select>
+
+    <select id="selectXsList" resultType="com.mallfe.item.pojo.AllBill">
+        select a.lsh,
+        case a.status
+        when 0 then '新增'
+        when 1 then '未派车'
+        when 2 then '已派车'
+        when 3 then '已送达'
+        when 9 then '已作废'
+        when 10 then '已撤销'
+        end as statusInfo,
+        a.hh,pinm,sl,
+        case a.lx
+        when 0 then '正常'
+        when 1 then '样机'
+        when 2 then '赠品'
+        when 3 then '残次'
+        end as lxInfo,a.qwsj,a.dept_code as deptCode,e.dept_name as deptName,
+        b.xingh,a.store_code as storeCode,d.store_name as storeName,
+        a.storage_code as storageCode,j.store_name as storageName,a.contact,a.phone,
+        concat(ifnull(a.province,''),' ',ifnull(a.city,''),' ',ifnull(a.district,''),
+        ' ',ifnull(a.location,'')) as location,a.ckuserid,k.truename as ckusername
+        from mf_xs a left join mf_sp b on a.hh = b.hh
+        left join mf_user c on a.lrid = c.id
+        left join mf_store d on a.store_code = d.store_code
+        left join mf_region e on d.dept_code = e.dept_code
+        left join mf_ps f on a.psdh = f.lsh
+        left join mf_driver g on f.driver_code = g.driver_code
+        left join mf_path h on f.path_code=h.path_code and f.dept_code=h.dept_code
+        left join mf_store j on a.storage_code = j.store_code
+        left join mf_user k on a.ckuserid = k.id
+        where a.lrsj between #{strq} and concat(#{torq},' 23:59:59')
+        <if test="storecode!= null and storecode != '' ">
+            and a.store_code = #{storecode}
+        </if>
+
+        <if test="storagecode!= null and storagecode != '' ">
+            and a.storage_code = #{storagecode}
+        </if>
+
+        <if test="lsh!= null and lsh != '' ">
+            and a.lsh = #{lsh}
+        </if>
+
+        <if test="hh!= null">
+            and a.hh = #{hh}
+        </if>
+
+        <if test="plbm!= null and plbm != '' ">
+            and (b.plbm = #{plbm} or concat(substr(b.plbm,1,4),'00')=#{plbm} or
+            concat(substr(b.plbm,1,2),'0000')=#{plbm})
+        </if>
+
+        order by a.lrsj desc
+    </select>
+
+    <select id="selectThList" resultType="com.mallfe.item.pojo.AllBill">
+        select a.lsh,
+        case a.status
+        when 0 then '新增'
+        when 1 then '未派车'
+        when 2 then '已派车'
+        when 3 then '已送达'
+        when 9 then '已作废'
+        when 10 then '已撤销'
+        end as statusInfo,
+        a.hh,pinm,sl,
+        case a.lx
+        when 0 then '正常'
+        when 1 then '样机'
+        when 2 then '赠品'
+        when 3 then '残次'
+        end as lxInfo,a.qwsj,a.dept_code as deptCode,e.dept_name as deptName,
+        b.xingh,a.store_code as storeCode,d.store_name as storeName,
+        a.storage_code as storageCode,j.store_name as storageName,a.contact,a.phone,
+        concat(ifnull(a.province,''),' ',ifnull(a.city,''),' ',ifnull(a.district,''),
+        ' ',ifnull(a.location,'')) as location,a.ckuserid,k.truename as ckusername
+        from mf_th a left join mf_sp b on a.hh = b.hh
+        left join mf_user c on a.lrid = c.id
+        left join mf_store d on a.store_code = d.store_code
+        left join mf_region e on d.dept_code = e.dept_code
+        left join mf_ps f on a.psdh = f.lsh
+        left join mf_driver g on f.driver_code = g.driver_code
+        left join mf_path h on f.path_code=h.path_code and f.dept_code=h.dept_code
+        left join mf_store j on a.storage_code = j.store_code
+        left join mf_user k on a.ckuserid = k.id
+        where a.lrsj between #{strq} and concat(#{torq},' 23:59:59')
+        <if test="storecode!= null and storecode != '' ">
+            and a.store_code = #{storecode}
+        </if>
+
+        <if test="storagecode!= null and storagecode != '' ">
+            and a.storage_code = #{storagecode}
+        </if>
+
+        <if test="lsh!= null and lsh != '' ">
+            and a.lsh = #{lsh}
+        </if>
+
+        <if test="hh!= null">
+            and a.hh = #{hh}
+        </if>
+
+        <if test="plbm!= null and plbm != '' ">
+            and (b.plbm = #{plbm} or concat(substr(b.plbm,1,4),'00')=#{plbm} or
+            concat(substr(b.plbm,1,2),'0000')=#{plbm})
+        </if>
+
+        order by a.lrsj desc
+    </select>
+
     <select id="selectXsthDetail" resultType="com.mallfe.item.pojo.AllBill">
         select a.lsh,case a.status
                          when 0 then '新增'

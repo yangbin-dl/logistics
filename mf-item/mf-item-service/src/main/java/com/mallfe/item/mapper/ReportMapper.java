@@ -61,4 +61,23 @@ public interface ReportMapper
                                                         @Param("lx") Integer lx,
                                                         @Param("strq") String strq,
                                                         @Param("torq") String torq);
+
+    List<AllBill> selectXsList(@Param("deptcode") String deptCode,
+                               @Param("strq") String strq,
+                               @Param("torq") String torq,
+                               @Param("lsh") String lsh,
+                               @Param("hh") Integer hh,
+                               @Param("plbm") String plbm,
+                               @Param("storecode") String storeCode,
+                               @Param("storagecode") String storageCode);
+
+    List<AllBill> selectThList(@Param("deptcode") String deptCode,
+                               @Param("strq") String strq,
+                               @Param("torq") String torq,
+                               @Param("lsh") String lsh,
+                               @Param("hh") Integer hh,
+                               @Param("plbm") String plbm,
+                               @Param("storecode") String storeCode,
+                               @Param("storagecode") String storageCode);
+
 }
