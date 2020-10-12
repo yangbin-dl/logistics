@@ -104,14 +104,16 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
                                      @Param("uid") String uid
     );
 
-    /**
-     * 销售单撤销
-     * @param xs
-     * @return
-     */
+
     int updateStatusToRevert(Xs xs);
 
     Integer selectBillNumberCount(@Param("billNumber") String billNumber);
 
     int updateSdpicUrl(@Param("lsh") String lsh,@Param("sdpicUrl") String sdpicUrl);
+
+    List<AllBill> selectBill(@Param("lruserid") String lruserid,
+                             @Param("phone") String phone,
+                             @Param("lsh") String lsh,
+                             @Param("hh") Integer hh,
+                             @Param("contact") String contact);
 }

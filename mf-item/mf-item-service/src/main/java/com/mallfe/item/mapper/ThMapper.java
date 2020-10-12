@@ -1,5 +1,6 @@
 package com.mallfe.item.mapper;
 
+import com.mallfe.item.pojo.AllBill;
 import com.mallfe.item.pojo.Th;
 import org.apache.ibatis.annotations.Param;
 import tk.mybatis.mapper.common.Mapper;
@@ -11,8 +12,9 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
 
     /**
      * 退货单提交
-     * @param lsh 退货单
-     * @return
+     * @param lsh
+     * @param ckuserid
+     * @return int
      */
     int updateStatusToCommited(@Param("lsh") String lsh, @Param("ckuserid") Long ckuserid);
 
@@ -71,4 +73,10 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
     Integer selectBillNumberCount(@Param("billNumber") String billNumber);
 
     int updateSdpicUrl(@Param("lsh") String lsh,@Param("sdpicUrl") String sdpicUrl);
+
+    List<AllBill> selectBill(@Param("lruserid") String lruserid,
+                             @Param("phone") String phone,
+                             @Param("lsh") String lsh,
+                             @Param("hh") Integer hh,
+                             @Param("contact") String contact);
 }

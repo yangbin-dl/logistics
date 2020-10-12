@@ -305,4 +305,44 @@
     <select id="selectBillNumberCount" resultType="java.lang.Integer">
         select count(*) from mf_xs where status != 9 and bill_number = #{billNumber}
     </select>
+    <select id="selectBill" resultType="com.mallfe.item.pojo.AllBill">
+        select 'XS' as 'billtype',a.lsh, a.lrid,a.truename, a.status, a.lrsj, a.hh,b.pinm, sl,
+               a.lx,b.xingh,b.tm,province,city,district,f.path_code,h.path_name,
+               location,b.plbm,pic_url as picUrl,a.ckuserid,k.truename as ckusername,
+               a.phone,bill_number as billNumber,sdpic_url as sdpicUrl,
+               contact,f.driver_code,
+               qwsj,g.driver_name,g.phone as driver_phone,a.psdh,f.status as ps_status,
+               f.sdsj,a.store_code,d.store_name,a.dept_code,e.dept_name,a.remark,a.storage_code,j.store_name as storage_name
+        From mf_xs a left join mf_sp b on a.hh = b.hh
+                     left join mf_user c on a.lrid = c.id
+                     left join mf_store d on a.store_code = d.store_code
+                     left join mf_region e on d.dept_code = e.dept_code
+                     left join mf_ps f on a.psdh = f.lsh
+                     left join mf_driver g on f.driver_code = g.driver_code
+                     left join mf_path h on f.path_code=h.path_code and f.dept_code=h.dept_code
+                     left join mf_store j on a.storage_code = j.store_code
+                     left join mf_user k on a.ckuserid = k.id
+                     left join mf_user_pl m on b.plbm=m.plbm
+                     inner join mf_user n on a.store_code=n.store_code and m.uid=n.id and n.lx= 1
+        <where>
+            <if test="lrid != null">
+                n.id = #{lrid}
+            </if>
+
+            <if test="phone != null">
+                and a.phone = #{phone}
+            </if>
+            <if test="lsh != null">
+                and a.lsh = #{lsh}
+            </if>
+            <if test="hh != null">
+                and a.hh = #{hh}
+            </if>
+            <if test="contact != null">
+                and a.contact = #{contact}
+            </if>
+
+        </where>
+        order by a.lrsj desc
+    </select>
 </mapper>

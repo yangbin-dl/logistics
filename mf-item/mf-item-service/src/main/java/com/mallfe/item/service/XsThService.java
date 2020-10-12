@@ -18,6 +18,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -219,7 +220,7 @@ public class XsThService {
     public JsonObject queryAll(Integer page, String lruserid, String phone, Integer hh, String lsh, String contact) {
 
         //查询用户角色
-        List<AllBill> list;
+        List<AllBill> list ;
         User u = userService.selectById(Long.parseLong(lruserid));
 
         //分页
@@ -228,10 +229,18 @@ public class XsThService {
         //条件过滤
 
         if(u.getLx()==1){
+            list = new ArrayList<>();
 
+            //1.查询销售
+            list.addAll(xsMapper.selectBill(lruserid,phone,lsh,hh,contact));
+            //2.查询退货
+            list.addAll(thMapper.selectBill(lruserid,phone,lsh,hh,contact));
+            //3.查询换货
+            //list.addAll(ghMapper.selectBill(lruserid,phone,lsh,hh,contact));
+            //4.排序
 
             //20191030升级为实现同品类商品的查询
-            list = xsMapper.selectAllBill2(lruserid,phone,lsh,hh,contact);
+            //list = xsMapper.selectAllBill2(lruserid,phone,lsh,hh,contact);
         } else {
             list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
             //临时使用

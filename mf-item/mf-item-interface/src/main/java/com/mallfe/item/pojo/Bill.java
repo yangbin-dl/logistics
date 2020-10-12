@@ -6,6 +6,7 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+
 /**
  * 描述
  * 销售退货单据通用类
@@ -192,4 +193,6 @@ public class Bill {
 
     @Transient
     private String revertInfo;
+
+
 }
