@@ -198,6 +198,20 @@ public class XsThController {
         return result;
     }
 
+    @GetMapping("pageall2")
+    public JsonObject queryAll2(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "userid") String userid,
+            @RequestParam(value = "phone", required = false) String phone,
+            @RequestParam(value = "hh", required = false) Integer hh,
+            @RequestParam(value = "lsh", required = false) String lsh,
+            @RequestParam(value = "contact", required = false) String contact
+
+    ) {
+        JsonObject result = xsThService.queryAll2(page, userid, phone, hh, lsh, contact);
+        return result;
+    }
+
     @GetMapping("pagesh")
     public JsonObject querySh(
             @RequestParam(value = "page", defaultValue = "1") Integer page,
@@ -209,6 +223,20 @@ public class XsThController {
 
     ) {
         JsonObject result = xsThService.querySh(page, userid, phone, hh, lsh, contact);
+        return result;
+    }
+
+    @GetMapping("pagesh2")
+    public JsonObject querySh2(
+            @RequestParam(value = "page", defaultValue = "1") Integer page,
+            @RequestParam(value = "userid") String userid,
+            @RequestParam(value = "phone", required = false) String phone,
+            @RequestParam(value = "hh", required = false) Integer hh,
+            @RequestParam(value = "lsh", required = false) String lsh,
+            @RequestParam(value = "contact", required = false) String contact
+
+    ) {
+        JsonObject result = xsThService.querySh2(page, userid, phone, hh, lsh, contact);
         return result;
     }
 

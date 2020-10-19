@@ -19,7 +19,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 描述
@@ -217,6 +219,8 @@ public class XsThService {
         return bill;
     }
 
+
+
     public JsonObject queryAll(Integer page, String lruserid, String phone, Integer hh, String lsh, String contact) {
 
         //查询用户角色
@@ -225,23 +229,77 @@ public class XsThService {
 
         //分页
         //临时调整
-        PageHelper.startPage(page, 10);
+
         //条件过滤
 
         if(u.getLx()==1){
             list = new ArrayList<>();
 
             //1.查询销售
-            list.addAll(xsMapper.selectBill(lruserid,phone,lsh,hh,contact));
+            list.addAll(xsMapper.selectBill(lruserid,phone,lsh,hh,contact,page*10,null,null,null,null));
             //2.查询退货
-            list.addAll(thMapper.selectBill(lruserid,phone,lsh,hh,contact));
+            list.addAll(thMapper.selectBill(lruserid,phone,lsh,hh,contact,page*10,null,null,null,null));
             //3.查询换货
-            //list.addAll(ghMapper.selectBill(lruserid,phone,lsh,hh,contact));
+            list.addAll(ghMapper.selectBill(lruserid,phone,lsh,hh,contact,page*10,null,null,null,null));
             //4.排序
+            if(!CollectionUtils.isEmpty(list)){
+                list = list.stream().sorted(Comparator.comparing(AllBill::getLrsj).reversed())
+                        .skip((page-1)* 10).limit(10).collect(Collectors.toList());
+            }
 
             //20191030升级为实现同品类商品的查询
+            //PageHelper.startPage(page, 10);
             //list = xsMapper.selectAllBill2(lruserid,phone,lsh,hh,contact);
         } else {
+            //PageHelper.startPage(page, 10);
+            //list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
+
+            list = new ArrayList<>();
+
+            //1.查询销售
+            list.addAll(xsMapper.selectBill(null,phone,lsh,hh,contact,page*10,null,u.getStoreCode(),lruserid,1));
+            //2.查询退货
+            list.addAll(thMapper.selectBill(null,phone,lsh,hh,contact,page*10,null,u.getStoreCode(),lruserid,1));
+            //3.查询换货
+            list.addAll(ghMapper.selectBill(null,phone,lsh,hh,contact,page*10,null,u.getStoreCode(),lruserid,1));
+            //4.排序
+            if(!CollectionUtils.isEmpty(list)){
+                list = list.stream().sorted(Comparator.comparing(AllBill::getLrsj).reversed())
+                        .skip((page-1)* 10).limit(10).collect(Collectors.toList());
+            }
+        }
+
+        //查询
+
+        if(CollectionUtils.isEmpty(list)){
+            return new JsonError("未查询到单据！");
+        }
+
+        //解析分页结果
+        PageInfo<AllBill> info = new PageInfo<>(list);
+
+        return new JsonData(new PageResult<>(info.getTotal(), list));
+    }
+
+    public JsonObject queryAll2(Integer page, String lruserid, String phone, Integer hh, String lsh, String contact) {
+
+        //查询用户角色
+        List<AllBill> list ;
+        User u = userService.selectById(Long.parseLong(lruserid));
+
+        //分页
+        //临时调整
+
+        //条件过滤
+
+        if(u.getLx()==1){
+
+
+            //20191030升级为实现同品类商品的查询
+            PageHelper.startPage(page, 10);
+            list = xsMapper.selectAllBill2(lruserid,phone,lsh,hh,contact);
+        } else {
+            PageHelper.startPage(page, 10);
             list = xsMapper.selectAllBillByStore(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
             //临时使用
             //list = xsMapper.selectAllBillForSh(u.getStoreCode(),phone,lsh,hh,contact,lruserid);
@@ -260,6 +318,46 @@ public class XsThService {
     }
 
     public JsonObject querySh(Integer page, String lruserid, String phone, Integer hh, String lsh, String contact) {
+
+        //查询用户角色
+
+        User u = userService.selectById(Long.parseLong(lruserid));
+
+        if(u.getLx()!=6 && u.getLx()!=7){
+            return new JsonError("未查询到单据！");
+        }
+
+        //分页
+        //PageHelper.startPage(page, 10);
+        //条件过滤
+
+        List<AllBill> list = new ArrayList<>();
+
+        //1.查询销售
+        list.addAll(xsMapper.selectBill(null,phone,lsh,hh,contact,page*10,0,u.getStoreCode(),lruserid,null));
+        //2.查询退货
+        list.addAll(thMapper.selectBill(null,phone,lsh,hh,contact,page*10,0,u.getStoreCode(),lruserid,null));
+        //3.查询换货
+        list.addAll(ghMapper.selectBill(null,phone,lsh,hh,contact,page*10,0,u.getStoreCode(),lruserid,null));
+        //4.排序
+        if(!CollectionUtils.isEmpty(list)){
+            list = list.stream().sorted(Comparator.comparing(AllBill::getLrsj).reversed())
+                    .skip((page-1)* 10).limit(10).collect(Collectors.toList());
+        }
+
+        //查询
+
+        if(CollectionUtils.isEmpty(list)){
+            return new JsonError("未查询到单据！");
+        }
+
+        //解析分页结果
+        PageInfo<AllBill> info = new PageInfo<>(list);
+
+        return new JsonData(new PageResult<>(info.getTotal(), list));
+    }
+
+    public JsonObject querySh2(Integer page, String lruserid, String phone, Integer hh, String lsh, String contact) {
 
         //查询用户角色
 

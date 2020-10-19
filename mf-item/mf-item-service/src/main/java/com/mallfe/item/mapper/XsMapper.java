@@ -111,9 +111,14 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
 
     int updateSdpicUrl(@Param("lsh") String lsh,@Param("sdpicUrl") String sdpicUrl);
 
-    List<AllBill> selectBill(@Param("lruserid") String lruserid,
+    List<AllBill> selectBill(@Param("lrid") String lruserid,
                              @Param("phone") String phone,
                              @Param("lsh") String lsh,
                              @Param("hh") Integer hh,
-                             @Param("contact") String contact);
+                             @Param("contact") String contact,
+                             @Param("limit") Integer limit,
+                             @Param("status") Integer status,
+                             @Param("storecode") String storecode,
+                             @Param("shuserid") String shuserid,
+                             @Param("his") Integer his);
 }
