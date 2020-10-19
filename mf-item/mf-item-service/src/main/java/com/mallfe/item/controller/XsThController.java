@@ -194,7 +194,7 @@ public class XsThController {
             @RequestParam(value = "contact", required = false) String contact
 
     ) {
-        JsonObject result = xsThService.queryAll(page, userid, phone, hh, lsh, contact);
+        JsonObject result = xsThService.queryAll2(page, userid, phone, hh, lsh, contact);
         return result;
     }
 
@@ -208,7 +208,7 @@ public class XsThController {
             @RequestParam(value = "contact", required = false) String contact
 
     ) {
-        JsonObject result = xsThService.queryAll2(page, userid, phone, hh, lsh, contact);
+        JsonObject result = xsThService.queryAll(page, userid, phone, hh, lsh, contact);
         return result;
     }
 
@@ -222,7 +222,7 @@ public class XsThController {
             @RequestParam(value = "contact", required = false) String contact
 
     ) {
-        JsonObject result = xsThService.querySh(page, userid, phone, hh, lsh, contact);
+        JsonObject result = xsThService.querySh2(page, userid, phone, hh, lsh, contact);
         return result;
     }
 
@@ -236,7 +236,7 @@ public class XsThController {
             @RequestParam(value = "contact", required = false) String contact
 
     ) {
-        JsonObject result = xsThService.querySh2(page, userid, phone, hh, lsh, contact);
+        JsonObject result = xsThService.querySh(page, userid, phone, hh, lsh, contact);
         return result;
     }
 
