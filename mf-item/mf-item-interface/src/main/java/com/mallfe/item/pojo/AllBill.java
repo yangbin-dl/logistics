@@ -161,8 +161,11 @@ public class AllBill {
     private String billNumber;
 
     private String sdpicUrl;
+//     @Transient
+//     private String picServer = "http://120.201.127.207:2389/";
+    
     @Transient
-    private String picServer = "http://120.201.127.207:2389/";
+    private String picServer = "http://47.94.95.93:2389/";
 
     @Transient
     private String revertInfo;
