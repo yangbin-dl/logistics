@@ -176,7 +176,22 @@ public class Bill {
     @Transient
     private String storageName;
 
+    /**
+     * 备注
+     */
     private String remark;
+
+    /**
+     * 手工备注：派工网点
+     * @since 2021-03-24
+     */
+    private String remarksWd;
+
+    /**
+     * 手工备注：品类
+     * @since 2021-03-24
+     */
+    private String remarksPl;
 
     private String picUrl;
 

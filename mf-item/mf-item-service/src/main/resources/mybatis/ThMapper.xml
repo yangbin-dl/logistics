@@ -55,7 +55,7 @@
                    when 2 then '未送达'
                    when 3 then '已送达'
                    when 9 then '已作废'
-                   end as statusInfo
+                   end as statusInfo,b.remarks_wd as remarksWd,b.remarks_pl as remarksPl
         From mf_tp_mx a left join mf_th b on a.ddh = b.lsh
                         left join mf_sp c on b.hh=c.hh
         where a.lsh = #{lsh}
@@ -77,7 +77,7 @@
         when 3 then '已送达'
         when 9 then '已作废'
         when 10 then '已撤销'
-        end as statusInfo
+        end as statusInfo,b.remarks_wd as remarksWd,b.remarks_pl as remarksPl
         From mf_th b left join mf_sp c on b.hh=c.hh
         left join mf_store e on b.store_code = e.store_code
         left join mf_store f on b.storage_code = f.store_code

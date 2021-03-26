@@ -57,7 +57,8 @@
                b.storage_code as storageCode,f.store_name as storageName,
                b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,
                c.pinm,c.xingh,c.tm,b.remark,
-               case a.status when 0 then '配送中' when 1 then '已送达' when 2 then '未送达' end as statusInfo
+               case a.status when 0 then '配送中' when 1 then '已送达' when 2 then '未送达' end as statusInfo,
+               b.remarks_wd as remarksWd,b.remarks_pl as remarksPl
         From mf_ps_mx a left join mf_xs b on a.ddh = b.lsh
                         left join mf_sp c on b.hh=c.hh
                         left join mf_store e on b.store_code = e.store_code
@@ -73,7 +74,8 @@
                b.storage_code as storageCode,f.store_name as storageName,
                b.lrsj, b.cksj, b.zfsj, b.pcsj, b.fcsj, b.sdsj,
                c.pinm,c.xingh,c.tm,b.remark,
-               case a.status when 0 then '配送中' when 1 then '已送达' when 2 then '未送达' end as statusInfo
+               case a.status when 0 then '配送中' when 1 then '已送达' when 2 then '未送达' end as statusInfo,
+               b.remarks_wd as remarksWd,b.remarks_pl as remarksPl
         From mf_psrk_mx a left join mf_xs b on a.ddh = b.lsh
                           left join mf_sp c on b.hh=c.hh
                           left join mf_store e on b.store_code = e.store_code
@@ -96,7 +98,8 @@
                    when 3 then '已送达'
                    when 9 then '已作废'
                    when 10 then '已撤销'
-                   end as statusInfo
+                   end as statusInfo,
+        b.remarks_wd as remarksWd,b.remarks_pl as remarksPl
         From mf_xs b left join mf_sp c on b.hh=c.hh
         left join mf_kucn d on b.hh=d.hh and b.lx = d.lx and b.storage_code = d.store_code
         left join mf_store e on b.store_code = e.store_code
