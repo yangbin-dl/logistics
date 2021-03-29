@@ -161,6 +161,18 @@ public class AllBill {
     private String billNumber;
 
     private String sdpicUrl;
+
+    /**
+     * 手工备注：派工网点
+     * @since 2021-03-24
+     */
+    private String remarksWd;
+
+    /**
+     * 手工备注：品类
+     * @since 2021-03-24
+     */
+    private String remarksPl;
 //     @Transient
 //     private String picServer = "http://120.201.127.207:2389/";
     
