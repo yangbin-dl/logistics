@@ -94,7 +94,8 @@
         b.xingh,a.store_code as storeCode,d.store_name as storeName,
         a.storage_code as storageCode,j.store_name as storageName,a.contact,a.phone,
         concat(ifnull(a.province,''),' ',ifnull(a.city,''),' ',ifnull(a.district,''),
-        ' ',ifnull(a.location,'')) as location,a.ckuserid,k.truename as ckusername
+        ' ',ifnull(a.location,'')) as location,a.ckuserid,k.truename as ckusername,
+               remarks_pl as remarksPl,remarks_wd as remarksWd
         from mf_xs a left join mf_sp b on a.hh = b.hh
         left join mf_user c on a.lrid = c.id
         left join mf_store d on a.store_code = d.store_code
@@ -149,7 +150,8 @@
         b.xingh,a.store_code as storeCode,d.store_name as storeName,
         a.storage_code as storageCode,j.store_name as storageName,a.contact,a.phone,
         concat(ifnull(a.province,''),' ',ifnull(a.city,''),' ',ifnull(a.district,''),
-        ' ',ifnull(a.location,'')) as location,a.ckuserid,k.truename as ckusername
+        ' ',ifnull(a.location,'')) as location,a.ckuserid,k.truename as ckusername,
+        remarks_pl as remarksPl,remarks_wd as remarksWd
         from mf_th a left join mf_sp b on a.hh = b.hh
         left join mf_user c on a.lrid = c.id
         left join mf_store d on a.store_code = d.store_code
@@ -197,7 +199,7 @@
                a.storage_code as storageCode,a.storage_name as storageName,a.contact,a.phone,
                concat(ifnull(a.province,''),' ',ifnull(a.city,''),' ',ifnull(a.district,''),
                    ' ',ifnull(a.location,'')) as location,a.plbm,b.plmc,a.truename,a.driver_name as driverName,
-               a.driver_phone as driverPhone,sdsj,lrsj
+               a.driver_phone as driverPhone,sdsj,lrsj,remarks_pl as remarksPl,remarks_wd as remarksWd
         from vw_xs a left join mf_pl b on a.plbm=b.plbm where a.lsh=#{lsh}
     </select>
     <select id="selectKucnList" resultType="com.mallfe.item.pojo.KucnReport">
