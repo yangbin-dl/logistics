@@ -83,4 +83,6 @@ public interface GhMapper extends Mapper<Gh>, MySqlMapper<Gh> {
                              @Param("storecode") String storecode,
                              @Param("shuserid") String shuserid,
                              @Param("his") Integer his);
+
+    AllBill selectBillDetail(@Param("lsh") String lsh);
 }

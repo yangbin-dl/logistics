@@ -84,4 +84,5 @@ public interface ThMapper extends Mapper<Th>, MySqlMapper<Th> {
                              @Param("storecode") String storecode,
                              @Param("shuserid") String shuserid,
                              @Param("his") Integer his);
+    AllBill selectBillDetail(@Param("lsh") String lsh);
 }

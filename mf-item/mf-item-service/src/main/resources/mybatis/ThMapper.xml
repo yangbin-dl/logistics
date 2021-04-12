@@ -190,4 +190,34 @@
 
         limit 0,${limit}
     </select>
+    <select id="selectBillDetail" resultType="com.mallfe.item.pojo.AllBill">
+        select 'TH' as 'billtype',a.lsh, a.lrid,a.truename, a.status, a.lrsj, a.hh,b.pinm, sl,
+               a.lx,b.xingh,b.tm,province,city,district,f.path_code,h.path_name,
+               concat(ifnull(province,''),' ',ifnull(city,''),' ',ifnull(district,''),' ',ifnull(location,'')) as location,
+               b.plbm,pic_url as picUrl,a.ckuserid,k.truename as ckusername,
+               a.phone,bill_number as billNumber,sdpic_url as sdpicUrl,
+               contact,f.driver_code as driverCode,
+               qwsj,g.driver_name as driverName,g.phone as driverPhone,a.psdh,f.status as ps_status,
+               f.sdsj,a.store_code as storeCode,d.store_name as storeName,a.dept_code as deptCode,
+               '锦州地区' as deptName,a.remark,a.storage_code as storageCode,
+               j.store_name as storageName,
+               case a.status
+                   when 0 then '新增'
+                   when 1 then '已提交'
+                   when 2 then '已派车'
+                   when 3 then '已送达'
+                   when 9 then '已作废'
+                   when 10 then '已撤销'
+                   end as statusInfo
+        From mf_th a left join mf_sp b on a.hh=b.hh
+                     left join mf_user c on a.lrid = c.id
+                     left join mf_store d on a.store_code =d.store_code
+
+                     left join mf_tp f on a.psdh = f.lsh
+                     left join mf_driver g on f.driver_code = g.driver_code
+                     left join mf_path h on f.path_code=h.path_code and f.dept_code=h.dept_code
+                     left join mf_store j on a.storage_code = j.store_code
+                     left join mf_user k on a.ckuserid = k.id
+        where a.lsh = #{lsh}
+    </select>
 </mapper>

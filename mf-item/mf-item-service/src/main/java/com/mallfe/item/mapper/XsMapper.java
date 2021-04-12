@@ -90,6 +90,8 @@ public interface XsMapper extends Mapper<Xs>, MySqlMapper<Xs> {
 
     AllBill selectOneBill(@Param("lsh") String lsh);
 
+    AllBill selectBillDetail(@Param("lsh") String lsh);
+
     List<Province> selectProvince();
 
     List<City> selectCity(@Param("province") String province);

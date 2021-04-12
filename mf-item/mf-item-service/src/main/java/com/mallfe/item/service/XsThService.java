@@ -525,13 +525,32 @@ public class XsThService {
         return new JsonData("提交成功");
     }
 
+    public AllBill queryBilldetail(String lsh){
+        AllBill bill = null;
+
+        switch (lsh.substring(0,2)){
+            case "XS":
+                bill = xsMapper.selectBillDetail(lsh);
+                break;
+            case "TH":
+                bill = thMapper.selectBillDetail(lsh);
+                break;
+            case "GH":
+                bill = ghMapper.selectBillDetail(lsh);
+                break;
+        }
+
+
+        return bill;
+    }
+
     public JsonObject appQueryXs(String lsh) {
-        AllBill bill = xsMapper.selectOneBill(lsh);
+        AllBill bill = xsMapper.selectBillDetail(lsh);
         return new JsonData(bill);
     }
 
     public JsonObject appQueryTh(String lsh) {
-        AllBill bill = xsMapper.selectOneBill(lsh);
+        AllBill bill = thMapper.selectBillDetail(lsh);
         return new JsonData(bill);
     }
 
@@ -609,7 +628,7 @@ public class XsThService {
     }
 
     public JsonObject appQueryGh(String lsh) {
-        AllBill bill = ghMapper.selectOneBill(lsh);
+        AllBill bill = ghMapper.selectBillDetail(lsh);
         return new JsonData(bill);
     }
 
