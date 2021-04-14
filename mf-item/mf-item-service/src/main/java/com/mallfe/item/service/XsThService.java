@@ -545,12 +545,12 @@ public class XsThService {
     }
 
     public JsonObject appQueryXs(String lsh) {
-        AllBill bill = xsMapper.selectBillDetail(lsh);
+        AllBill bill = queryBilldetail(lsh);
         return new JsonData(bill);
     }
 
     public JsonObject appQueryTh(String lsh) {
-        AllBill bill = thMapper.selectBillDetail(lsh);
+        AllBill bill = queryBilldetail(lsh);
         return new JsonData(bill);
     }
 
@@ -628,7 +628,7 @@ public class XsThService {
     }
 
     public JsonObject appQueryGh(String lsh) {
-        AllBill bill = ghMapper.selectBillDetail(lsh);
+        AllBill bill = queryBilldetail(lsh);
         return new JsonData(bill);
     }
 
