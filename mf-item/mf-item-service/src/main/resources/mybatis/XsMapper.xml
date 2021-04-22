@@ -331,7 +331,8 @@
                    when 10 then '已撤销'
                    end as statusInfo,remarks_pl as remarksPl,remarks_wd as remarksWd
         From mf_xs a left join mf_sp b on a.hh = b.hh
-            left join mf_user c on a.lrid = c.id
+        left join mf_user_pl pl on b.plbm=pl.plbm
+        inner join mf_user c on a.store_code=c.store_code and pl.uid=c.id and c.lx= 1
             left join mf_store d on a.store_code = d.store_code
 
             left join mf_ps f on a.psdh = f.lsh
@@ -345,7 +346,7 @@
 
         <where>
             <if test="lrid != null">
-                a.lrid = #{lrid}
+                c.lrid = #{lrid}
             </if>
 
             <if test="phone != null">
