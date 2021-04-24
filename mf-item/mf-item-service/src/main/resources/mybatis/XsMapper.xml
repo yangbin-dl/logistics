@@ -346,7 +346,7 @@
 
         <where>
             <if test="lrid != null">
-                c.lrid = #{lrid}
+                c.id = #{lrid}
             </if>
 
             <if test="phone != null">
