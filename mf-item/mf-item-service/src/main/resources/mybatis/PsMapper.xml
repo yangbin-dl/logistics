@@ -19,38 +19,39 @@
 
 
     <select id="selectPs" resultType="com.mallfe.item.pojo.Ps">
-        select a.psdh as lsh,a.driver_code as driverCode,b.driver_name as driverName,
-               a.location,a.phone,a.contact,
-               a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.ps_status as status,a.sdsj,
+        select a.lsh as lsh,a.driver_code as driverCode,b.driver_name as driverName,
+        mx.location,mx.phone,mx.contact,
+               a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.status as status,a.sdsj,
                a.lrid,a.lrusername,a.truename,a.store_code as storeCode,a.dept_code as deptCode,
-               case a.ps_status
+               case a.status
                    when 0 then '新增'
                    when 1 then '已发出'
                    when 2 then '已完成'
                    when 9 then '已作废'
                end as statusInfo,d.store_name as storeName
-        from vw_ps a left join mf_driver b on a.driver_code = b.driver_code
+        from mf_ps a left join mf_driver b on a.driver_code = b.driver_code
         left join mf_path c on a.path_code = c.path_code
         left join mf_store d on a.store_code = d.store_code
+        inner join mf_ps_mx mfp  on a.lsh=mfp.lsh
+        left join mf_xs mx on mfp.ddh = mx.lsh
         <where>
-            a.billtype='PS'
 
             <if test="lsh != null and lsh != ''">
-                and a.psdh = #{lsh}
+                and a.lsh = #{lsh}
             </if>
             <if test="status != null">
-                and a.ps_status = #{status}
+                and a.status = #{status}
             </if>
 
             <if test="key != null and key != ''">
-                and (a.location like CONCAT('%',#{key},'%')
+                and (mx.location like CONCAT('%',#{key},'%')
                 or a.lsh like CONCAT('%',#{key},'%')
-                or a.psdh like CONCAT('%',#{key},'%')
-                or a.phone like CONCAT('%',#{key},'%')
+                or mfp.lsh like CONCAT('%',#{key},'%')
+                or mx.phone like CONCAT('%',#{key},'%')
                 )
             </if>
         </where>
-        order by a.psdh desc
+        order by a.lsh desc
 
     </select>
     <select id="selectList" resultType="com.mallfe.item.pojo.AllBill">
@@ -100,40 +101,42 @@
         order by lrsj desc
     </select>
     <select id="selectPsWithUid" resultType="com.mallfe.item.pojo.Ps">
-        select a.psdh as lsh,a.driver_code as driverCode,b.driver_name as driverName,
-        a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.ps_status as status,a.sdsj,
+        select a.lsh as lsh,a.driver_code as driverCode,b.driver_name as driverName,
+        a.path_code as pathCode,c.path_name as pathName ,a.lrsj,a.fcsj,a.status as status,a.sdsj,
         a.lrid,a.lrusername,a.truename,a.store_code as storeCode,a.dept_code as deptCode,
-        case a.ps_status
+        case a.status
         when 0 then '新增'
         when 1 then '已发出'
         when 2 then '已完成'
         when 9 then '已作废'
         end as statusInfo,e.store_name as storeName
-        from vw_ps a left join mf_driver b on a.driver_code = b.driver_code
+        from mf_ps a left join mf_driver b on a.driver_code = b.driver_code
         left join mf_path c on a.path_code = c.path_code
         inner join mf_user d on a.store_code = d.storage_code
         left join mf_store e on a.store_code = e.store_code
+        inner join mf_ps_mx mfp  on a.lsh=mfp.lsh
+        left join mf_xs mx on mfp.ddh = mx.lsh
+
         <where>
-            a.billtype='PS'
             <if test="lsh != null and lsh != ''">
-                and a.psdh = #{lsh}
+                and a.lsh = #{lsh}
             </if>
             <if test="status != null">
-                and a.ps_status = #{status}
+                and a.status = #{status}
             </if>
             <if test="uid != null and uid != ''">
                 and d.id = #{uid}
             </if>
 
             <if test="key != null and key != ''">
-                and (a.location like CONCAT('%',#{key},'%')
+                and (mx.location like CONCAT('%',#{key},'%')
                 or a.lsh like CONCAT('%',#{key},'%')
-                or a.psdh like CONCAT('%',#{key},'%')
-                or a.phone like CONCAT('%',#{key},'%')
+                or mfp.lsh like CONCAT('%',#{key},'%')
+                or mx.phone like CONCAT('%',#{key},'%')
                 )
             </if>
         </where>
-        order by a.psdh desc
+        order by a.lsh desc
     </select>
 
 </mapper>
