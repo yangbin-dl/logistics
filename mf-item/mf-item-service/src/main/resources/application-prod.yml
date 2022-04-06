@@ -3,8 +3,8 @@ server:
 spring:
   datasource:
     url: jdbc:mysql://rm-i5u74thre6519h09lpo.mysql.cn-chengdu.rds.aliyuncs.com:4417/logistics?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8
-    username: logiuser
-    password: Tonsan123
+    username: jinzhou
+    password: Dsjt_jinzhou@mysql8
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 30
