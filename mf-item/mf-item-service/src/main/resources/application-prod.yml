@@ -2,9 +2,9 @@ server:
   port: 8081
 spring:
   datasource:
-    url: jdbc:mysql://47.94.95.93:3306/logistics?allowMulitQueries=true&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://rm-i5u74thre6519h09lpo.mysql.cn-chengdu.rds.aliyuncs.com:4417/logistics?allowMultiQueries=true&useUnicode=true&characterEncoding=utf8
     username: jinzhou
-    password: Tonsan123
+    password: Dsjt_jinzhou@mysql8
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 30
