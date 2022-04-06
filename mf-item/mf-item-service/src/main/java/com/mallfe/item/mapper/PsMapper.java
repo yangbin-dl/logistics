@@ -50,6 +50,19 @@ public interface PsMapper extends Mapper<Ps> {
                              @Param("wlstatus") Integer wlstatus,
                              @Param("psstatus") Integer psstatus);
 
+    /**
+     * 用原始单据查询配送单
+     * 2022-04-01新增
+     * 用于优化app查询速度
+     */
+    List<AllBill> selectBill(@Param("driverCode") String driveCode,
+                             @Param("phone") String phone,
+                             @Param("hh") Integer hh,
+                             @Param("lsh") String lsh,
+                             @Param("psdh") String psdh,
+                             @Param("wlstatus") Integer wlstatus,
+                             @Param("psstatus") Integer psstatus);
+
     List<Ps> selectPsWithUid(@Param("status") Integer status,
                              @Param("lsh") String lsh,
                              @Param("uid")Long uid,

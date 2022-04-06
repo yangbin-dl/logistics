@@ -77,5 +77,56 @@
         </where>
         order by a.lsh desc
     </select>
+    <select id="selectBill" resultType="com.mallfe.item.pojo.AllBill">
+        select 'TP', a.lsh, c.hh, pinm, sl, lx, psdh,
+        concat(ifnull(province,''),' ',ifnull(city,''),' ',ifnull(district,''),' ',ifnull(location,'')) as location,
+        d.phone, contact, qwsj, b.sdsj,xingh,tm,ifnull(remark,'') as remark,province,city,district,
+        c.store_code as storeCode,store_name as storeName,b.lrsj,b.lrid,b.truename,c.sdpic_url as sdpicUrl,
+        b.dept_code as deptCode,dept_name as deptName,driver_name as driverName,d.phone as driverPhone,
+        b.status as psStatus,
+        case b.status
+        when 0 then '新增'
+        when 1 then '已发出'
+        when 2 then '已完成'
+        when 3 then '已作废'
+        end as psStatusInfo,
+        a.status as wlStatus,
+        case a.status
+        when 0 then '运输中'
+        when 1 then '已送达'
+        when 2 then '未送达'
+        end as wlStatusInfo
+        from mf_tp_mx a left join mf_tp b on a.lsh = b.lsh
+        left join mf_th c on a.ddh = c.lsh
+        left join mf_driver d on b.driver_code = d.driver_code
+        left join mf_path e on b.path_code = e.path_code and b.dept_code = e.dept_code
+        left join mf_sp f on c.hh = f.hh
+        left join mf_region g on b.dept_code = g.dept_code
+        left join mf_store h on c.store_code = h.store_code
+        <where>
+            <if test="driverCode != null and driverCode != ''">
+                b.driver_code = #{driverCode}
+            </if>
+
+            <if test="phone != null and phone != ''">
+                and c.phone = #{phone}
+            </if>
+            <if test="lsh != null and lsh != ''">
+                and a.ddh = #{lsh}
+            </if>
+            <if test="hh != null">
+                and c.hh = #{hh}
+            </if>
+            <if test="psdh != null and psdh != ''">
+                and a.lsh = #{psdh}
+            </if>
+            <if test="wlstatus != null">
+                and a.status = #{wlstatus}
+            </if>
+            <if test="psstatus != null">
+                and b.status = #{psstatus}
+            </if>
+        </where>
+    </select>
 
 </mapper>

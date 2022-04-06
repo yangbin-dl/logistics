@@ -18,7 +18,9 @@ import org.springframework.util.CollectionUtils;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 描述
@@ -962,15 +964,31 @@ public class PsTpService {
     public JsonObject applist(Integer page, String userid, String phone, Integer hh, String lsh, String psdh) {
 
         //分页
-        PageHelper.startPage(page, 10);
+        //PageHelper.startPage(page, 10);
         //条件过滤
 
         //查询用户角色
-        List<AllBill> list;
+        //List<AllBill> list;
         User u = userService.selectById(Long.parseLong(userid));
         String driveCode = u.getUsername();
 
-        list = psMapper.selectList(driveCode,phone,hh,lsh,psdh,0,1);
+        //list = psMapper.selectList(driveCode,phone,hh,lsh,psdh,0,1);
+
+        List<AllBill> list = new ArrayList<>();
+        //1.查询配送
+        list.addAll(psMapper.selectBill(driveCode,phone,hh,lsh,psdh,0,1));
+
+        //2.查询退配
+        list.addAll(tpMapper.selectBill(driveCode,phone,hh,lsh,psdh,0,1));
+
+        //3.查询更换配送
+        list.addAll(ghpsMapper.selectBill(driveCode,phone,hh,lsh,psdh,0,1));
+
+        //4.排序
+        if(!CollectionUtils.isEmpty(list)){
+            list = list.stream().sorted(Comparator.comparing(AllBill::getLrsj).reversed())
+                    .collect(Collectors.toList());
+        }
 
         //查询
 
@@ -1114,13 +1132,29 @@ public class PsTpService {
         //条件过滤
 
         //查询用户角色
-        List<AllBill> list;
+        //List<AllBill> list;
         User u = userService.selectById(Long.parseLong(userid));
         String driveCode = u.getUsername();
 
-        list = psMapper.selectList(driveCode,phone,hh,lsh,psdh,null,2);
+        //list = psMapper.selectList(driveCode,phone,hh,lsh,psdh,null,2);
 
         //查询
+
+        List<AllBill> list = new ArrayList<>();
+        //1.查询配送
+        list.addAll(psMapper.selectBill(driveCode,phone,hh,lsh,psdh,0,2));
+
+        //2.查询退配
+        list.addAll(tpMapper.selectBill(driveCode,phone,hh,lsh,psdh,0,2));
+
+        //3.查询更换配送
+        list.addAll(ghpsMapper.selectBill(driveCode,phone,hh,lsh,psdh,0,2));
+
+        //4.排序
+        if(!CollectionUtils.isEmpty(list)){
+            list = list.stream().sorted(Comparator.comparing(AllBill::getLrsj).reversed())
+                    .collect(Collectors.toList());
+        }
 
         if(CollectionUtils.isEmpty(list)){
             return new JsonError("未查询到单据！");
