@@ -1142,13 +1142,13 @@ public class PsTpService {
 
         List<AllBill> list = new ArrayList<>();
         //1.查询配送
-        list.addAll(psMapper.selectBill(driveCode,phone,hh,lsh,psdh,0,2));
+        list.addAll(psMapper.selectBill(driveCode,phone,hh,lsh,psdh,null,2));
 
         //2.查询退配
-        list.addAll(tpMapper.selectBill(driveCode,phone,hh,lsh,psdh,0,2));
+        list.addAll(tpMapper.selectBill(driveCode,phone,hh,lsh,psdh,null,2));
 
         //3.查询更换配送
-        list.addAll(ghpsMapper.selectBill(driveCode,phone,hh,lsh,psdh,0,2));
+        list.addAll(ghpsMapper.selectBill(driveCode,phone,hh,lsh,psdh,null,2));
 
         //4.排序
         if(!CollectionUtils.isEmpty(list)){
